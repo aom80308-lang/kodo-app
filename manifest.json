@@ -9,5 +9,13 @@
   "start_url": "/kodo-app/",
   "theme_color": "#3b82f6",
   "id": "com.aom80308.kodo",
-  "description": "تطبيق Kodo لتعليم البرمجة (بايثون وجافاسكريبت) بالعربي"
+  "description": "تطبيق Kodo لتعليم البرمجة (بايثون وجافاسكريبت) بالعربي",
+  "icons": [
+    {
+      "src": "/kodo-app/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
