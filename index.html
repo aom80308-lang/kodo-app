@@ -3542,7 +3542,80 @@ var App = {
     this._toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2200);
   }
 };
-
+<script>
+/* ====== Kodo Patch v1.1 ====== */
+(function() {
+  var origStartCourse = App.startCourse;
+  App.startCourse = function(courseId) {
+    origStartCourse.call(this, courseId);
+    this.saveState();
+  };
+  var origSaveState = App.saveState;
+  App.saveState = function() {
+    origSaveState.call(this);
+    try {
+      var s = JSON.parse(localStorage.getItem('kodo_state') || '{}');
+      s.currentCourse = this.state.currentCourse;
+      localStorage.setItem('kodo_state', JSON.stringify(s));
+    } catch(e) {}
+  };
+  var origLoadState = App.loadState;
+  App.loadState = function() {
+    origLoadState.call(this);
+    try {
+      var s = JSON.parse(localStorage.getItem('kodo_state') || '{}');
+      if (s.currentCourse) this.state.currentCourse = s.currentCourse;
+    } catch(e) {}
+  };
+  App.setupSplashTap = function() {
+    var self = this;
+    var splash = document.getElementById('splash');
+    if (!splash) return;
+    var continueFromSplash = function() {
+      if (self.state.currentCourse) {
+        var titles = { python: 'بايثون', javascript: 'جافا سكريبت' };
+        var el = document.getElementById('course-title');
+        if (el) el.textContent = titles[self.state.currentCourse] || 'دورة';
+        self.go('learning-path');
+      } else {
+        self.go('onboarding');
+      }
+    };
+    splash.addEventListener('click', function(e) {
+      if (e.target.closest('#logo-tap')) return;
+      if (splash.classList.contains('active')) {
+        clearTimeout(self._splashTimer);
+        self.vibrate(10); self.playSound('click');
+        continueFromSplash();
+      }
+    });
+    this._splashTimer = setTimeout(function() {
+      if (splash.classList.contains('active')) continueFromSplash();
+    }, 2000);
+  };
+})();
+(function() {
+  var Py = COURSES.python.levels[0];
+  Py.units[0].lessons[0].content = "<p>البرمجة هي كتابة <strong>تعليمات مرتبة</strong> للكمبيوتر ينفذها خطوة بخطوة.</p><p>فكر فيها زي ما بتقول لصاحبك خطوات عمل شاي:</p><ul style='padding-right:20px;line-height:2;'><li>املأ الكوباية ماء</li><li>حطها على النار</li><li>استنى 5 دقايق</li><li>حط السكر</li></ul><p>نفس الكلام مع الكمبيوتر، بس بلغة برمجة زي بايثون.</p><p>💡 <strong>نصيحة:</strong> الكمبيوتر مش ذكي، هو بس بينفذ. لو نسيت خطوة، النتيجة هتختلف.</p>";
+  Py.units[0].lessons[1].content = "<p>ليه تتعلم برمجة؟ في 4 أسباب قوية:</p><ul style='padding-right:20px;line-height:2;'><li><strong>💼 شغل:</strong> فيه طلب ضخم على المبرمجين في كل حاجة (مواقع، تطبيقات، ألعاب، AI)</li><li><strong>💰 دخل أعلى:</strong> رواتب المبرمجين من أعلى الرواتب في السوق</li><li><strong>🎨 إبداع:</strong> تقدر تبني أي فكرة في دماغك</li><li><strong>🧠 تفكير:</strong> بتتعلم تحل المشاكل بطريقة منطقية</li></ul><p>💡 <strong>مهم:</strong> الموهبة مش شرط، الممارسة هي الأهم. كل يوم 30 دقيقة تكفي.</p>";
+  Py.units[1].lessons[0].content = "<p>الكود = <strong>أوامر</strong> مكتوبة بلغة الكمبيوتر يفهمها وينفذها.</p><p>زي ما بنكتب جملة بالعربي، بنكتب جملة بلغة البرمجة.</p><p>مثال: عايز تقول للكمبيوتر \"اطبع كلمة أهلاً\":</p><code style='display:block;background:#1E293B;color:#86EFAC;padding:10px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;'>print(\"أهلاً\")</code><p>💡 <strong>نصيحة:</strong> كل أمر في سطر منفصل، والكمبيوتر بينفذهم بالترتيب من فوق لتحت.</p>";
+  Py.units[1].lessons[1].content = "<p>الكمبيوتر مش ساحر، بيشتغل بخطوات:</p><ol style='padding-right:20px;line-height:2;'><li><strong>📖 يقرأ:</strong> يقرأ السطر الأول من الكود</li><li><strong>🤔 يفهم:</strong> يترجمه للغة الآلة (0 و 1)</li><li><strong>⚙️ ينفذ:</strong> يعمل اللي مكتوب بالظبط</li><li><strong>➡️ ينتقل:</strong> للسطر اللي بعده</li></ol><p>لو لقى أمر مش مفهوم، بيوقف ويطلعلك <strong>خطأ (Error)</strong>.</p><p>💡 <strong>نصيحة:</strong> لما تلاقي خطأ متخافش، ده عادي جداً. اقرأ الرسالة وشوف السطر اللي فيه المشكلة.</p>";
+  Py.units[2].lessons[0].content = "<p>فيه نوعين من لغات البرمجة:</p><ul style='padding-right:20px;line-height:2;'><li><strong>لغات عالية المستوى:</strong> قريبة من لغة البشر، سهلة التعلم زي <em>Python, JavaScript</em>. بتحتاج مترجم يحولها لآلة.</li><li><strong>لغات منخفضة المستوى:</strong> قريبة من لغة الآلة (0 و 1)، صعبة التعلم زي <em>Assembly</em>. بس أسرع في التنفيذ.</li></ul><p>💡 <strong>للمبتدئين:</strong> ابدأ بلغة عالية المستوى زي بايثون، وبعدين لما تتقدم تقدر تتعلم اللغات الصعبة.</p>";
+  Py.units[2].lessons[1].content = "<p>بايثون (Python) لغة برمجة قوية وسهلة، اسمها جاي من فرقة كوميدية مشهورة.</p><p>ليه بايثون الأفضل للمبتدئين؟</p><ul style='padding-right:20px;line-height:2;'><li>✅ <strong>سهلة القراءة:</strong> كودها شبه الإنجليزي العادي</li><li>✅ <strong>كتير بتستخدم في:</strong> الذكاء الاصطناعي، تحليل البيانات، المواقع، الأتمتة</li><li>✅ <strong>مجتمع ضخم:</strong> أي مشكلة تلاقي حل ليها</li><li>✅ <strong>مطلوبة في السوق:</strong> شركات كتير بتدوّر عليها</li></ul><p>💡 <strong>نصيحة:</strong> متحاولش تتعلم كل حاجة مرة واحدة، ركز على الأساسيات الأول.</p>";
+  Py.units[3].lessons[0].content = "<p>فيه طريقتين لترجمة الكود:</p><ul style='padding-right:20px;line-height:2;'><li><strong>Compiler (مترجم):</strong> يترجم الكود <em>كله مرة واحدة</em> قبل التشغيل. لو فيه خطأ، مش هيشتغل خالص.</li><li><strong>Interpreter (مفسّر):</strong> يقرأ الكود <em>سطر سطر</em> وينفذ. لو فيه خطأ، هيتوقف عنده بس اللي قبله اشتغل.</li></ul><p><strong>Python</strong> بتستخدم <em>Interpreter</em>، عشان كده سهلة في التجربة والتعلم.</p><p>💡 <strong>نصيحة:</strong> عشان تشتغل Python، لازم تكون منزل عندك <strong>Python Interpreter</strong>.</p>";
+  Py.units[3].lessons[1].content = "<p>خطوات تشغيل كود بايثون:</p><ol style='padding-right:20px;line-height:2;'><li>بتكتب الكود في ملف اسمه <code>example.py</code> (امتداد <strong>.py</strong>)</li><li>بتشغل الملف، الـ Interpreter بيقرأه</li><li>بيترجم كل سطر للغة الآلة</li><li>الكمبيوتر ينفذه ويطلعلك النتيجة</li></ol><p>💡 <strong>نصيحة:</strong> سيب ملفاتك منظمة في مجلد واحد، وسهّل على نفسك بالتعليقات.</p>";
+  Py.units[4].lessons[0].content = "<p><strong>print()</strong> هي أول دالة هتتعلمها، وظيفتها تطبع حاجة على الشاشة.</p><p>أمثلة:</p><ul style='padding-right:20px;line-height:2;'><li><code>print(\"أهلاً\")</code> → تطبع: أهلاً</li><li><code>print(100)</code> → تطبع: 100</li><li><code>print(5+3)</code> → تطبع: 8</li><li><code>print(\"العمر:\", 25)</code> → تطبع: العمر: 25</li></ul><p>💡 <strong>مهم:</strong> النص لازم يكون جوه علامات تنصيص <code>\" \"</code>، أما الأرقام عادي.</p>";
+  Py.units[4].lessons[1].content = "<p>دلوقتي دورك تجرب بنفسك!</p><p>جرب تكتب الكود ده وشغّله:</p><code style='display:block;background:#1E293B;color:#86EFAC;padding:10px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;'>print(\"اسمك\")</code><p>وبعدين جرب تغير النص لحاجة تانية زي:</p><ul style='padding-right:20px;line-height:2;'><li><code>print(\"أنا بتعلم بايثون\")</code></li><li><code>print(\"عمري 15 سنة\")</code></li><li><code>print(2026 - 2010)</code></li></ul><p>💡 <strong>نصيحة:</strong> أحسن طريقة للتعلم هي <strong>التجربة</strong>. متخافش من الأخطاء.</p>";
+  var Js = COURSES.javascript.levels[0];
+  Js.units[0].lessons[0].content = "<p>JavaScript (اختصارها JS) هي لغة البرمجة اللي بتشتغل في <strong>المتصفح</strong>.</p><p>أي حاجة بتشوفها بتتحرك في أي موقع (زي الأزرار اللي بتتفاعل معاها، الإشعارات، القوائم المنسدلة)، وراها JavaScript.</p><p>مميزاتها:</p><ul style='padding-right:20px;line-height:2;'><li>✅ بتشتغل على طول في المتصفح (مش محتاجة تنزيل برامج)</li><li>✅ سهلة المبتدئين</li><li>✅ بتستخدم في المواقع والتطبيقات</li></ul><p>💡 <strong>نصيحة:</strong> اتعلمها بعد ما تخلص أساسيات HTML و CSS، أو معاهم في نفس الوقت.</p>";
+  Js.units[0].lessons[1].content = "<p>ليه JavaScript مهمة؟</p><ul style='padding-right:20px;line-height:2;'><li><strong>🌐 المواقع:</strong> أي موقع تفاعلي بيستخدمها (كل مواقع العالم)</li><li><strong>📱 التطبيقات:</strong> بتقدر تبني تطبيقات موبايل بـ React Native</li><li><strong>🖥️ السيرفرات:</strong> بـ Node.js بتشتغل على السيرفر</li><li><strong>🎮 الألعاب:</strong> ألعاب المتصفح بسيطة</li></ul><p>💡 <strong>معلومة:</strong> JavaScript هي <strong>أكتر لغة برمجة مستخدمة في العالم</strong>.</p>";
+  Js.units[1].lessons[0].content = "<p>فين بتكتب كود JavaScript؟ في أي مكانين:</p><ul style='padding-right:20px;line-height:2;'><li><strong>1. Console المتصفح:</strong> أي متصفح فيه Developer Tools، اضغط <code>F12</code> واختار <strong>Console</strong>، واكتب أي كود JS وهيشتغل فوراً</li><li><strong>2. ملف .html:</strong> بتكتب الكود جوه وسم <code>&lt;script&gt;</code></li></ul><p>💡 <strong>للمبتدئين:</strong> ابدأ بالـ Console، لأنه أسرع طريقة للتجربة.</p>";
+  Js.units[1].lessons[1].content = "<p><strong>Node.js</strong> بيسيبك تشغل JavaScript بره المتصفح (على السيرفر).</p><p>الفرق:</p><ul style='padding-right:20px;line-height:2;'><li><strong>JavaScript:</strong> في المتصفح، بيتعامل مع الصفحة</li><li><strong>Node.js:</strong> على السيرفر، بيتعامل مع الملفات وقواعد البيانات</li></ul><p>💡 <strong>معلومة:</strong> Node.js خلت JavaScript تنافس اللغات التانية زي Python و Java في مجالات كتير.</p>";
+  Js.units[2].lessons[0].content = "<p><strong>console.log()</strong> هي أداة الطباعة في JavaScript.</p><p>أمثلة:</p><ul style='padding-right:20px;line-height:2;'><li><code>console.log(\"أهلاً\")</code> → تطبع: أهلاً</li><li><code>console.log(100)</code> → تطبع: 100</li><li><code>console.log(5+3)</code> → تطبع: 8</li></ul><p>💡 <strong>الفكرة:</strong> console.log هي زي print في بايثون، بترجعلك إنت اللي بتشوف النتيجة.</p>";
+  Js.units[2].lessons[1].content = "<p>في JavaScript، كل سطر كود لازم ينتهي بـ <strong>فاصلة منقوطة <code>;</code></strong>.</p><p>أمثلة:</p><ul style='padding-right:20px;line-height:2;'><li><code>let x = 5;</code></li><li><code>console.log(x);</code></li></ul><p>💡 <strong>نصيحة:</strong> نسيان الفاصلة المنقوطة ممكن يسبب أخطاء صعبة تكتشفها. خلي عادة عندك تحطها على طول.</p>";
+})();
+</script>
+  
 window.addEventListener('load', function() { App.init(); });
 if (window.matchMedia) {
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
