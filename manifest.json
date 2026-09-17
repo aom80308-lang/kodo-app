@@ -1,0 +1,13 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "aom80308-lang.github",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Kodo",
+  "start_url": "/",
+  "theme_color": "#3b82f6",
+  "id": "com.aom80308.kodo",
+  "description": "تطبيق Kodo لتعليم البرمجة (بايثون وجافاسكريبت) بالعربي"
+}
