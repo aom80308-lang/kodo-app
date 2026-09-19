@@ -3646,5 +3646,37 @@ if (window.matchMedia) {
   };
 })();
 </script>
+  <style>
+.active-effect { display: none !important; }
+</style>
+<script>
+(function() {
+  var topbarStats = document.querySelector('#learning-path .topbar .stats');
+  if (topbarStats) {
+    var effectChip = document.createElement('div');
+    effectChip.className = 'stat';
+    effectChip.id = 'effect-chip';
+    effectChip.style.cssText = 'background: linear-gradient(135deg, #FBBF24, #F59E0B); color: #fff; display: none; font-size: 11px;';
+    effectChip.textContent = '⚡';
+    topbarStats.appendChild(effectChip);
+  }
+  var origUpdate = App.updateActiveEffectsBar;
+  App.updateActiveEffectsBar = function() {
+    origUpdate.call(this);
+    var chip = document.getElementById('effect-chip');
+    if (!chip) return;
+    var effects = [];
+    if (this.state._xpMultiplier && this.state._xpMultiplier > 1) effects.push('⚡×' + this.state._xpMultiplier);
+    if (this.state._gemsMultiplier && this.state._gemsMultiplier > 1) effects.push('💰×' + this.state._gemsMultiplier);
+    if (this.state.streakShield) effects.push('🛡️');
+    if (effects.length > 0) {
+      chip.textContent = effects.join(' ');
+      chip.style.display = 'flex';
+    } else {
+      chip.style.display = 'none';
+    }
+  };
+})();
+</script>
 </body>
 </html>
