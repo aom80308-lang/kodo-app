@@ -1346,4 +1346,84 @@ j5: {
     { question: "console.log بتشتغل فين؟", answers: ["Console", "Word", "Excel"], correct: 0 }
   ]
 },
+j6: {
+  chapters: [
+    { title: "الفاصلة ;", content: "<p>في JS، كل سطر بينتهي بـ <code>;</code>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let x = 5;<br>console.log(x);</div>" },
+    { title: "مش إلزامية لكن...", content: "<p>JS بتشتغل بدون <code>;</code>، بس أحسن تحطها:</p><ul style='padding-right:20px;line-height:2;'><li>تجنب أخطاء غريبة</li><li>الكود أنضف</li><li>سهل القراءة</li></ul>" },
+    { title: "المقارنة", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: مفيش <code>;</code></li><li>JS: <code>;</code> بعد كل سطر</li></ul>" },
+    { title: "أخطاء شائعة", content: "<div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let x = 5  ❌ (بدون ;)<br>let y = 10;</div>" },
+    { title: "نصيحة", content: "<p>💡 خلي عادة عندك تحط <code>;</code> بعد كل سطر. هتفرق كتير.</p>" }
+  ],
+  quizzes: [
+    { question: "كل سطر بينتهي بـ؟", answers: [";", ".", ","], correct: 0 },
+    { question: "الفاصلة إلزامية؟", answers: ["أيوة", "لأ بس أحسن", "مش بتحط"], correct: 1 },
+    { question: "في Python في ;؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "أحسن عادة؟", answers: ["تحط ;", "متحطهاش", "مش مهم"], correct: 0 },
+    { question: "let x = 5 بـ ;؟", answers: ["أيوة", "لأ", "مش مهم"], correct: 0 }
+  ]
+},
+j7: {
+  chapters: [
+    { title: "let إيه؟", content: "<p><code>let</code> بتعرف متغير قابل للتغيير:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let x = 5;<br>x = 10;<br>console.log(x);  // 10</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>x = 5</code></li><li>JS: <code>let x = 5;</code></li></ul>" },
+    { title: "بدون let", content: "<p>لو مش حطيت <code>let</code>، المتغير بيبقى global:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>y = 5;  // global<br>let z = 5;  // محلي (أفضل)</div>" },
+    { title: "let vs var", content: "<p>قبل 2015 كان في <code>var</code> بس. <code>let</code> أحسن:</p><ul style='padding-right:20px;line-height:2;'><li>نطاق محدود</li><li>مش بيسمح بإعادة التعريف</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 استخدم <code>let</code> دايماً. <code>var</code> قديمة.</p>" }
+  ],
+  quizzes: [
+    { question: "let بتعمل إيه؟", answers: ["تعرف متغير", "تحذف", "تطبع"], correct: 0 },
+    { question: "let x = 5; x = 10; = ؟", answers: ["5", "10", "خطأ"], correct: 1 },
+    { question: "الفرق من Python؟", answers: ["let قبل الاسم", "مفيش فرق", "var أفضل"], correct: 0 },
+    { question: "var قديمة؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "الأفضل؟", answers: ["let", "var", "const"], correct: 0 }
+  ]
+},
+j8: {
+  chapters: [
+    { title: "const إيه؟", content: "<p><code>const</code> بتعرف ثابت (مش بيتغير):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>const PI = 3.14;<br>console.log(PI);</div>" },
+    { title: "محاولة التغيير", content: "<div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>const PI = 3.14;<br>PI = 3.15;  ❌ TypeError</div>" },
+    { title: "متى تستخدمها؟", content: "<ul style='padding-right:20px;line-height:2;'><li>القيم اللي مش بتتغير</li><li>الـ config</li><li>الدوال الثابتة</li></ul>" },
+    { title: "let vs const", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>let</strong>: بتتغير</li><li><strong>const</strong>: ثابتة</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 استخدم <code>const</code> افتراضياً، و <code>let</code> بس لما تحتاج تغيير.</p>" }
+  ],
+  quizzes: [
+    { question: "const بتعمل إيه؟", answers: ["ثابت", "متغير", "دالة"], correct: 0 },
+    { question: "const PI = 3.14; PI = 3.15; = ؟", answers: ["تشتغل", "خطأ", "تتجاهل"], correct: 1 },
+    { question: "الأفضل نبدأ بـ؟", answers: ["const", "var", "let"], correct: 0 },
+    { question: "const بتستخدم في؟", answers: ["القيم الثابتة", "الحذف", "الطباعة"], correct: 0 },
+    { question: "الفرق من let؟", answers: ["مش بتتغير", "أسرع", "أقصر"], correct: 0 }
+  ]
+},
+j9: {
+  chapters: [
+    { title: "camelCase إيه؟", content: "<p>أسلوب تسمية في JS: أول كلمة صغيرة، والباقي أول حرف كبير:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let firstName = \"أحمد\";<br>let userAge = 25;<br>let totalPrice = 100;</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>first_name</code></li><li>JS: <code>firstName</code></li></ul>" },
+    { title: "أمثلة غلط", content: "<div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>first_name = \"أ\"  ❌ (snake_case)<br>FirstName = \"أ\"  ❌ (PascalCase للكلاسات)</div>" },
+    { title: "قواعد التسمية", content: "<ul style='padding-right:20px;line-height:2;'><li>يبدأ بحرف أو _ أو $</li><li>مفيش مسافات</li><li>حساس لحالة الأحرف</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 اسم متغير واضح يفرق كتير. <code>userAge</code> أحسن من <code>x</code>.</p>" }
+  ],
+  quizzes: [
+    { question: "camelCase أمثلة؟", answers: ["firstName", "first_name", "FirstName"], correct: 0 },
+    { question: "في Python نستخدم؟", answers: ["snake_case", "camelCase", "PascalCase"], correct: 0 },
+    { question: "المتغير يبدأ بـ؟", answers: ["حرف", "رقم", "رمز خاص"], correct: 0 },
+    { question: "name و Name نفس الحاجة؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "أحسن اسم؟", answers: ["userAge", "x", "u"], correct: 0 }
+  ]
+},
+j10: {
+  chapters: [
+    { title: "Number", content: "<p>أرقام في JS (مفيش فرق بين int و float):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let x = 5;<br>let y = 3.14;<br>console.log(typeof x);  // number</div>" },
+    { title: "String", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let name = \"أحمد\";<br>let greeting = 'أهلاً';<br>console.log(typeof name);  // string</div>" },
+    { title: "typeof", content: "<p><code>typeof</code> بترجع نوع القيمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>typeof 5       // \"number\"<br>typeof \"نص\"    // \"string\"<br>typeof true    // \"boolean\"</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: int, float, str</li><li>JS: number, string, boolean</li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let age = 25;<br>let name = \"أحمد\";<br>console.log(typeof age);<br>console.log(typeof name);</div>" }
+  ],
+  quizzes: [
+    { question: "typeof 5 = ؟", answers: ["number", "int", "float"], correct: 0 },
+    { question: "typeof \"نص\" = ؟", answers: ["string", "text", "char"], correct: 0 },
+    { question: "JS فيها int و float؟", answers: ["أيوة", "لأ كلها number", "أحياناً"], correct: 1 },
+    { question: "النصوص بـ؟", answers: ["\" \" أو ' '", "بدون تنصيص", "[ ]"], correct: 0 },
+    { question: "typeof true = ؟", answers: ["boolean", "bool", "int"], correct: 0 }
+  ]
+},
 };
