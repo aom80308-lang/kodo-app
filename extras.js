@@ -1586,4 +1586,84 @@ j20: {
     { question: "else لازم قبلها؟", answers: ["if", "else if", "for"], correct: 0 }
   ]
 },
+j21: {
+  chapters: [
+    { title: "switch إيه؟", content: "<p>بديل لـ if/else لما يكون عندك قيم محددة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let day = 1;<br>switch (day) {<br>    case 1:<br>        console.log(\"سبت\");<br>        break;<br>    case 2:<br>        console.log(\"حد\");<br>        break;<br>    default:<br>        console.log(\"يوم تاني\");<br>}</div>" },
+    { title: "break مهمة", content: "<p>بدون <code>break</code>، الكود هيكمل للحالات التالية:</p><div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>case 1: console.log(\"سبت\");<br>case 2: console.log(\"حد\");  // هيتنفذ برضه</div>" },
+    { title: "default", content: "<p>زي else، لما مفيش حالة تتطابق:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>default:<br>    console.log(\"مش معروف\");</div>" },
+    { title: "متى تستخدم switch؟", content: "<ul style='padding-right:20px;line-height:2;'><li>قيم محددة (مش مدى)</li><li>حالات كتير</li><li>أوضح من if/else</li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let color = \"red\";<br>switch (color) {<br>    case \"red\": console.log(\"أحمر\"); break;<br>    case \"blue\": console.log(\"أزرق\"); break;<br>    default: console.log(\"لون تاني\");<br>}</div>" }
+  ],
+  quizzes: [
+    { question: "switch بديل لـ؟", answers: ["if/else", "for", "while"], correct: 0 },
+    { question: "break بتعمل إيه؟", answers: ["توقف الحالة", "تطبع", "تحذف"], correct: 0 },
+    { question: "default زي؟", answers: ["else", "if", "for"], correct: 0 },
+    { question: "بدون break؟", answers: ["يكمل للحالات التالية", "يوقف", "خطأ"], correct: 0 },
+    { question: "switch مع؟", answers: ["قيم محددة", "مدى", "عشوائي"], correct: 0 }
+  ]
+},
+j22: {
+  chapters: [
+    { title: "for إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for (let i = 0; i &lt; 3; i++) {<br>    console.log(i);<br>}<br>// 0, 1, 2</div>" },
+    { title: "الأجزاء الثلاثة", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>i = 0</strong>: البداية</li><li><strong>i &lt; 3</strong>: الشرط</li><li><strong>i++</strong>: الزيادة</li></ul>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>for i in range(3):</code></li><li>JS: <code>for (let i=0; i&lt;3; i++)</code></li></ul>" },
+    { title: "for بدون عداد", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for (let i = 10; i &gt; 0; i--) {<br>    console.log(i);<br>}</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for (let i = 1; i &lt;= 5; i++) {<br>    console.log(\"عدد:\", i);<br>}</div>" }
+  ],
+  quizzes: [
+    { question: "for (let i=0; i<3; i++) بيطبع؟", answers: ["0,1,2", "1,2,3", "3"], correct: 0 },
+    { question: "i++ يعني؟", answers: ["زيادة 1", "نقصان 1", "ضرب"], correct: 0 },
+    { question: "i=0 بتعمل إيه؟", answers: ["البداية", "الشرط", "الزيادة"], correct: 0 },
+    { question: "i<3 إيه؟", answers: ["الشرط", "البداية", "الزيادة"], correct: 0 },
+    { question: "الفرق من Python؟", answers: ["أقواس و i++", "مفيش", "range"], correct: 0 }
+  ]
+},
+j23: {
+  chapters: [
+    { title: "for...of", content: "<p>للمرور على عناصر قائمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let fruits = [\"تفاح\", \"موز\", \"عنب\"];<br>for (let fruit of fruits) {<br>    console.log(fruit);<br>}</div>" },
+    { title: "مع النصوص", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for (let letter of \"abc\") {<br>    console.log(letter);<br>}</div>" },
+    { title: "الفرق من for العادي", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>for</strong>: بتحتاج عداد</li><li><strong>for...of</strong>: بسيطة للعناصر</li></ul>" },
+    { title: "for...in", content: "<p>للتنقل على خصائص object:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let person = {name: \"أحمد\", age: 25};<br>for (let key in person) {<br>    console.log(key, person[key]);<br>}</div>" },
+    { title: "نصيحة", content: "<p>💡 <code>for...of</code> للقوائم، <code>for...in</code> للـ objects.</p>" }
+  ],
+  quizzes: [
+    { question: "for...of بتعدي على؟", answers: ["عناصر", "فهارس", "أرقام"], correct: 0 },
+    { question: "for...in بتعدي على؟", answers: ["خصائص object", "أرقام", "عناصر"], correct: 0 },
+    { question: "for (let x of [1,2,3]) = ؟", answers: ["1,2,3", "0,1,2", "خطأ"], correct: 0 },
+    { question: "for...of مع النصوص؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "for...of أسهل من؟", answers: ["for العادي", "while", "if"], correct: 0 }
+  ]
+},
+j24: {
+  chapters: [
+    { title: "while إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let i = 0;<br>while (i &lt; 3) {<br>    console.log(i);<br>    i++;<br>}</div>" },
+    { title: "زي Python", content: "<p>نفس الفكرة بالظبط:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>while (condition) {<br>    // code<br>    // update<br>}</div>" },
+    { title: "خطر اللانهائي", content: "<p>لو نسيت تعدل الشرط:</p><div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>while (true) {<br>    console.log(\"أبدي\");  ❌<br>}</div>" },
+    { title: "مع break", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let count = 0;<br>while (true) {<br>    if (count &gt;= 3) break;<br>    console.log(count);<br>    count++;<br>}</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let n = 5;<br>while (n &gt; 0) {<br>    console.log(n);<br>    n--;<br>}</div>" }
+  ],
+  quizzes: [
+    { question: "while بتكرر إمتى؟", answers: ["لحد ما الشرط يبقى غلط", "مرة", "أبداً"], correct: 0 },
+    { question: "لازم تعدل؟", answers: ["الشرط", "لا حاجة", "المتغير بس"], correct: 0 },
+    { question: "while(true) بدون break؟", answers: ["لانهائي", "يوقف", "مرة"], correct: 0 },
+    { question: "break بتعمل إيه؟", answers: ["توقف", "تطبع", "تحذف"], correct: 0 },
+    { question: "i=0; while(i<3); i++ = ؟", answers: ["0,1,2", "1,2,3", "3"], correct: 0 }
+  ]
+},
+j25: {
+  chapters: [
+    { title: "break", content: "<p>توقف الحلقة فوراً:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for (let i = 0; i &lt; 5; i++) {<br>    if (i === 2) break;<br>    console.log(i);<br>}<br>// 0, 1</div>" },
+    { title: "continue", content: "<p>تتخطى الدورة الحالية:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for (let i = 0; i &lt; 5; i++) {<br>    if (i === 2) continue;<br>    console.log(i);<br>}<br>// 0, 1, 3, 4</div>" },
+    { title: "الفرق", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>break</strong>: توقف الحلقة</li><li><strong>continue</strong>: تخطى الدورة</li></ul>" },
+    { title: "مع nested loops", content: "<p>break توقف الحلقة اللي هي فيها بس:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for (let i = 0; i &lt; 3; i++) {<br>    for (let j = 0; j &lt; 3; j++) {<br>        if (j === 1) break;<br>        console.log(i, j);<br>    }<br>}</div>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>البحث عن قيمة</li><li>الخروج بناءً على شرط</li><li>تخطي قيم معينة</li></ul>" }
+  ],
+  quizzes: [
+    { question: "break بتعمل إيه؟", answers: ["توقف الحلقة", "تتخطى", "تطبع"], correct: 0 },
+    { question: "continue بتعمل إيه؟", answers: ["تتخطى دورة", "توقف", "تحذف"], correct: 0 },
+    { question: "for(i=0;i<5;i++) if(i==2) break = ؟", answers: ["0,1", "0,1,2", "0,1,3,4"], correct: 0 },
+    { question: "for(i=0;i<5;i++) if(i==2) continue = ؟", answers: ["0,1,3,4", "0,1", "لا شيء"], correct: 0 },
+    { question: "الفرق بينهم؟", answers: ["break توقف، continue تتخطى", "مفيش فرق", "الاتنين يوقفو"], correct: 0 }
+  ]
+},
 };
