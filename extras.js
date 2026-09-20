@@ -1666,4 +1666,84 @@ j25: {
     { question: "الفرق بينهم؟", answers: ["break توقف، continue تتخطى", "مفيش فرق", "الاتنين يوقفو"], correct: 0 }
   ]
 },
+j26: {
+  chapters: [
+    { title: "function إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function greet() {<br>    console.log(\"أهلاً\");<br>}<br><br>greet();  // أهلاً</div>" },
+    { title: "التركيب", content: "<ul style='padding-right:20px;line-height:2;'><li><code>function</code> — كلمة مفتاحية</li><li>اسم الدالة</li><li><code>( )</code> — الأقواس</li><li><code>{ }</code> — الكود</li></ul>" },
+    { title: "الاستدعاء", content: "<p>عشان تشغل الدالة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>greet();<br>greet();</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>def greet():</code></li><li>JS: <code>function greet() { }</code></li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function welcome() {<br>    console.log(\"=\" .repeat(20));<br>    console.log(\"أهلاً\");<br>    console.log(\"=\" .repeat(20));<br>}<br>welcome();</div>" }
+  ],
+  quizzes: [
+    { question: "function بتعمل إيه؟", answers: ["تعرف دالة", "تطبع", "تحفظ"], correct: 0 },
+    { question: "إزاي نستدعي دالة؟", answers: ["اسمها()", "call", "print"], correct: 0 },
+    { question: "في Python بـ؟", answers: ["def", "function", "fun"], correct: 0 },
+    { question: "الكود جوه الدالة بـ؟", answers: ["{ }", ":", "()"], correct: 0 },
+    { question: "function greet() { }، الاستدعاء؟", answers: ["greet()", "call greet", "greet"], correct: 0 }
+  ]
+},
+j27: {
+  chapters: [
+    { title: "parameters و return", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function add(a, b) {<br>    return a + b;<br>}<br><br>let result = add(3, 5);<br>console.log(result);  // 8</div>" },
+    { title: "بدون return", content: "<p>لو مش فيه return، الدالة بترجع undefined:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function f() {<br>    console.log(\"hi\");<br>}<br>console.log(f());  // undefined</div>" },
+    { title: "أكتر من return", content: "<p>أول return بتوقف الدالة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function f() {<br>    return 1;<br>    console.log(\"مش هيتنفذ\");<br>}</div>" },
+    { title: "الفرق من Python", content: "<p>نفس الفكرة بالظبط، بس الأقواس اللفظية مختلفة.</p>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function area(w, h) {<br>    return w * h;<br>}<br>console.log(area(5, 3));  // 15</div>" }
+  ],
+  quizzes: [
+    { question: "return بتعمل إيه؟", answers: ["ترجع قيمة", "تطبع", "تحفظ"], correct: 0 },
+    { question: "function add(a,b) { return a+b; } add(3,5) = ؟", answers: ["8", "3+5", "خطأ"], correct: 0 },
+    { question: "بدون return؟", answers: ["ترجع undefined", "خطأ", "صفر"], correct: 0 },
+    { question: "return بتوقف الدالة؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "الفرق من Python؟", answers: ["مفيش", "كبير", "مشابه"], correct: 0 }
+  ]
+},
+j28: {
+  chapters: [
+    { title: "Arrow Function", content: "<p>طريقة مختصرة لكتابة الدوال:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>const greet = () =&gt; {<br>    console.log(\"أهلاً\");<br>};<br>greet();</div>" },
+    { title: "سطر واحد", content: "<p>لو سطر واحد، مش محتاج <code>{ }</code> و <code>return</code>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>const sq = x =&gt; x * x;<br>console.log(sq(5));  // 25</div>" },
+    { title: "مع باراميترات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>const add = (a, b) =&gt; a + b;<br>console.log(add(3, 5));  // 8</div>" },
+    { title: "المقارنة", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>function</strong>: الطريقة الكلاسيكية</li><li><strong>arrow</strong>: أحدث وأقصر</li></ul>" },
+    { title: "متى تستخدمها؟", content: "<p>💡 Arrow Functions بقت شائعة جداً، خصوصاً في React و modern JS.</p>" }
+  ],
+  quizzes: [
+    { question: "Arrow Function بـ؟", answers: ["=>", "->", "=>"], correct: 0 },
+    { question: "const sq = x => x*x; sq(5) = ؟", answers: ["25", "5", "خطأ"], correct: 0 },
+    { question: "مختصرة عن؟", answers: ["function", "def", "class"], correct: 0 },
+    { question: "مع سطر واحد، return لازم؟", answers: ["لأ", "أيوة", "أحياناً"], correct: 0 },
+    { question: "الفرق من function؟", answers: ["أقصر", "أطول", "نفسها"], correct: 0 }
+  ]
+},
+j29: {
+  chapters: [
+    { title: "Arrays", content: "<p>قائمة عناصر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = [1, 2, 3];<br>console.log(a);<br>console.log(a[0]);  // 1</div>" },
+    { title: "mix", content: "<p>تقدر تحط أنواع مختلفة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let data = [25, \"أحمد\", true, null];</div>" },
+    { title: "length", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>[1,2,3].length  // 3</div>" },
+    { title: "الفهارس", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = [\"أ\", \"ب\", \"ج\"];<br>console.log(a[0]);   // أ<br>console.log(a[-1]);  // undefined<br>console.log(a[a.length - 1]);  // ج</div>" },
+    { title: "الفرق من Python", content: "<p>نفس الفكرة، بس Python عندها فهارس سلبية.</p>" }
+  ],
+  quizzes: [
+    { question: "Array بـ؟", answers: ["[ ]", "( )", "{ }"], correct: 0 },
+    { question: "[1,2,3][0] = ؟", answers: ["1", "0", "خطأ"], correct: 0 },
+    { question: "[1,2,3].length = ؟", answers: ["3", "2", "4"], correct: 0 },
+    { question: "الفهرس بيبدأ من؟", answers: ["0", "1", "-1"], correct: 0 },
+    { question: "آخر عنصر بـ؟", answers: ["a[a.length-1]", "a[-1]", "a.last"], correct: 0 }
+  ]
+},
+j30: {
+  chapters: [
+    { title: "push و pop", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = [1, 2];<br>a.push(3);      // [1, 2, 3]<br>a.pop();        // [1, 2]</div>" },
+    { title: "shift و unshift", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = [1, 2, 3];<br>a.shift();       // [2, 3] - حذف الأول<br>a.unshift(0);    // [0, 2, 3] - إضافة الأول</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>append/remove/pop</code></li><li>JS: <code>push/pop/shift/unshift</code></li></ul>" },
+    { title: "indexOf و includes", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>[1,2,3].indexOf(2)     // 1<br>[1,2,3].includes(2)    // true<br>[1,2,3].includes(5)    // false</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let cart = [];<br>cart.push(\"كتاب\");<br>cart.push(\"قلم\");<br>console.log(cart);  // [\"كتاب\", \"قلم\"]</div>" }
+  ],
+  quizzes: [
+    { question: "push بتعمل إيه؟", answers: ["تضيف في الآخر", "تحذف", "ترتب"], correct: 0 },
+    { question: "pop بتعمل إيه؟", answers: ["تحذف الآخر", "تضيف", "ترتب"], correct: 0 },
+    { question: "shift بتعمل إيه؟", answers: ["تحذف الأول", "تضيف", "ترتب"], correct: 0 },
+    { question: "[1,2,3].includes(2) = ؟", answers: ["true", "false", "2"], correct: 0 },
+    { question: "أضيف في الأول بـ؟", answers: ["unshift", "push", "pop"], correct: 0 }
+  ]
+},
 };
