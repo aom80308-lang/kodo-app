@@ -1266,4 +1266,84 @@ p77: {
     { question: "مبروك على إيه؟", answers: ["خلصت Python", "الحذف", "الطباعة"], correct: 0 }
   ]
 },
+j1: {
+  chapters: [
+    { title: "JS إيه؟", content: "<p>JavaScript (اختصارها JS) لغة برمجة بتشتغل في <strong>المتصفح</strong>.</p><p>أي حاجة بتتحرك في أي موقع، وراها JavaScript.</p>" },
+    { title: "ليه JS مهمة؟", content: "<ul style='padding-right:20px;line-height:2;'><li>🌐 كل المواقع بتستخدمها</li><li>📱 تقدر تبني تطبيقات موبايل</li><li>🖥️ بـ Node.js بتشتغل على السيرفر</li></ul>" },
+    { title: "JS vs Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: عامة، AI، بيانات</li><li>JavaScript: الويب والمتصفح</li></ul>" },
+    { title: "فين تكتب كود JS؟", content: "<ul style='padding-right:20px;line-height:2;'><li>في Console المتصفح (F12)</li><li>في ملف .html جوه script</li><li>في ملف .js خارجي</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 اتعلم JS بعد HTML و CSS عشان تفهم الصورة كاملة.</p>" }
+  ],
+  quizzes: [
+    { question: "JS بتشتغل فين؟", answers: ["المتصفح", "المطبخ", "التلفزيون"], correct: 0 },
+    { question: "JS بتستخدم في؟", answers: ["المواقع", "الطباعة", "النحت"], correct: 0 },
+    { question: "Node.js بتخلي JS تشتغل فين؟", answers: ["السيرفر", "الجو", "الطباعة"], correct: 0 },
+    { question: "الفرق بين JS و Python؟", answers: ["JS للويب", "مفيش فرق", "Python أسرع"], correct: 0 },
+    { question: "فين تكتب كود JS؟", answers: ["Console", "Word", "Excel"], correct: 0 }
+  ]
+},
+j2: {
+  chapters: [
+    { title: "ليه JavaScript؟", content: "<p>3 أسباب قوية:</p><ul style='padding-right:20px;line-height:2;'><li>🌐 لغة الويب الرسمية</li><li>💼 مطلوبة جداً في السوق</li><li>📱 تقدر تبني كل حاجة</li></ul>" },
+    { title: "أنواع التطبيقات", content: "<ul style='padding-right:20px;line-height:2;'><li>مواقع تفاعلية</li><li>تطبيقات موبايل (React Native)</li><li>سيرفرات (Node.js)</li><li>تطبيقات سطح مكتب</li></ul>" },
+    { title: "مكتبات شهيرة", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>React</strong> — واجهات</li><li><strong>Vue</strong> — واجهات</li><li><strong>Angular</strong> — تطبيقات كبيرة</li><li><strong>Node</strong> — سيرفرات</li></ul>" },
+    { title: "شركات بتستخدمها", content: "<ul style='padding-right:20px;line-height:2;'><li>🔵 Facebook</li><li>📷 Instagram</li><li>🎬 Netflix</li><li>🛒 Amazon</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 ابدأ بالأساسيات، وبعدين اتعلم مكتبة زي React.</p>" }
+  ],
+  quizzes: [
+    { question: "JS مطلوبة في السوق؟", answers: ["أيوة", "لأ", "نادرة"], correct: 0 },
+    { question: "React بتستخدم في؟", answers: ["واجهات", "قواعد بيانات", "طباعة"], correct: 0 },
+    { question: "Node.js بتستخدم في؟", answers: ["السيرفر", "المتصفح", "الطباعة"], correct: 0 },
+    { question: "شركة بتستخدم JS؟", answers: ["Facebook", "مطعم", "مغسلة"], correct: 0 },
+    { question: "نبدأ بإيه؟", answers: ["الأساسيات", "React", "Vue"], correct: 0 }
+  ]
+},
+j3: {
+  chapters: [
+    { title: "Console إيه؟", content: "<p>Console = مكان بتكتب فيه كود JS مباشرة في المتصفح.</p><p>افتحه بـ <code>F12</code> ← Console.</p>" },
+    { title: "إزاي تستخدمه؟", content: "<ol style='padding-right:20px;line-height:2;'><li>افتح Chrome/Firefox</li><li>اضغط F12</li><li>اختار Console</li><li>اكتب الكود</li><li>اضغط Enter</li></ol>" },
+    { title: "أول أمر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>console.log(\"أهلاً\")<br>// أهلاً</div>" },
+    { title: "أوامر سريعة", content: "<ul style='padding-right:20px;line-height:2;'><li><code>console.log()</code> — طباعة</li><li><code>console.error()</code> — خطأ</li><li><code>console.warn()</code> — تحذير</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 Console أسرع طريقة لتجربة أي كود JS.</p>" }
+  ],
+  quizzes: [
+    { question: "Console بنفتحه بـ؟", answers: ["F12", "Ctrl+P", "Alt+F4"], correct: 0 },
+    { question: "console.log بيعمل إيه؟", answers: ["يطبع", "يحفظ", "يحذف"], correct: 0 },
+    { question: "console.error بيعمل إيه؟", answers: ["خطأ", "طباعة", "حفظ"], correct: 0 },
+    { question: "Console موجود فين؟", answers: ["المتصفح", "الموبايل", "التلفزيون"], correct: 0 },
+    { question: "Console مفيد في؟", answers: ["التجربة", "الطباعة", "الحذف"], correct: 0 }
+  ]
+},
+j4: {
+  chapters: [
+    { title: "Node.js إيه؟", content: "<p>Node.js بتسييبك تشغل JavaScript <strong>بره المتصفح</strong> (على السيرفر).</p>" },
+    { title: "الفرق", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>JS في المتصفح</strong>: بتتعامل مع الصفحة</li><li><strong>Node.js</strong>: الملفات، قواعد البيانات، السيرفرات</li></ul>" },
+    { title: "استخدامات Node", content: "<ul style='padding-right:20px;line-height:2;'><li>🌐 سيرفرات المواقع</li><li>📡 APIs</li><li>🤖 أدوات سطر أوامر</li><li>📦 سيرفرات real-time</li></ul>" },
+    { title: "شركات بتستخدمها", content: "<ul style='padding-right:20px;line-height:2;'><li>Netflix</li><li>PayPal</li><li>Uber</li><li>LinkedIn</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 اتعلم JS في المتصفح الأول، بعدين Node.js.</p>" }
+  ],
+  quizzes: [
+    { question: "Node.js بتشغل JS فين؟", answers: ["السيرفر", "المتصفح", "الطباعة"], correct: 0 },
+    { question: "Node بتعمل إيه؟", answers: ["سيرفرات", "طباعة", "حذف"], correct: 0 },
+    { question: "شركة بتستخدم Node؟", answers: ["Netflix", "مطعم", "مغسلة"], correct: 0 },
+    { question: "نبدأ بإيه؟", answers: ["JS في المتصفح", "Node", "React"], correct: 0 },
+    { question: "Node بـ JS؟", answers: ["أيوة", "لأ", "لغة تانية"], correct: 0 }
+  ]
+},
+j5: {
+  chapters: [
+    { title: "console.log", content: "<p>أول أمر في JS:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>console.log(\"أهلاً\")<br>// أهلاً</div>" },
+    { title: "مع أرقام", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>console.log(100)<br>console.log(5 + 3)   // 8<br>console.log(6 * 7)   // 42</div>" },
+    { title: "مقارنة بـ Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>print()</code></li><li>JS: <code>console.log()</code></li></ul>" },
+    { title: "أكتر من قيمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>console.log(\"العمر:\", 25)<br>// العمر: 25</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>console.log(\"اسمي أحمد\")<br>console.log(\"عمري 25 سنة\")</div>" }
+  ],
+  quizzes: [
+    { question: "console.log بتعمل إيه؟", answers: ["تطبع", "تحفظ", "تحذف"], correct: 0 },
+    { question: "البديل في Python؟", answers: ["print", "say", "echo"], correct: 0 },
+    { question: "console.log(5+3) = ؟", answers: ["8", "53", "خطأ"], correct: 0 },
+    { question: "أكتر من قيمة بـ؟", answers: ["فاصلة", "نقطة", "نجمة"], correct: 0 },
+    { question: "console.log بتشتغل فين؟", answers: ["Console", "Word", "Excel"], correct: 0 }
+  ]
+},
 };
