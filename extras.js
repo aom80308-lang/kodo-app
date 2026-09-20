@@ -1042,4 +1042,84 @@ p63: {
     { question: "أحسن من؟", answers: ["for + append", "print", "del"], correct: 0 }
   ]
 },
+p64: {
+  chapters: [
+    { title: "مع شرط", content: "<p>بتقدر تحط شرط جوه الـ Comprehension:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>even = [x for x in range(10) if x % 2 == 0]<br>print(even)  # [0, 2, 4, 6, 8]</div>" },
+    { title: "التركيب", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>[التعبير for المتغير in السلسلة if الشرط]</div>" },
+    { title: "أمثلة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>pos = [x for x in [-1, 2, -3, 4] if x &gt; 0]<br># [2, 4]<br>long = [w for w in words if len(w) &gt; 3]</div>" },
+    { title: "المقارنة", content: "<p>بدون Comprehension:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>even = []<br>for x in range(10):<br>    if x % 2 == 0:<br>        even.append(x)</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>names = [\"أحمد\", \"علي\", \"محمود\", \"سارة\"]<br>long = [n for n in names if len(n) &gt; 3]<br>print(long)  # ['أحمد', 'محمود']</div>" }
+  ],
+  quizzes: [
+    { question: "Comprehension مع شرط؟", answers: ["بتفلتر", "تحذف", "ترتب"], correct: 0 },
+    { question: "[x for x in range(5) if x%2==0] = ؟", answers: ["[0,2,4]", "[1,3]", "[0,1,2,3,4]"], correct: 0 },
+    { question: "بديلها إيه؟", answers: ["for+if", "while", "def"], correct: 0 },
+    { question: "الشرط بيجي بعد؟", answers: ["for", "if", "in"], correct: 0 },
+    { question: "[x for x in [1,2,3] if x>1] = ؟", answers: ["[2,3]", "[1,2,3]", "[1]"], correct: 0 }
+  ]
+},
+p65: {
+  chapters: [
+    { title: "import إيه؟", content: "<p><code>import</code> بتستورد وحدة (module):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>import math<br>print(math.sqrt(9))  # 3.0</div>" },
+    { title: "طريقة تانية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>from math import sqrt<br>print(sqrt(9))  # 3.0</div>" },
+    { title: "مع اسم مختصر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>import math as m<br>print(m.sqrt(9))</div>" },
+    { title: "وحدات شهيرة", content: "<ul style='padding-right:20px;line-height:2;'><li><code>math</code> — العمليات الرياضية</li><li><code>random</code> — الأرقام العشوائية</li><li><code>datetime</code> — التواريخ والأوقات</li><li><code>os</code> — الملفات والنظام</li></ul>" },
+    { title: "وحدات جاهزة", content: "<p>Python فيها مكتبات كتير جاهزة. مش محتاج تكتب كل حاجة من الأول.</p>" }
+  ],
+  quizzes: [
+    { question: "import بتعمل إيه؟", answers: ["تستورد وحدة", "تطبع", "تحفظ"], correct: 0 },
+    { question: "math.sqrt(9) = ؟", answers: ["3.0", "81", "9"], correct: 0 },
+    { question: "import math as m بتعمل إيه؟", answers: ["اسم مختصر", "حذف", "طباعة"], correct: 0 },
+    { question: "أشهر وحدات؟", answers: ["math, random", "for, if", "list, dict"], correct: 0 },
+    { question: "من أين نستورد؟", answers: ["مكتبات بايثون", "الإنترنت", "الملفات"], correct: 0 }
+  ]
+},
+p66: {
+  chapters: [
+    { title: "random إيه؟", content: "<p><code>random</code> بترجع أرقام عشوائية:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>import random<br>print(random.randint(1, 6))  # رقم من 1 لـ 6</div>" },
+    { title: "دوال شائعة", content: "<ul style='padding-right:20px;line-height:2;'><li><code>randint(a,b)</code>: عدد صحيح من a لـ b</li><li><code>random()</code>: عدد عشري من 0 لـ 1</li><li><code>choice(list)</code>: عنصر عشوائي</li><li><code>shuffle(list)</code>: خلط القائمة</li></ul>" },
+    { title: "أمثلة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>import random<br>print(random.choice([\"أحمد\", \"علي\", \"سارة\"]))<br>cards = [1, 2, 3]<br>random.shuffle(cards)<br>print(cards)</div>" },
+    { title: "تطبيق", content: "<p>لعبة تخمين:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>import random<br>n = random.randint(1, 10)<br>guess = int(input(\"خمن: \"))<br>if guess == n:<br>    print(\"صح!\")<br>else:<br>    print(\"غلط، الرقم:\", n)</div>" },
+    { title: "نصيحة", content: "<p>💡 random مفيدة في الألعاب والاختبارات والبيانات العشوائية.</p>" }
+  ],
+  quizzes: [
+    { question: "random.randint(1,6) = ؟", answers: ["1 لـ 6", "0 لـ 6", "1 لـ 5"], correct: 0 },
+    { question: "random.choice بترجع؟", answers: ["عنصر عشوائي", "رقم", "نص"], correct: 0 },
+    { question: "random.shuffle بتعمل إيه؟", answers: ["تخلط القائمة", "ترتب", "تحذف"], correct: 0 },
+    { question: "random() بترجع؟", answers: ["0 لـ 1", "1 لـ 10", "أي رقم"], correct: 0 },
+    { question: "random مفيدة في؟", answers: ["الألعاب", "الطباعة", "الحذف"], correct: 0 }
+  ]
+},
+p67: {
+  chapters: [
+    { title: "open()", content: "<p><code>open()</code> بتفتح ملف:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>f = open(\"data.txt\")<br>content = f.read()<br>print(content)<br>f.close()</div>" },
+    { title: "with open", content: "<p>الطريقة الآمنة (بتقفل الملف تلقائياً):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>with open(\"data.txt\") as f:<br>    content = f.read()<br>    print(content)</div>" },
+    { title: "قراءة سطر سطر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>with open(\"data.txt\") as f:<br>    for line in f:<br>        print(line)</div>" },
+    { title: "readlines", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>with open(\"data.txt\") as f:<br>    lines = f.readlines()<br>    print(lines)</div>" },
+    { title: "مهم", content: "<p>💡 دايماً استخدم <code>with open</code> عشان تقفل الملف تلقائياً.</p>" }
+  ],
+  quizzes: [
+    { question: "open() بتعمل إيه؟", answers: ["تفتح ملف", "تطبع", "تحذف"], correct: 0 },
+    { question: "الطريقة الآمنة؟", answers: ["with open", "open", "close"], correct: 0 },
+    { question: "read() بترجع؟", answers: ["محتوى الملف", "حجم", "اسم"], correct: 0 },
+    { question: "f.close() بتعمل إيه؟", answers: ["تقفل الملف", "تحذف", "تفتح"], correct: 0 },
+    { question: "سطر سطر بـ؟", answers: ["for line in f", "read()", "print"], correct: 0 }
+  ]
+},
+p68: {
+  chapters: [
+    { title: "الكتابة في ملف", content: "<p>بـ <code>\"w\"</code> (write) تكتب ملف جديد:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>with open(\"data.txt\", \"w\") as f:<br>    f.write(\"مرحبا\")</div>" },
+    { title: "الإضافة", content: "<p>بـ <code>\"a\"</code> (append) تضيف للآخر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>with open(\"data.txt\", \"a\") as f:<br>    f.write(\"\\nسطر جديد\")</div>" },
+    { title: "الأوضاع", content: "<ul style='padding-right:20px;line-height:2;'><li><code>\"r\"</code>: قراءة</li><li><code>\"w\"</code>: كتابة (يمسح القديم)</li><li><code>\"a\"</code>: إضافة</li><li><code>\"r+\"</code>: قراءة وكتابة</li></ul>" },
+    { title: "كتابة أسطر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>with open(\"data.txt\", \"w\") as f:<br>    f.write(\"سطر 1\\n\")<br>    f.write(\"سطر 2\\n\")</div>" },
+    { title: "مهم", content: "<p>💡 <code>\"w\"</code> بتمسح المحتوى القديم، <code>\"a\"</code> بتضيف بدون مسح.</p>" }
+  ],
+  quizzes: [
+    { question: "الكتابة بـ؟", answers: ["w", "r", "a"], correct: 0 },
+    { question: "الإضافة بـ؟", answers: ["a", "w", "r"], correct: 0 },
+    { question: "\"w\" بتمسح القديم؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "بعد with open الملف؟", answers: ["بيقفل تلقائياً", "يفضل مفتوح", "يتمسح"], correct: 0 },
+    { question: "لكتابة سطر جديد؟", answers: ["\\n", "\\t", ";"], correct: 0 }
+  ]
+},
 };
