@@ -402,4 +402,84 @@ p23: {
     { question: "x=10; y=5; x-y = ؟", answers: ["15", "5", "-5"], correct: 1 }
   ]
 },
+p24: {
+  chapters: [
+    { title: "الضرب", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(6 * 7)    # 42<br>print(5 * 4)    # 20</div>" },
+    { title: "القسمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(10 / 2)   # 5.0<br>print(7 / 2)    # 3.5</div><p>💡 النتيجة دايماً float.</p>" },
+    { title: "الترتيب", content: "<p>الضرب والقسمة قبل الجمع والطرح:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(2 + 3 * 4)  # 14<br>print((2 + 3) * 4) # 20</div>" },
+    { title: "الأقواس", content: "<ul style='padding-right:20px;line-height:2;'><li><code>2 + 3 * 4</code> = 14</li><li><code>(2 + 3) * 4</code> = 20</li></ul><p>💡 الأقواس أولاً.</p>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>price = 25<br>qty = 4<br>total = price * qty<br>print(\"الإجمالي:\", total)</div>" }
+  ],
+  quizzes: [
+    { question: "6 * 7 = ؟", answers: ["42", "13", "67"], correct: 0 },
+    { question: "7 / 2 = ؟", answers: ["3", "3.5", "4"], correct: 1 },
+    { question: "2 + 3 * 4 = ؟", answers: ["20", "14", "24"], correct: 1 },
+    { question: "(2 + 3) * 4 = ؟", answers: ["14", "20", "24"], correct: 1 },
+    { question: "الأقواس بتعمل إيه؟", answers: ["تغير الترتيب", "تحذف", "تطبع"], correct: 0 }
+  ]
+},
+p25: {
+  chapters: [
+    { title: "القسمة الصحيحة //", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(10 // 3)   # 3<br>print(7 // 2)    # 3</div>" },
+    { title: "الباقي %", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(10 % 3)   # 1<br>print(8 % 2)    # 0</div>" },
+    { title: "الفرق", content: "<ul style='padding-right:20px;line-height:2;'><li><code>/</code> — قسمة عادية</li><li><code>//</code> — قسمة صحيحة</li><li><code>%</code> — باقي القسمة</li></ul>" },
+    { title: "استخدامات %", content: "<p>معرفة زوجي/فردي:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(10 % 2)   # 0 (زوجي)<br>print(7 % 2)    # 1 (فردي)</div>" },
+    { title: "نصيحة", content: "<p>💡 لو <code>x % 2 == 0</code> يبقى زوجي.</p>" }
+  ],
+  quizzes: [
+    { question: "10 // 3 = ؟", answers: ["3", "3.33", "1"], correct: 0 },
+    { question: "10 % 3 = ؟", answers: ["3", "1", "0"], correct: 1 },
+    { question: "8 % 2 = ؟", answers: ["0", "4", "2"], correct: 0 },
+    { question: "5 % 2 = ؟", answers: ["2.5", "1", "0"], correct: 1 },
+    { question: "% بتساعد في معرفة؟", answers: ["الزوجي والفردي", "الطباعة", "الحذف"], correct: 0 }
+  ]
+},
+p26: {
+  chapters: [
+    { title: "الأس **", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(2 ** 3)    # 8<br>print(5 ** 2)    # 25</div>" },
+    { title: "الأس في الرياضيات", content: "<ul style='padding-right:20px;line-height:2;'><li>2 ** 3 = 2 × 2 × 2 = 8</li><li>5 ** 2 = 5 × 5 = 25</li></ul>" },
+    { title: "الجذر التربيعي", content: "<p>الأس <code>** 0.5</code>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(9 ** 0.5)   # 3.0<br>print(16 ** 0.5)  # 4.0</div>" },
+    { title: "ترتيب الأولوية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(2 ** 3 + 1)   # 9<br>print((2 + 1) ** 2) # 9</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>side = 5<br>area = side ** 2<br>print(\"المساحة:\", area)</div>" }
+  ],
+  quizzes: [
+    { question: "2 ** 3 = ؟", answers: ["6", "8", "23"], correct: 1 },
+    { question: "5 ** 2 = ؟", answers: ["10", "25", "7"], correct: 1 },
+    { question: "9 ** 0.5 = ؟", answers: ["4.5", "3.0", "81"], correct: 1 },
+    { question: "2 ** 3 + 1 = ؟", answers: ["9", "16", "7"], correct: 0 },
+    { question: "الأس قبل؟", answers: ["الجمع", "الضرب", "كل العمليات"], correct: 2 }
+  ]
+},
+p27: {
+  chapters: [
+    { title: "دمج النصوص +", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"أهلاً\" + \" \" + \"بيك\")</div>" },
+    { title: "مش مع الأرقام", content: "<div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"العمر: \" + 25)   ❌</div><p>الصح:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"العمر: \" + str(25))  ✅</div>" },
+    { title: "طريقة تانية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"العمر:\", 25)  ✅</div>" },
+    { title: "تكرار النص *", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"ها \" * 3)  # ها ها ها</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = \"أحمد\"<br>print(\"أهلاً \" + name)<br>print(\"=\" * 20)</div>" }
+  ],
+  quizzes: [
+    { question: "دمج نصوص بـ؟", answers: ["+", "*", "%"], correct: 0 },
+    { question: "دمج نص ورقم بـ + يشتغل؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "str(25) بتعمل إيه؟", answers: ["تحول لرقم", "تحول لنص", "تحذف"], correct: 1 },
+    { question: "\"ها \" * 3 = ؟", answers: ["هاهاها", "ها ها ها", "3"], correct: 1 },
+    { question: "الطريقة الأسهل لدمج نص ورقم؟", answers: ["+", "فاصلة", "*"], correct: 1 }
+  ]
+},
+p28: {
+  chapters: [
+    { title: "len() إيه؟", content: "<p><code>len()</code> بترجع طول النص:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(len(\"أهلاً\"))     # 5<br>print(len(\"hello\"))     # 5</div>" },
+    { title: "مع المسافات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(len(\"a b c\"))  # 5</div>" },
+    { title: "مع المتغيرات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = \"أحمد\"<br>print(len(name))  # 4</div>" },
+    { title: "مع القوائم", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>nums = [1, 2, 3, 4]<br>print(len(nums))  # 4</div>" },
+    { title: "استخدامات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>password = \"abc123\"<br>if len(password) &lt; 8:<br>    print(\"كلمة السر قصيرة\")</div>" }
+  ],
+  quizzes: [
+    { question: "len(\"أهلاً\") = ؟", answers: ["4", "5", "6"], correct: 1 },
+    { question: "len(\"hi\") = ؟", answers: ["2", "1", "3"], correct: 0 },
+    { question: "المسافات بتتحسب؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "len بتشتغل مع؟", answers: ["النصوص بس", "القوائم بس", "الاتنين"], correct: 2 },
+    { question: "len مفيدة في؟", answers: ["الحذف", "طول النص", "الحساب"], correct: 1 }
+  ]
+},
 };
