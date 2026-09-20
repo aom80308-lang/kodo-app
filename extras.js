@@ -1826,4 +1826,84 @@ j35: {
     { question: "الفرق من textContent؟", answers: ["innerHTML يفهم HTML", "مفيش", "أسرع"], correct: 0 }
   ]
 },
+j36: {
+  chapters: [
+    { title: "addEventListener", content: "<p>لإضافة حدث لعنصر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let btn = document.querySelector(\"button\");<br>btn.addEventListener(\"click\", function() {<br>    console.log(\"اتضغط\");<br>});</div>" },
+    { title: "أنواع الأحداث", content: "<ul style='padding-right:20px;line-height:2;'><li><code>click</code> — ضغط</li><li><code>change</code> — تغيير</li><li><code>input</code> — إدخال</li><li><code>submit</code> — إرسال</li><li><code>keydown</code> — ضغط مفتاح</li></ul>" },
+    { title: "مع Arrow", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>btn.addEventListener(\"click\", () =&gt; {<br>    console.log(\"اتضغط\");<br>});</div>" },
+    { title: "إزالة الحدث", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let handler = () =&gt; console.log(\"hi\");<br>btn.addEventListener(\"click\", handler);<br>btn.removeEventListener(\"click\", handler);</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let btn = document.querySelector(\"button\");<br>btn.addEventListener(\"click\", () =&gt; {<br>    btn.textContent = \"اتضغط!\";<br>});</div>" }
+  ],
+  quizzes: [
+    { question: "addEventListener بتعمل إيه؟", answers: ["تضيف حدث", "تحذف", "تطبع"], correct: 0 },
+    { question: "click إيه؟", answers: ["ضغط", "تغيير", "إدخال"], correct: 0 },
+    { question: "إزالة حدث بـ؟", answers: ["removeEventListener", "deleteEvent", "off"], correct: 0 },
+    { question: "submit بتشتغل مع؟", answers: ["النماذج", "الطباعة", "الألوان"], correct: 0 },
+    { question: "input بتشتغل عند؟", answers: ["الكتابة", "الحذف", "الضغط"], correct: 0 }
+  ]
+},
+j37: {
+  chapters: [
+    { title: "event object", content: "<p>الحدث بيبعت object فيه معلومات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>btn.addEventListener(\"click\", (e) =&gt; {<br>    console.log(e.target);  // العنصر<br>    console.log(e.type);    // \"click\"<br>});</div>" },
+    { title: "target", content: "<p><code>e.target</code> = العنصر اللي حصل عليه الحدث.</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>div.addEventListener(\"click\", (e) =&gt; {<br>    e.target.style.color = \"red\";<br>});</div>" },
+    { title: "value", content: "<p>لقراءة قيمة input:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>input.addEventListener(\"input\", (e) =&gt; {<br>    console.log(e.target.value);<br>});</div>" },
+    { title: "preventDefault", content: "<p>لمنع السلوك الافتراضي:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>form.addEventListener(\"submit\", (e) =&gt; {<br>    e.preventDefault();<br>    // ...<br>});</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let inp = document.querySelector(\"input\");<br>let out = document.querySelector(\"#out\");<br>inp.addEventListener(\"input\", (e) =&gt; {<br>    out.textContent = e.target.value;<br>});</div>" }
+  ],
+  quizzes: [
+    { question: "event target إيه؟", answers: ["العنصر", "القيمة", "النوع"], correct: 0 },
+    { question: "e.target.value بتجيب؟", answers: ["قيمة input", "العنصر", "النوع"], correct: 0 },
+    { question: "preventDefault بتعمل إيه؟", answers: ["تمنع السلوك الافتراضي", "تطبع", "تحذف"], correct: 0 },
+    { question: "e.type بترجع؟", answers: ["نوع الحدث", "العنصر", "القيمة"], correct: 0 },
+    { question: "مع input، e.target.value = ؟", answers: ["النص المكتوب", "العنصر", "خطأ"], correct: 0 }
+  ]
+},
+j38: {
+  chapters: [
+    { title: "let و const", content: "<p>بدل <code>var</code> القديمة، استخدم:</p><ul style='padding-right:20px;line-height:2;'><li><code>let</code> — متغير بيتغير</li><li><code>const</code> — ثابت</li></ul>" },
+    { title: "الفرق من var", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>var</strong>: نطاق أوسع، أخطاء أكتر</li><li><strong>let/const</strong>: نطاق الكتلة</li></ul>" },
+    { title: "مثال على النطاق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if (true) {<br>    let x = 5;<br>}<br>console.log(x);  // خطأ!<br><br>if (true) {<br>    var y = 5;<br>}<br>console.log(y);  // 5</div>" },
+    { title: "const مع Object", content: "<p>const مش معناها إن المحتوى ثابت:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>const person = {name: \"أحمد\"};<br>person.name = \"علي\";  // مسموح<br>person = {};  // خطأ</div>" },
+    { title: "نصيحة", content: "<p>💡 استخدم <code>const</code> دايماً، و <code>let</code> بس لما تحتاج تغيير.</p>" }
+  ],
+  quizzes: [
+    { question: "let و const بدل؟", answers: ["var", "def", "func"], correct: 0 },
+    { question: "const بمعنى؟", answers: ["ثابت", "متغير", "دالة"], correct: 0 },
+    { question: "let نطاقها؟", answers: ["الكتلة", "عام", "لا شيء"], correct: 0 },
+    { question: "const person = {}; person.name = 'x'; = ؟", answers: ["مسموح", "خطأ", "أحياناً"], correct: 0 },
+    { question: "var قديمة؟", answers: ["أيوة", "لأ", "أفضل"], correct: 0 }
+  ]
+},
+j39: {
+  chapters: [
+    { title: "Spread ...", content: "<p>تفرد عناصر array أو object:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = [1, 2, 3];<br>let b = [...a, 4, 5];<br>console.log(b);  // [1, 2, 3, 4, 5]</div>" },
+    { title: "مع object", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let p1 = {name: \"أحمد\"};<br>let p2 = {...p1, age: 25};<br>console.log(p2);</div>" },
+    { title: "نسخ array", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = [1, 2, 3];<br>let copy = [...a];<br>copy.push(4);<br>console.log(a);     // [1, 2, 3]<br>console.log(copy);  // [1, 2, 3, 4]</div>" },
+    { title: "دمج arrays", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = [1, 2];<br>let b = [3, 4];<br>let c = [...a, ...b];<br>console.log(c);  // [1, 2, 3, 4]</div>" },
+    { title: "نصيحة", content: "<p>💡 Spread أسهل من <code>concat</code> و <code>Object.assign</code>.</p>" }
+  ],
+  quizzes: [
+    { question: "Spread بـ؟", answers: ["...", "++", "--"], correct: 0 },
+    { question: "[...a, 4] بتعمل إيه؟", answers: ["تنسخ وتضيف", "تحذف", "ترتب"], correct: 0 },
+    { question: "[...a, ...b] بتعمل إيه؟", answers: ["دمج", "حذف", "ترتيب"], correct: 0 },
+    { question: "مع object بـ؟", answers: ["{...obj}", "[...obj]", "(...obj)"], correct: 0 },
+    { question: "Spread مع Arrays؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 }
+  ]
+},
+j40: {
+  chapters: [
+    { title: "Destructuring", content: "<p>تفكيك array أو object:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let [a, b] = [1, 2];<br>let {name, age} = {name: \"أحمد\", age: 25};<br>console.log(a, b, name, age);</div>" },
+    { title: "مع قيم افتراضية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let {name, age = 0} = {name: \"علي\"};<br>console.log(age);  // 0</div>" },
+    { title: "مع أسماء جديدة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let {name: userName} = {name: \"علي\"};<br>console.log(userName);  // علي</div>" },
+    { title: "تبديل قيم", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = 1, b = 2;<br>[a, b] = [b, a];<br>console.log(a, b);  // 2 1</div>" },
+    { title: "نصيحة", content: "<p>💡 Destructuring بتختصر كود كتير. مفيدة في الـ function parameters.</p>" }
+  ],
+  quizzes: [
+    { question: "Destructuring إيه؟", answers: ["تفكيك", "دمج", "حذف"], correct: 0 },
+    { question: "let [a,b] = [1,2]; a = ؟", answers: ["1", "[1,2]", "خطأ"], correct: 0 },
+    { question: "مع Object بـ؟", answers: ["{ }", "[ ]", "( )"], correct: 0 },
+    { question: "let {x: y} = {x:5}; y = ؟", answers: ["5", "x", "خطأ"], correct: 0 },
+    { question: "[a,b] = [b,a] بتعمل إيه؟", answers: ["تبديل", "حذف", "طباعة"], correct: 0 }
+  ]
+},
 };
