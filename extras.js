@@ -1122,4 +1122,148 @@ p68: {
     { question: "لكتابة سطر جديد؟", answers: ["\\n", "\\t", ";"], correct: 0 }
   ]
 },
+p69: {
+  chapters: [
+    { title: "try/except إيه؟", content: "<p>بنتعامل مع الأخطاء بدون ما البرنامج يوقف:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try:<br>    x = 1 / 0<br>except:<br>    print(\"مش هينفع القسمة على صفر\")</div>" },
+    { title: "النوع المحدد", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try:<br>    x = int(\"أحمد\")<br>except ValueError:<br>    print(\"ده مش رقم\")</div>" },
+    { title: "أكتر من except", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try:<br>    x = 1 / 0<br>except ValueError:<br>    print(\"قيمة غلط\")<br>except ZeroDivisionError:<br>    print(\"قسمة على صفر\")</div>" },
+    { title: "else و finally", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try:<br>    x = 10 / 2<br>except:<br>    print(\"خطأ\")<br>else:<br>    print(\"نجح\")<br>finally:<br>    print(\"دايماً\")</div>" },
+    { title: "ليه مفيدة؟", content: "<ul style='padding-right:20px;line-height:2;'><li>البرنامج مبيوقفش</li><li>تجربة أفضل للمستخدم</li><li>تقدر تتعامل مع الأخطاء</li></ul>" }
+  ],
+  quizzes: [
+    { question: "try/except بتعمل إيه؟", answers: ["تتعامل مع الأخطاء", "تحذف", "تطبع"], correct: 0 },
+    { question: "except ZeroDivisionError تعالج؟", answers: ["قسمة على صفر", "قيمة غلط", "أي خطأ"], correct: 0 },
+    { question: "finally بتتنفذ؟", answers: ["دايماً", "أبداً", "أحياناً"], correct: 0 },
+    { question: "else بتتنفذ لو؟", answers: ["الشرط غلط", "مفيش خطأ", "دايماً"], correct: 1 },
+    { question: "try/except مفيدة في؟", answers: ["تجنب توقف البرنامج", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
+p70: {
+  chapters: [
+    { title: "finally إيه؟", content: "<p>بتتنفذ <strong>دايماً</strong>، سواء حصل خطأ أو لأ:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try:<br>    print(1)<br>finally:<br>    print(2)</div><p>النتيجة: 1 ثم 2.</p>" },
+    { title: "مع خطأ", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try:<br>    x = 1 / 0<br>except:<br>    print(\"خطأ\")<br>finally:<br>    print(\"تم\")</div><p>النتيجة: خطأ ثم تم.</p>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>تقفيل ملف</li><li>تقفيل اتصال</li><li>تنظيف</li></ul>" },
+    { title: "مثال عملي", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>f = open(\"x.txt\", \"w\")<br>try:<br>    f.write(\"بيانات\")<br>finally:<br>    f.close()</div>" },
+    { title: "نصيحة", content: "<p>💡 استخدم finally للتنظيف اللي لازم يحصل مهما كانت النتيجة.</p>" }
+  ],
+  quizzes: [
+    { question: "finally بتتنفذ؟", answers: ["دايماً", "أبداً", "مع الخطأ بس"], correct: 0 },
+    { question: "finally بتستخدم في؟", answers: ["التنظيف", "الطباعة", "الحساب"], correct: 0 },
+    { question: "مع try مفيش خطأ، finally؟", answers: ["بتتنفذ", "مش بتتنفذ", "أحياناً"], correct: 0 },
+    { question: "finally لازم؟", answers: ["مع try", "لوحدها", "مع except"], correct: 0 },
+    { question: "مثال استخدامها؟", answers: ["تقفيل ملف", "طباعة", "حساب"], correct: 0 }
+  ]
+},
+p71: {
+  chapters: [
+    { title: "class إيه؟", content: "<p><code>class</code> = قالب لإنشاء كائنات (objects):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Dog:<br>    def bark(self):<br>        print(\"هوهو\")<br><br>d = Dog()<br>d.bark()  # هوهو</div>" },
+    { title: "الدوال جوه الـ class", content: "<p>لازم أول باراميتر يكون <code>self</code>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Cat:<br>    def meow(self):<br>        print(\"مياو\")<br><br>Cat().meow()</div>" },
+    { title: "إنشاء كائن", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Person:<br>    pass<br><br>p1 = Person()<br>p2 = Person()</div>" },
+    { title: "ليه الـ classes؟", content: "<ul style='padding-right:20px;line-height:2;'><li>تنظيم الكود</li><li>إعادة الاستخدام</li><li>تمثيل أشياء من الحياة</li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Car:<br>    def start(self):<br>        print(\"العربية اشتغلت\")<br><br>my_car = Car()<br>my_car.start()</div>" }
+  ],
+  quizzes: [
+    { question: "class إيه؟", answers: ["قالب للكائنات", "متغير", "دالة"], correct: 0 },
+    { question: "self إيه؟", answers: ["الكائن نفسه", "متغير عام", "دالة"], correct: 0 },
+    { question: "إزاي نعمل كائن؟", answers: ["Class()", "new", "var"], correct: 0 },
+    { question: "الدوال جوه class بتاخد؟", answers: ["self", "لا حاجة", "arg"], correct: 0 },
+    { question: "class مفيدة في؟", answers: ["تنظيم الكود", "الطباعة", "الحذف"], correct: 0 }
+  ]
+},
+p72: {
+  chapters: [
+    { title: "__init__ إيه؟", content: "<p><code>__init__</code> بتنفذ أول ما نعمل كائن جديد:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Person:<br>    def __init__(self, name):<br>        self.name = name<br><br>p = Person(\"علي\")<br>print(p.name)  # علي</div>" },
+    { title: "أكتر من باراميتر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Person:<br>    def __init__(self, name, age):<br>        self.name = name<br>        self.age = age<br><br>p = Person(\"أحمد\", 25)<br>print(p.name, p.age)</div>" },
+    { title: "self.name", content: "<p><code>self.name</code> = تخزين القيمة في الكائن.</p><p>كل كائن ليه نسخته الخاصة.</p>" },
+    { title: "مع دوال", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Person:<br>    def __init__(self, n):<br>        self.name = n<br>    def greet(self):<br>        print(\"أهلاً \" + self.name)<br><br>p = Person(\"علي\")<br>p.greet()</div>" },
+    { title: "نصيحة", content: "<p>💡 __init__ اختياري، بس مفيد لو عايز الكائن يبدأ بقيم معينة.</p>" }
+  ],
+  quizzes: [
+    { question: "__init__ بتتنفذ إمتى؟", answers: ["أول ما نعمل كائن", "بعد الدالة", "أبداً"], correct: 0 },
+    { question: "self.name بتعمل إيه؟", answers: ["تخزن القيمة في الكائن", "تحذف", "تطبع"], correct: 0 },
+    { question: "__init__ تقدر تاخد باراميترات؟", answers: ["أيوة", "لأ", "واحد بس"], correct: 0 },
+    { question: "p = Person(\"علي\"); p.name = ؟", answers: ["علي", "Person", "None"], correct: 0 },
+    { question: "__init__ إلزامية؟", answers: ["لأ", "أيوة", "أحياناً"], correct: 0 }
+  ]
+},
+p73: {
+  chapters: [
+    { title: "الوراثة إيه؟", content: "<p>الكلاس يورث من كلاس تاني:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Animal:<br>    def eat(self):<br>        print(\"بيأكل\")<br><br>class Dog(Animal):<br>    def bark(self):<br>        print(\"هوهو\")<br><br>d = Dog()<br>d.eat()  # من Animal<br>d.bark() # من Dog</div>" },
+    { title: "التركيب", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Child(Parent):<br>    pass</div>" },
+    { title: "إعادة التعريف", content: "<p>الابن يقدر يعيد تعريف دوال الأب:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Animal:<br>    def sound(self):<br>        print(\"...\")<br><br>class Cat(Animal):<br>    def sound(self):<br>        print(\"مياو\")</div>" },
+    { title: "super()", content: "<p>تنادي دوال الأب:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Parent:<br>    def __init__(self, name):<br>        self.name = name<br><br>class Child(Parent):<br>    def __init__(self, name, age):<br>        super().__init__(name)<br>        self.age = age</div>" },
+    { title: "الفايدة", content: "<ul style='padding-right:20px;line-height:2;'><li>إعادة استخدام الكود</li><li>تنظيم أحسن</li><li>علاقة is-a</li></ul>" }
+  ],
+  quizzes: [
+    { question: "الوراثة إيه؟", answers: ["كلاس يورث من كلاس", "دالة", "متغير"], correct: 0 },
+    { question: "class Child(Parent) بتعمل إيه؟", answers: ["Child يورث Parent", "العكس", "مفيش حاجة"], correct: 0 },
+    { question: "super() بتعمل إيه؟", answers: ["تنادي دوال الأب", "تحذف", "تطبع"], correct: 0 },
+    { question: "الابن يقدر يعيد تعريف دوال الأب؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "الفايدة من الوراثة؟", answers: ["إعادة استخدام", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
+p74: {
+  chapters: [
+    { title: "Generators إيه؟", content: "<p><code>yield</code> بترجع قيمة من غير ما توقف الدالة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def count():<br>    yield 1<br>    yield 2<br>    yield 3<br><br>for x in count():<br>    print(x)</div>" },
+    { title: "الفرق من return", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>return</strong>: بتنهي الدالة</li><li><strong>yield</strong>: بترجع قيمة وتكمل بعدين</li></ul>" },
+    { title: "مع next()", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>g = count()<br>print(next(g))  # 1<br>print(next(g))  # 2</div>" },
+    { title: "الفايدة", content: "<ul style='padding-right:20px;line-height:2;'><li>توفير الذاكرة</li><li>التعامل مع بيانات كبيرة</li><li>سلاسل لا نهائية</li></ul>" },
+    { title: "مثال", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def squares(n):<br>    for i in range(n):<br>        yield i * i<br><br>for s in squares(5):<br>    print(s)</div>" }
+  ],
+  quizzes: [
+    { question: "yield بتعمل إيه؟", answers: ["ترجع قيمة وتكمل", "تنهي", "تطبع"], correct: 0 },
+    { question: "الفرق من return؟", answers: ["yield مش بتنهي", "مفيش فرق", "return أسرع"], correct: 0 },
+    { question: "next() بتعمل إيه؟", answers: ["تجيب القيمة اللي بعدها", "تحذف", "تطبع"], correct: 0 },
+    { question: "الفايدة؟", answers: ["توفير الذاكرة", "الطباعة", "الحذف"], correct: 0 },
+    { question: "def count(): yield 1 = ؟", answers: ["بتنشئ generator", "دالة عادية", "خطأ"], correct: 0 }
+  ]
+},
+p75: {
+  chapters: [
+    { title: "Decorators إيه؟", content: "<p>دالة بتعدل دالة تانية بدون تغييرها:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def deco(f):<br>    def wrapper():<br>        print(\"قبل\" )<br>        f()<br>        print(\"بعد\")<br>    return wrapper<br><br>@deco<br>def hello():<br>    print(\"مرحبا\")<br><br>hello()</div>" },
+    { title: "النتيجة", content: "<div style='background:#0F172A;color:#22C55E;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;'>قبل<br>مرحبا<br>بعد</div>" },
+    { title: "@deco", content: "<p><code>@deco</code> = نفس <code>hello = deco(hello)</code></p>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>قياس الوقت</li><li>تسجيل (logging)</li><li>التحقق من الصلاحيات</li></ul>" },
+    { title: "مثال", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def timer(f):<br>    import time<br>    def w():<br>        t = time.time()<br>        f()<br>        print(\"استغرق\", time.time()-t)<br>    return w</div>" }
+  ],
+  quizzes: [
+    { question: "Decorator بتعمل إيه؟", answers: ["تعدل دالة", "تحذف", "تطبع"], correct: 0 },
+    { question: "@deco معناها؟", answers: ["hello = deco(hello)", "حذف", "طباعة"], correct: 0 },
+    { question: "Decorator تستخدم في؟", answers: ["قياس الوقت", "الحذف", "الحساب"], correct: 0 },
+    { question: "Decorator بتاخد دالة؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "الغرض الأساسي؟", answers: ["تعديل دالة", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
+p76: {
+  chapters: [
+    { title: "آلة حاسبة", content: "<p>برنامج بياخد رقمين ويعمل عملية:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a = int(input(\"الرقم الأول: \"))<br>b = int(input(\"الرقم التاني: \"))<br>op = input(\"العملية (+,-,*,/): \")<br><br>if op == \"+\":<br>    print(a + b)<br>elif op == \"-\":<br>    print(a - b)<br>elif op == \"*\":<br>    print(a * b)<br>elif op == \"/\":<br>    print(a / b)<br>else:<br>    print(\"عملية غير معروفة\")</div>" },
+    { title: "تطوير", content: "<p>ممكن تعملها دالة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def calc(a, b, op):<br>    if op == \"+\": return a + b<br>    if op == \"-\": return a - b<br>    if op == \"*\": return a * b<br>    if op == \"/\": return a / b<br>    return None</div>" },
+    { title: "مشاريع مشابهة", content: "<ul style='padding-right:20px;line-height:2;'><li>حاسبة BMI</li><li>محول عملات</li><li>حاسبة متوسط الدرجات</li></ul>" },
+    { title: "أفكار", content: "<p>جرب تضيف:</p><ul style='padding-right:20px;line-height:2;'><li>حلقات للعمليات المتكررة</li><li>معالجة الأخطاء</li><li>حفظ النتائج</li></ul>" },
+    { title: "التعلم بالمشاريع", content: "<p>💡 أحسن طريقة للتعلم هي تعمل مشاريع حقيقية. ابدأ صغير وكبّر.</p>" }
+  ],
+  quizzes: [
+    { question: "int(input()) بيعمل إيه؟", answers: ["ياخد رقم", "نص", "حذف"], correct: 0 },
+    { question: "if op == \"+\" بتعمل إيه؟", answers: ["تجمع", "تطرح", "تضرب"], correct: 0 },
+    { question: "أحسن طريقة للتعلم؟", answers: ["مشاريع", "القراءة", "الفيديوهات"], correct: 0 },
+    { question: "بعد ما تخلص المشروع؟", answers: ["تطوره", "تمسحه", "تنساه"], correct: 0 },
+    { question: "آلة حاسبة بـ؟", answers: ["if/elif", "for", "while"], correct: 0 }
+  ]
+},
+p77: {
+  chapters: [
+    { title: "لعبة تخمين", content: "<p>الكمبيوتر يختار رقم، وإنتا تخمن:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>import random<br>n = random.randint(1, 10)<br>tries = 0<br><br>while True:<br>    guess = int(input(\"خمن: \"))<br>    tries += 1<br>    if guess == n:<br>        print(\"صح في\", tries, \"محاولة\" )<br>        break<br>    elif guess &lt; n:<br>        print(\"أكبر\")<br>    else:<br>        print(\"أصغر\")</div>" },
+    { title: "شرح الكود", content: "<ul style='padding-right:20px;line-height:2;'><li>random يختار رقم</li><li>while True تفضل تسأل</li><li>break يوقف لما يخمن صح</li><li>tries يعد المحاولات</li></ul>" },
+    { title: "تطويرات", content: "<ul style='padding-right:20px;line-height:2;'><li>حد أقصى للمحاولات</li><li>مستويات صعوبة</li><li>حفظ أفضل نتيجة</li></ul>" },
+    { title: "مشاريع مشابهة", content: "<ul style='padding-right:20px;line-height:2;'><li>حجر ورقة مقص</li><li>Quiz App</li><li>To-Do List</li></ul>" },
+    { title: "مبروك!", content: "<p>🎉 خلصت Python كاملة! دلوقتي عندك أساس متين. جرب تبني مشاريعك الصغيرة، وبعدها اتعلم JavaScript.</p>" }
+  ],
+  quizzes: [
+    { question: "random.randint(1,10) بتعمل إيه؟", answers: ["تختار رقم", "تطبع", "تحذف"], correct: 0 },
+    { question: "break بتعمل إيه؟", answers: ["توقف الحلقة", "تطبع", "تحذف"], correct: 0 },
+    { question: "tries بتعد إيه؟", answers: ["المحاولات", "الأرقام", "الطباعة"], correct: 0 },
+    { question: "while True معناها؟", answers: ["تكرار لحد break", "مرة واحدة", "أبداً"], correct: 0 },
+    { question: "مبروك على إيه؟", answers: ["خلصت Python", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
 };
