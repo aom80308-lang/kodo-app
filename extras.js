@@ -642,4 +642,84 @@ p38: {
     { question: "False and anything = ؟", answers: ["True", "False", "حسب"], correct: 1 }
   ]
 },
+p39: {
+  chapters: [
+    { title: "or إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(True or False)  # True<br>print(False or True)  # True<br>print(False or False) # False</div>" },
+    { title: "مع الشروط", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>day = \"جمعة\"<br>if day == \"جمعة\" or day == \"سبت\":<br>    print(\"أجازة\")</div>" },
+    { title: "الحياة الواقعية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if hasMember or age &lt; 5:<br>    print(\"دخول مجاني\")</div>" },
+    { title: "الفرق من and", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>and</strong>: لازم الاتنين</li><li><strong>or</strong>: كفاية واحد</li></ul>" },
+    { title: "قصر التقييم", content: "<p>بيتوقف عند أول True:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>True or print(\"مش هيطبع\")<br>False or print(\"هيطبع\")</div>" }
+  ],
+  quizzes: [
+    { question: "True or False = ؟", answers: ["True", "False", "خطأ"], correct: 0 },
+    { question: "or بترجع True إمتى؟", answers: ["لو واحد صح", "لو الاتنين صح", "أبداً"], correct: 0 },
+    { question: "False or False = ؟", answers: ["True", "False", "خطأ"], correct: 1 },
+    { question: "الفرق من and؟", answers: ["مفيش", "or كفاية واحد", "and كفاية واحد"], correct: 1 },
+    { question: "or مفيدة في؟", answers: ["بدائل", "الحذف", "الحساب"], correct: 0 }
+  ]
+},
+p40: {
+  chapters: [
+    { title: "not إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(not True)   # False<br>print(not False)  # True</div>" },
+    { title: "مع الشروط", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>isRaining = False<br>if not isRaining:<br>    print(\"تقدر تخرج\")</div>" },
+    { title: "مع == و !=", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(not (5 == 5))  # False<br>print(not (5 == 3))  # True</div>" },
+    { title: "مع and / or", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(not (True and False))<br># True</div>" },
+    { title: "نصيحة", content: "<p>💡 متستخدمش not زيادة عن اللزوم. الكود بيسهل قراءته لما يكون واضح.</p>" }
+  ],
+  quizzes: [
+    { question: "not True = ؟", answers: ["True", "False", "خطأ"], correct: 1 },
+    { question: "not False = ؟", answers: ["True", "False", "خطأ"], correct: 0 },
+    { question: "not بتعمل إيه؟", answers: ["تعكس القيمة", "تطبع", "تحفظ"], correct: 0 },
+    { question: "not (5 == 5) = ؟", answers: ["True", "False", "خطأ"], correct: 1 },
+    { question: "not (True and False) = ؟", answers: ["True", "False", "خطأ"], correct: 0 }
+  ]
+},
+p41: {
+  chapters: [
+    { title: "for إيه؟", content: "<p><code>for</code> بتكرر كود عدد معين من المرات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(3):<br>    print(i)</div><p>النتيجة: 0, 1, 2</p>" },
+    { title: "المتغير i", content: "<p><code>i</code> هو اسم المتغير. تقدر تسميه أي حاجة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for number in range(3):<br>    print(number)</div>" },
+    { title: "المسافة البادئة", content: "<p>زي if، الكود جوه for لازم يكون بمسافة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(3):<br>    print(i)  ✅</div>" },
+    { title: "طباعة بدون for", content: "<p>بدون for:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(0)<br>print(1)<br>print(2)</div><p>مع for بسطرين.</p>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(5):<br>    print(\"مرحبا\")</div>" }
+  ],
+  quizzes: [
+    { question: "for بتعمل إيه؟", answers: ["تكرر", "تطبع", "تحفظ"], correct: 0 },
+    { question: "range(3) بتطلع؟", answers: ["1,2,3", "0,1,2", "3"], correct: 1 },
+    { question: "الكود جوه for؟", answers: ["مسافة", "مفيش", "نقطة"], correct: 0 },
+    { question: "for i in range(3): print(i) يطبع؟", answers: ["0,1,2", "1,2,3", "3"], correct: 0 },
+    { question: "اسم المتغير في for؟", answers: ["لازم i", "أي اسم", "لازم x"], correct: 1 }
+  ]
+},
+p42: {
+  chapters: [
+    { title: "range() إيه؟", content: "<p><code>range()</code> بتوليد سلسلة أرقام:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>range(5)       # 0,1,2,3,4<br>range(1,5)     # 1,2,3,4<br>range(1,10,2)  # 1,3,5,7,9</div>" },
+    { title: "range(نهاية)", content: "<p>رقم واحد = من 0 لـ (الرقم - 1):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(3):<br>    print(i)<br># 0, 1, 2</div>" },
+    { title: "range(بداية، نهاية)", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(1, 4):<br>    print(i)<br># 1, 2, 3</div>" },
+    { title: "range(بداية، نهاية، خطوة)", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(0, 10, 2):<br>    print(i)<br># 0, 2, 4, 6, 8</div>" },
+    { title: "من الآخر", content: "<p>بخطوة سالبة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(5, 0, -1):<br>    print(i)<br># 5, 4, 3, 2, 1</div>" }
+  ],
+  quizzes: [
+    { question: "range(3) بتطلع؟", answers: ["1,2,3", "0,1,2", "3"], correct: 1 },
+    { question: "range(1,4) بتطلع؟", answers: ["1,2,3", "1,2,3,4", "0,1,2,3"], correct: 0 },
+    { question: "range(0,10,2) بتطلع؟", answers: ["0,2,4,6,8", "0,1,2...9", "2,4,6,8,10"], correct: 0 },
+    { question: "range(5,0,-1) بتطلع؟", answers: ["5,4,3,2,1", "0,1,2,3,4,5", "5,6,7"], correct: 0 },
+    { question: "range بتوليد؟", answers: ["نصوص", "أرقام", "قوائم"], correct: 1 }
+  ]
+},
+p43: {
+  chapters: [
+    { title: "المرور على قائمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>fruits = [\"تفاح\", \"موز\", \"عنب\"]<br>for fruit in fruits:<br>    print(fruit)</div>" },
+    { title: "على نص", content: "<p>بتقدر تمر على كل حرف في نص:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for letter in \"أحمد\":<br>    print(letter)</div>" },
+    { title: "مع العداد", content: "<p>لو محتاج تعرف رقم العنصر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>items = [\"أ\", \"ب\", \"ج\"]<br>for i, item in enumerate(items):<br>    print(i, item)</div>" },
+    { title: "الفايدة", content: "<p>بدون for:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(fruits[0])<br>print(fruits[1])<br>print(fruits[2])</div><p>مع for بسطرين.</p>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>scores = [90, 85, 70]<br>total = 0<br>for s in scores:<br>    total += s<br>print(\"المجموع:\", total)</div>" }
+  ],
+  quizzes: [
+    { question: "for x in list بيعدي على؟", answers: ["العناصر", "الأرقام", "الفهارس"], correct: 0 },
+    { question: "for letter in \"abc\" بيعدي على؟", answers: ["كلمة كاملة", "كل حرف", "لا شيء"], correct: 1 },
+    { question: "enumerate بتعمل إيه؟", answers: ["ترقم العناصر", "تحذف", "ترتب"], correct: 0 },
+    { question: "for مفيدة مع؟", answers: ["القوائم والنصوص", "لا حاجة", "الأرقام بس"], correct: 0 },
+    { question: "for بيوفر؟", answers: ["الكود المكرر", "الطباعة", "الحذف"], correct: 0 }
+  ]
+},
 };
