@@ -3686,6 +3686,7 @@ if (window.matchMedia) {
   App.openLesson = function(lesson, unitCount, globalIdx) {
     var extra = EXTRAS[lesson.id];
     if (!extra) { return origOpenLesson.call(this, lesson, unitCount, globalIdx); }
+    this.state.currentLesson = lesson;
     this._extraChapters = extra.chapters;
     this._extraQuizzes = extra.quizzes;
     this._extraChapterIdx = 0;
