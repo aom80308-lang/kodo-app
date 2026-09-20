@@ -1906,4 +1906,84 @@ j40: {
     { question: "[a,b] = [b,a] بتعمل إيه؟", answers: ["تبديل", "حذف", "طباعة"], correct: 0 }
   ]
 },
+j41: {
+  chapters: [
+    { title: "Destructuring كامل", content: "<p>مع arrays و objects:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let person = {<br>    name: \"أحمد\",<br>    address: {city: \"القاهرة\", zip: \"123\"}<br>};<br>let {address: {city}} = person;<br>console.log(city);  // القاهرة</div>" },
+    { title: "في parameters", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function greet({name, age}) {<br>    console.log(name, age);<br>}<br>greet({name: \"علي\", age: 25});</div>" },
+    { title: "مع Rest", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let {a, ...rest} = {a: 1, b: 2, c: 3};<br>console.log(a);     // 1<br>console.log(rest);  // {b: 2, c: 3}</div>" },
+    { title: "Skip values", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let [a, , c] = [1, 2, 3];<br>console.log(a, c);  // 1 3</div>" },
+    { title: "نصيحة", content: "<p>💡 Destructuring من أقوى مميزات ES6.</p>" }
+  ],
+  quizzes: [
+    { question: "let {a:{b}} = {a:{b:5}}; b = ؟", answers: ["5", "a", "خطأ"], correct: 0 },
+    { question: "Destructuring مع function parameters؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "let {a, ...r} = obj؟", answers: ["Rest", "Spread", "خطأ"], correct: 0 },
+    { question: "let [a,,c] = [1,2,3]; c = ؟", answers: ["3", "2", "1"], correct: 0 },
+    { question: "Destructuring بـ object بـ؟", answers: ["{ }", "[ ]", "( )"], correct: 0 }
+  ]
+},
+j42: {
+  chapters: [
+    { title: "setTimeout", content: "<p>بتنفذ دالة بعد وقت محدد:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>setTimeout(() =&gt; {<br>    console.log(\"بعد 2 ثانية\");<br>}, 2000);</div>" },
+    { title: "المبدأ", content: "<p>الكود مش بيتوقف. setTimeout بتخلي الدالة تتنفذ بعدين.</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>console.log(1);<br>setTimeout(() =&gt; console.log(2), 100);<br>console.log(3);<br>// 1, 3, 2</div>" },
+    { title: "clearTimeout", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let id = setTimeout(() =&gt; console.log(\"hi\"), 1000);<br>clearTimeout(id);  // إلغاء</div>" },
+    { title: "setInterval", content: "<p>بتكرر كل فترة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let id = setInterval(() =&gt; {<br>    console.log(\"كل ثانية\");<br>}, 1000);<br>clearInterval(id);  // للإيقاف</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let count = 5;<br>let timer = setInterval(() =&gt; {<br>    console.log(count--);<br>    if (count &lt; 0) clearInterval(timer);<br>}, 1000);</div>" }
+  ],
+  quizzes: [
+    { question: "setTimeout بتعمل إيه؟", answers: ["تنفذ بعد وقت", "تكرر", "تحذف"], correct: 0 },
+    { question: "بعد كام مللي ثانية؟", answers: ["1000", "100", "10"], correct: 0 },
+    { question: "setInterval بتعمل إيه؟", answers: ["تكرر كل فترة", "تنفذ مرة", "تحذف"], correct: 0 },
+    { question: "الإلغاء بـ؟", answers: ["clearTimeout", "stop", "end"], correct: 0 },
+    { question: "console.log(1); setTimeout(()=>console.log(2), 100); console.log(3); = ؟", answers: ["1, 3, 2", "1, 2, 3", "3, 2, 1"], correct: 0 }
+  ]
+},
+j43: {
+  chapters: [
+    { title: "Promise إيه؟", content: "<p>وعد بقيمة هتجي بعدين:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let p = new Promise((resolve, reject) =&gt; {<br>    let success = true;<br>    if (success) resolve(\"تم\");<br>    else reject(\"فشل\");<br>});</div>" },
+    { title: "3 حالات", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>Pending</strong>: لسه</li><li><strong>Resolved</strong>: نجحت</li><li><strong>Rejected</strong>: فشلت</li></ul>" },
+    { title: "then", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>p.then(result =&gt; {<br>    console.log(result);<br>});</div>" },
+    { title: "catch", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>p.then(r =&gt; console.log(r))<br> .catch(e =&gt; console.log(e));</div>" },
+    { title: "نصيحة", content: "<p>💡 Promises مهمة جداً للتعامل مع العمليات اللي بتاخد وقت (fetch، قراءة ملفات).</p>" }
+  ],
+  quizzes: [
+    { question: "Promise إيه؟", answers: ["وعد بقيمة", "دالة", "متغير"], correct: 0 },
+    { question: "3 حالات؟", answers: ["Pending/Resolved/Rejected", "بداية/نهاية", "1/2/3"], correct: 0 },
+    { question: "then بتعمل إيه؟", answers: ["تستقبل النتيجة", "تحذف", "تطبع"], correct: 0 },
+    { question: "catch بتعمل إيه؟", answers: ["تستقبل الخطأ", "تحذف", "تطبع"], correct: 0 },
+    { question: "Promise بتستخدم في؟", answers: ["fetch", "الحساب", "الطباعة"], correct: 0 }
+  ]
+},
+j44: {
+  chapters: [
+    { title: "then و catch", content: "<p>then للنجاح، catch للفشل:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>fetch(\"data.json\")<br>  .then(res =&gt; res.json())<br>  .then(data =&gt; console.log(data))<br>  .catch(err =&gt; console.log(err));</div>" },
+    { title: "finaly", content: "<p>بتتنفذ دايماً:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>fetch(url)<br>  .then(res =&gt; res.json())<br>  .catch(e =&gt; console.log(e))<br>  .finally(() =&gt; console.log(\"خلصنا\"));</div>" },
+    { title: "Chaining", content: "<p>تقدر تكرر then:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>Promise.resolve(5)<br>  .then(x =&gt; x * 2)<br>  .then(x =&gt; x + 1)<br>  .then(x =&gt; console.log(x));  // 11</div>" },
+    { title: "Promise.all", content: "<p>لانتظار عدة promises:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>Promise.all([p1, p2, p3])<br>  .then(results =&gt; console.log(results));</div>" },
+    { title: "نصيحة", content: "<p>💡 دايماً حط <code>catch</code> عشان تتعامل مع الأخطاء.</p>" }
+  ],
+  quizzes: [
+    { question: "then للنجاح؟", answers: ["أيوة", "لأ", "للخطأ"], correct: 0 },
+    { question: "catch للفشل؟", answers: ["أيوة", "لأ", "للنجاح"], correct: 0 },
+    { question: "finally بتتنفذ؟", answers: ["دايماً", "أبداً", "بالنجاح بس"], correct: 0 },
+    { question: "Promise.all بتعمل إيه؟", answers: ["تنتظر عدة", "تحذف", "تطبع"], correct: 0 },
+    { question: "Chaining إيه؟", answers: ["تكرار then", "حذف", "طباعة"], correct: 0 }
+  ]
+},
+j45: {
+  chapters: [
+    { title: "async/await", content: "<p>طريقة حديثة للتعامل مع Promises:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>async function getData() {<br>    let res = await fetch(url);<br>    let data = await res.json();<br>    console.log(data);<br>}</div>" },
+    { title: "الفرق من then", content: "<ul style='padding-right:20px;line-height:2;'><li>then: chain طويل</li><li>await: يشبه الكود المتزامن</li></ul>" },
+    { title: "مع try/catch", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>async function f() {<br>    try {<br>        let x = await Promise.resolve(5);<br>        console.log(x);<br>    } catch (e) {<br>        console.log(e);<br>    }<br>}</div>" },
+    { title: "مهم", content: "<p>لازم الدالة تكون <code>async</code> عشان تستخدم <code>await</code>.</p>" },
+    { title: "نصيحة", content: "<p>💡 async/await بقت الطريقة الشائعة. أنضف من then بكثير.</p>" }
+  ],
+  quizzes: [
+    { question: "await بتعمل إيه؟", answers: ["تستنى Promise", "تحذف", "تطبع"], correct: 0 },
+    { question: "async بتعمل إيه؟", answers: ["تخلي الدالة async", "تحذف", "تطبع"], correct: 0 },
+    { question: "لازم مع await؟", answers: ["async", "for", "if"], correct: 0 },
+    { question: "async/await بديلة لـ؟", answers: ["then/catch", "if/else", "for"], correct: 0 },
+    { question: "بديل try/catch؟", answers: ["catch في then", "finally", "throw"], correct: 0 }
+  ]
+},
 };
