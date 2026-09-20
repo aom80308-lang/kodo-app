@@ -882,4 +882,84 @@ p53: {
     { question: "difference بتعمل إيه؟", answers: ["الفرق", "الاتحاد", "التقاطع"], correct: 0 }
   ]
 },
+p54: {
+  chapters: [
+    { title: "Dict إيه؟", content: "<p><code>dict</code> = قاموس بنحفظ فيه <strong>مفتاح وقيمة</strong>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>person = {\"name\": \"أحمد\", \"age\": 25}<br>print(person[\"name\"])  # أحمد</div>" },
+    { title: "الوصول للقيمة", content: "<p>بالـ key مش بالفهرس:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>d = {\"a\": 1, \"b\": 2}<br>print(d[\"a\"])  # 1</div>" },
+    { title: "إضافة وتعديل", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>d = {\"a\": 1}<br>d[\"b\"] = 2    # إضافة<br>d[\"a\"] = 10   # تعديل<br>print(d)  # {'a': 10, 'b': 2}</div>" },
+    { title: "الحذف", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>d = {\"a\": 1, \"b\": 2}<br>del d[\"a\"]<br>print(d)  # {'b': 2}</div>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>بيانات شخص</li><li>إعدادات</li><li>قاموس كلمات</li></ul>" }
+  ],
+  quizzes: [
+    { question: "dict إيه؟", answers: ["مفتاح وقيمة", "قائمة", "نص"], correct: 0 },
+    { question: "d={\"a\":1}; d[\"a\"] = ؟", answers: ["1", "a", "خطأ"], correct: 0 },
+    { question: "بنتعامل بالـ؟", answers: ["الفهرس", "المفتاح", "القيمة"], correct: 1 },
+    { question: "إضافة عنصر جديد؟", answers: ["d[\"k\"]=v", "d.add()", "d.append()"], correct: 0 },
+    { question: "حذف عنصر بـ؟", answers: ["del d[k]", "d.pop()", "الاتنين"], correct: 2 }
+  ]
+},
+p55: {
+  chapters: [
+    { title: "keys()", content: "<p><code>keys()</code> بترجع كل المفاتيح:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>d = {\"a\": 1, \"b\": 2}<br>print(d.keys())<br># dict_keys(['a', 'b'])</div>" },
+    { title: "values()", content: "<p><code>values()</code> بترجع كل القيم:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>d = {\"a\": 1, \"b\": 2}<br>print(d.values())<br># dict_values([1, 2])</div>" },
+    { title: "items()", content: "<p><code>items()</code> بترجع كل الأزواج:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>d = {\"a\": 1, \"b\": 2}<br>for k, v in d.items():<br>    print(k, v)</div>" },
+    { title: "التحويل لـ List", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>list(d.keys())<br>list(d.values())</div>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>المرور على المفاتيح</li><li>المرور على القيم</li><li>المرور على الاتنين</li></ul>" }
+  ],
+  quizzes: [
+    { question: "keys بترجع؟", answers: ["المفاتيح", "القيم", "الاتنين"], correct: 0 },
+    { question: "values بترجع؟", answers: ["المفاتيح", "القيم", "الاتنين"], correct: 1 },
+    { question: "items بترجع؟", answers: ["مفاتيح بس", "قيم بس", "مفاتيح وقيم"], correct: 2 },
+    { question: "for k,v in d.items() ؟", answers: ["يمر على الاتنين", "المفاتيح", "القيم"], correct: 0 },
+    { question: "list(d.keys()) = ؟", answers: ["قائمة", "قاموس", "نص"], correct: 0 }
+  ]
+},
+p56: {
+  chapters: [
+    { title: "get()", content: "<p><code>get()</code> بترجع القيمة، ولو مش موجودة بترجع None:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>d = {\"a\": 1}<br>print(d.get(\"a\"))     # 1<br>print(d.get(\"b\"))     # None</div>" },
+    { title: "قيمة افتراضية", content: "<p>بتقدر تحدد قيمة افتراضية:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>d = {\"a\": 1}<br>print(d.get(\"b\", 0))  # 0</div>" },
+    { title: "الفرق من []", content: "<div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(d[\"b\"])  ❌ KeyError<br>print(d.get(\"b\"))  ✅ None</div>" },
+    { title: "استخدامات", content: "<p>مفيدة في:</p><ul style='padding-right:20px;line-height:2;'><li>تجنب الأخطاء</li><li>القيم الافتراضية</li><li>عدّ الكلمات</li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>words = [\"a\", \"b\", \"a\"]<br>count = {}<br>for w in words:<br>    count[w] = count.get(w, 0) + 1<br>print(count)  # {'a': 2, 'b': 1}</div>" }
+  ],
+  quizzes: [
+    { question: "get بترجع لو مش موجود؟", answers: ["None", "خطأ", "0"], correct: 0 },
+    { question: "d.get(\"x\", 5) لو x مش موجود = ؟", answers: ["None", "5", "خطأ"], correct: 1 },
+    { question: "الفرق من []؟", answers: ["get آمنة", "مفيش فرق", "[] أسرع"], correct: 0 },
+    { question: "get مفيدة في؟", answers: ["تجنب الأخطاء", "الحذف", "الطباعة"], correct: 0 },
+    { question: "d.get(\"x\") لو مش موجود؟", answers: ["None", "خطأ", "0"], correct: 0 }
+  ]
+},
+p57: {
+  chapters: [
+    { title: "def إيه؟", content: "<p><code>def</code> بتعرف دالة (function):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def greet():<br>    print(\"أهلاً\")<br><br>greet()  # أهلاً</div>" },
+    { title: "التركيب", content: "<ul style='padding-right:20px;line-height:2;'><li><code>def</code> — كلمة مفتاحية</li><li>اسم الدالة</li><li><code>( )</code> — الأقواس</li><li><code>:</code> — نقطتين</li><li>الكود بمسافة</li></ul>" },
+    { title: "استدعاء الدالة", content: "<p>عشان تشغلها، اكتب اسمها والأقواس:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def hi():<br>    print(\"مرحبا\")<br><br>hi()  # مرحبا<br>hi()  # مرحبا</div>" },
+    { title: "ليه الدوال؟", content: "<ul style='padding-right:20px;line-height:2;'><li>مفيش تكرار</li><li>الكود منظم</li><li>سهل التعديل</li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def welcome():<br>    print(\"=\" * 20)<br>    print(\"أهلاً بيك\" )<br>    print(\"=\" * 20)<br><br>welcome()</div>" }
+  ],
+  quizzes: [
+    { question: "def بتعمل إيه؟", answers: ["تعرف دالة", "تطبع", "تحفظ"], correct: 0 },
+    { question: "إزاي نستدعي دالة؟", answers: ["اسمها()", "call", "print"], correct: 0 },
+    { question: "الكود جوه الدالة؟", answers: ["مسافة", "مفيش", "نقطة"], correct: 0 },
+    { question: "الدوال بتقلل؟", answers: ["التكرار", "الطباعة", "الحساب"], correct: 0 },
+    { question: "def greet(): ... الأول؟", answers: ["def", "function", "name"], correct: 0 }
+  ]
+},
+p58: {
+  chapters: [
+    { title: "Parameters إيه؟", content: "<p>بارامترات = مدخلات للدالة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def greet(name):<br>    print(\"أهلاً \" + name)<br><br>greet(\"أحمد\")  # أهلاً أحمد</div>" },
+    { title: "أكتر من باراميتر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def add(a, b):<br>    print(a + b)<br><br>add(3, 5)  # 8</div>" },
+    { title: "الفرق بين الباراميتر والوسيط", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>Parameter</strong>: الاسم في التعريف</li><li><strong>Argument</strong>: القيمة عند الاستدعاء</li></ul>" },
+    { title: "بدون عدد محدد", content: "<p>لو مش عايز تحدد عدد:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def greet(*names):<br>    for n in names:<br>        print(\"أهلاً \" + n)<br><br>greet(\"أ\", \"ب\", \"ج\")</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def area(w, h):<br>    print(\"المساحة:\", w * h)<br><br>area(5, 3)  # 15</div>" }
+  ],
+  quizzes: [
+    { question: "الباراميتر إيه؟", answers: ["مدخل للدالة", "مخرج", "متغير"], correct: 0 },
+    { question: "def add(a,b): ... add(3,5) = ؟", answers: ["a=3, b=5", "a=5, b=3", "خطأ"], correct: 0 },
+    { question: "*names بياخد؟", answers: ["قيم متعددة", "قيمة واحدة", "خطأ"], correct: 0 },
+    { question: "Argument إيه؟", answers: ["القيمة عند الاستدعاء", "الاسم", "النوع"], correct: 0 },
+    { question: "دالة بباراميتر؟", answers: ["تاخد مدخل", "مفيش مدخل", "طباعة"], correct: 0 }
+  ]
+},
 };
