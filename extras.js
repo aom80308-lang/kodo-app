@@ -242,4 +242,84 @@ p13: {
     { question: "من استخدامات sep؟", answers: ["الطباعة بس", "تنسيق التواريخ والإيميلات", "الحذف"], correct: 1 }
   ]
 }
+  p14: {
+  chapters: [
+    { title: "end إيه؟", content: "<p><code>end</code> بتحدد إيه اللي يتحط في نهاية الطباعة.</p><p>الافتراضي: سطر جديد (\\n)</p><p>مثال:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"أهلاً\")<br>print(\"بيك\")</div><p>النتيجة: سطرين منفصلين.</p>" },
+    { title: "استخدام end", content: "<p>عشان تخلي الطباعة في نفس السطر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"أهلاً\", end=\" \")<br>print(\"بيك\")</div><p>النتيجة: <code>أهلاً بيك</code></p>" },
+    { title: "end بأي رمز", content: "<p>تقدر تستخدم أي رمز:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"أ\", end=\"-\")<br>print(\"ب\", end=\"-\")<br>print(\"ج\")</div><p>النتيجة: <code>أ-ب-ج</code></p>" },
+    { title: "end فاضية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"م\", end=\"\")<br>print(\"رحبا\")</div><p>النتيجة: <code>مرحبا</code></p>" },
+    { title: "استخدامات", content: "<p>end مفيدة في:</p><ul style='padding-right:20px;line-height:2;'><li>عرض قوائم في سطر واحد</li><li>شريط تقدم</li><li>عد تنازلي</li></ul>" }
+  ],
+  quizzes: [
+    { question: "end بتعمل إيه؟", answers: ["بتطبع", "بتحدد نهاية الطباعة", "بتحفظ"], correct: 1 },
+    { question: "الافتراضي في end؟", answers: ["سطر جديد", "مسافة", "نقطة"], correct: 0 },
+    { question: "print(\"a\",end=\"-\"); print(\"b\") = ؟", answers: ["a-b", "a b", "a و b في سطرين"], correct: 0 },
+    { question: "end=\"\" بتعمل إيه؟", answers: ["سطر جديد", "مفيش فاصل", "مسافة"], correct: 1 },
+    { question: "end تستخدم في؟", answers: ["الطباعة في سطر واحد", "الحذف", "الحساب"], correct: 0 }
+  ]
+},
+p15: {
+  chapters: [
+    { title: "التعليقات إيه؟", content: "<p>التعليق = ملاحظة في الكود، الكمبيوتر بيتجاهلها.</p><p>بيبدأ بـ <code>#</code></p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'># ده تعليق<br>print(\"كود\")</div><p>النتيجة: <code>كود</code></p>" },
+    { title: "أنواع التعليقات", content: "<ul style='padding-right:20px;line-height:2;'><li>سطر واحد: يبدأ بـ <code>#</code></li><li>متعدد الأسطر: بين <code>''' '''</code></li></ul>" },
+    { title: "مكان التعليق", content: "<p>ممكن يكون في سطر لوحده أو جنب الكود:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 5  # قيمة x<br>print(x)  # اطبع x</div>" },
+    { title: "التعليقات مش بتتنفذ", content: "<p>الكمبيوتر بيتجاهل التعليقات تماماً.</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'># مش هيتنفذ<br>print(\"هيتنفذ\")<br># مش هيتنفذ</div>" },
+    { title: "نصيحة", content: "<p>💡 استخدم التعليقات بحكمة:</p><ul style='padding-right:20px;line-height:2;'><li>وضح الأجزاء الصعبة</li><li>اشرح ليه عملت كده</li><li>سيب ملاحظات لنفسك</li></ul>" }
+  ],
+  quizzes: [
+    { question: "التعليق بيبدأ بـ؟", answers: ["//", "#", "--"], correct: 1 },
+    { question: "التعليق بيتنفذ؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "تعليق متعدد الأسطر بين؟", answers: ["( )", "[ ]", "''' '''"], correct: 2 },
+    { question: "التعليق ممكن يكون؟", answers: ["في سطر لوحده", "جنب الكود", "الاتنين"], correct: 2 },
+    { question: "التعليق بيفيد في؟", answers: ["توضيح الكود", "الحذف", "الحساب"], correct: 0 }
+  ]
+},
+p16: {
+  chapters: [
+    { title: "ليه التعليقات؟", content: "<ul style='padding-right:20px;line-height:2;'><li>📖 الشرح: توضيح الكود</li><li>🧠 التذكر: لما ترجع للكود بعدين</li><li>👥 الفريق: حد تاني يفهم الكود</li><li>🚫 الإيقاف: تعطيل كود مؤقتاً</li></ul>" },
+    { title: "تعطيل الكود", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"سطر 1\")<br># print(\"سطر 2\")<br>print(\"سطر 3\")</div><p>النتيجة: سطر 1 و سطر 3.</p>" },
+    { title: "الشرح للمبتدئين", content: "<p>لو بتعلم حد، اشرح الكود بتعليقات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'># نطلب اسم المستخدم<br>name = input(\"اسمك؟ \")<br># نطبع ترحيب<br>print(\"أهلاً \" + name)</div>" },
+    { title: "التعليقات للتذكير", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'># سعر المنتج × الكمية<br>total = price * qty</div>" },
+    { title: "نصائح", content: "<p>💡 اشرح <strong>ليه</strong> مش <strong>إيه</strong>. متتعلقش على كل سطر.</p>" }
+  ],
+  quizzes: [
+    { question: "التعليقات بتفيد في؟", answers: ["الحساب", "الشرح والتذكر", "الحذف"], correct: 1 },
+    { question: "إزاي توقف سطر مؤقتاً؟", answers: ["امسحه", "حط # قبله", "اخفيه"], correct: 1 },
+    { question: "تعليق وحش إيه؟", answers: ["مضلل", "واضح", "قصير"], correct: 0 },
+    { question: "التعليق لازم يكون؟", answers: ["محدث", "قديم", "طويل"], correct: 0 },
+    { question: "اشرح إيه في التعليق؟", answers: ["إيه اللي بيحصل", "ليه عملت كده", "لا حاجة"], correct: 1 }
+  ]
+},
+p17: {
+  chapters: [
+    { title: "المتغير إيه؟", content: "<p>المتغير = صندوق بنحفظ فيه قيمة.</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 5<br>print(x)</div><p>النتيجة: 5</p>" },
+    { title: "تغيير القيمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 5<br>print(x)  # 5<br>x = 10<br>print(x)  # 10</div>" },
+    { title: "استخدام المتغير", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = \"أحمد\"<br>print(\"أهلاً \" + name)<br>print(\"إزيك يا \" + name)</div>" },
+    { title: "أنواع المتغيرات", content: "<ul style='padding-right:20px;line-height:2;'><li>رقم: <code>x = 5</code></li><li>نص: <code>name = \"علي\"</code></li><li>منطقي: <code>isActive = True</code></li></ul>" },
+    { title: "ليه المتغيرات مهمة؟", content: "<p>بدل ما تكتب القيمة كل مرة، بتكتبها مرة في متغير وتستخدمه.</p><p>💡 لو غيّرت القيمة، بتغيرها في مكان واحد.</p>" }
+  ],
+  quizzes: [
+    { question: "المتغير إيه؟", answers: ["صندوق قيمة", "رقم", "نص"], correct: 0 },
+    { question: "x = 5; x = 10; print(x) = ؟", answers: ["5", "10", "15"], correct: 1 },
+    { question: "ممكن نحفظ نص في متغير؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "المتغير بيسهل؟", answers: ["الصعب", "تعديل القيم", "الحذف"], correct: 1 },
+    { question: "المتغير ممكن نوعه إيه؟", answers: ["رقم بس", "نص بس", "أي نوع"], correct: 2 }
+  ]
+},
+p18: {
+  chapters: [
+    { title: "أنواع القيم", content: "<p>3 أنواع أساسية في Python:</p><ul style='padding-right:20px;line-height:2;'><li>أرقام: 5، 3.14</li><li>نصوص: \"أهلاً\"</li><li>منطقية: True/False</li></ul>" },
+    { title: "الأرقام", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>int</strong>: 5، 100، -3</li><li><strong>float</strong>: 3.14، 2.5</li></ul>" },
+    { title: "النصوص", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = \"أحمد\"<br>greeting = 'أهلاً'</div>" },
+    { title: "القيم المنطقية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>isActive = True<br>isDone = False</div><p>💡 أول حرف Capital.</p>" },
+    { title: "معرفة النوع", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(type(5))     # int<br>print(type(\"علي\")) # str<br>print(type(True))  # bool</div>" }
+  ],
+  quizzes: [
+    { question: "True من أي نوع؟", answers: ["Boolean", "نص", "رقم"], correct: 0 },
+    { question: "3.14 من أي نوع؟", answers: ["int", "float", "نص"], correct: 1 },
+    { question: "5 من أي نوع؟", answers: ["int", "float", "Boolean"], correct: 0 },
+    { question: "\"أحمد\" من أي نوع؟", answers: ["رقم", "نص", "Boolean"], correct: 1 },
+    { question: "type(5) هيطبع؟", answers: ["int", "class", "5"], correct: 0 }
+  ]
+},
 };
