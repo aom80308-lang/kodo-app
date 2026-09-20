@@ -562,4 +562,84 @@ p33: {
     { question: "input ترجع من نوع؟", answers: ["int", "str", "float"], correct: 1 }
   ]
 },
+p34: {
+  chapters: [
+    { title: "if إيه؟", content: "<p><code>if</code> بتتحقق من شرط، ولو صح بتنفذ كود:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 10<br>if x &gt; 5:<br>    print(\"كبير\")</div>" },
+    { title: "المسافة البادئة", content: "<p><strong>مهم:</strong> الكود جوه if لازم يكون بمسافة بادئة (4 مسافات):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if x &gt; 5:<br>    print(\"كبير\")  ✅</div>" },
+    { title: "النقطتين", content: "<p>بعد الشرط، لازم <code>:</code>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if x &gt; 5:<br>    print(\"كبير\")</div>" },
+    { title: "لو الشرط غلط", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 3<br>if x &gt; 5:<br>    print(\"كبير\")<br># مفيش طباعة</div>" },
+    { title: "أكتر من سطر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if x &gt; 5:<br>    print(\"كبير\")<br>    print(\"جدا\")</div>" }
+  ],
+  quizzes: [
+    { question: "if بتعمل إيه؟", answers: ["تحقق شرط", "تطبع", "تحفظ"], correct: 0 },
+    { question: "بعد الشرط لازم؟", answers: ["نقطة", ":", ";"], correct: 1 },
+    { question: "الكود جوه if لازم؟", answers: ["مسافة بادئة", "في سطر جديد", "الاتنين"], correct: 0 },
+    { question: "لو الشرط غلط؟", answers: ["يشتغل", "مش يشتغل", "يطلع خطأ"], correct: 1 },
+    { question: "ممكن كذا سطر جوه if؟", answers: ["أيوة", "لأ", "سطر واحد بس"], correct: 0 }
+  ]
+},
+p35: {
+  chapters: [
+    { title: "else إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 3<br>if x &gt; 5:<br>    print(\"كبير\")<br>else:<br>    print(\"صغير\")</div>" },
+    { title: "elif إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 5<br>if x &gt; 10:<br>    print(\"كبير\" )<br>elif x &gt; 3:<br>    print(\"متوسط\")<br>else:<br>    print(\"صغير\")</div>" },
+    { title: "الترتيب", content: "<p>لازم الترتيب: if → elif → else</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if x &gt; 10: ...<br>elif x &gt; 5: ...<br>elif x &gt; 0: ...<br>else: ...</div>" },
+    { title: "else لوحدها؟", content: "<p><strong>else</strong> مش بتشتغل لوحدها:</p><div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>else:  ❌<br>    print(\"لا\")</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>grade = 85<br>if grade &gt;= 90:<br>    print(\"ممتاز\")<br>elif grade &gt;= 75:<br>    print(\"جيد جداً\")<br>elif grade &gt;= 50:<br>    print(\"مقبول\")<br>else:<br>    print(\"راسب\")</div>" }
+  ],
+  quizzes: [
+    { question: "else بتنفذ إمتى؟", answers: ["لو الشرط صح", "لو الشرط غلط", "دايماً"], correct: 1 },
+    { question: "elif إيه؟", answers: ["شرط إضافي", "نهاية", "بداية"], correct: 0 },
+    { question: "الترتيب الصح؟", answers: ["if-else-elif", "if-elif-else", "elif-if-else"], correct: 1 },
+    { question: "else لوحدها تنفع؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "عدد elif؟", answers: ["واحد", "اتنين", "غير محدود"], correct: 2 }
+  ]
+},
+p36: {
+  chapters: [
+    { title: "== إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(5 == 5)   # True<br>print(5 == 3)   # False</div>" },
+    { title: "الفرق بين = و ==", content: "<ul style='padding-right:20px;line-height:2;'><li><code>=</code> — تعيين قيمة</li><li><code>==</code> — مقارنة</li></ul>" },
+    { title: "مقارنة نصوص", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"أحمد\" == \"أحمد\")  # True<br>print(\"علي\" == \"أحمد\")   # False</div>" },
+    { title: "حساسية الحالة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"hello\" == \"Hello\")  # False</div>" },
+    { title: "مع if", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = input(\"اسمك؟ \")<br>if name == \"أحمد\":<br>    print(\"أهلاً يا أحمد\")</div>" }
+  ],
+  quizzes: [
+    { question: "== بتعمل إيه؟", answers: ["تعيين", "مقارنة", "طباعة"], correct: 1 },
+    { question: "5 == 5 = ؟", answers: ["5", "True", "False"], correct: 1 },
+    { question: "= و == نفس الحاجة؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "\"hello\" == \"Hello\" = ؟", answers: ["True", "False", "خطأ"], correct: 1 },
+    { question: "== تستخدم في؟", answers: ["الطباعة", "الشروط", "الحذف"], correct: 1 }
+  ]
+},
+p37: {
+  chapters: [
+    { title: "> و <", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(5 &gt; 3)   # True<br>print(5 &lt; 3)   # False</div>" },
+    { title: ">= و <=", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(5 &gt;= 5)  # True<br>print(3 &lt;= 3)  # True</div>" },
+    { title: "!= (مش يساوي)", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(5 != 3)   # True<br>print(5 != 5)   # False</div>" },
+    { title: "مع النصوص", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"a\" &lt; \"b\")   # True</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>age = 20<br>if age &gt;= 18:<br>    print(\"بالغ\")<br>else:<br>    print(\"قاصر\")</div>" }
+  ],
+  quizzes: [
+    { question: "5 > 3 = ؟", answers: ["True", "False", "5"], correct: 0 },
+    { question: "5 >= 5 = ؟", answers: ["True", "False", "خطأ"], correct: 0 },
+    { question: "!= يعني؟", answers: ["يساوي", "مش يساوي", "أكبر"], correct: 1 },
+    { question: "\"a\" < \"b\" = ؟", answers: ["True", "False", "خطأ"], correct: 0 },
+    { question: "3 <= 3 = ؟", answers: ["True", "False", "3"], correct: 0 }
+  ]
+},
+p38: {
+  chapters: [
+    { title: "and إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(True and True)   # True<br>print(True and False)  # False</div>" },
+    { title: "مع الشروط", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>age = 20<br>if age &gt;= 18 and age &lt;= 30:<br>    print(\"شباب\")</div>" },
+    { title: "الحياة الواقعية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if hasLicense and age &gt;= 18:<br>    print(\"تقدر تسوق\")</div>" },
+    { title: "الترتيب", content: "<p>بيتوقف عند أول False:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>False and print(\"مش هيطبع\")<br>True and print(\"هيطبع\")</div>" },
+    { title: "مع كذا شرط", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if a &gt; 0 and b &gt; 0 and c &gt; 0:<br>    print(\"كله موجب\")</div>" }
+  ],
+  quizzes: [
+    { question: "True and False = ؟", answers: ["True", "False", "خطأ"], correct: 1 },
+    { question: "and بترجع True إمتى؟", answers: ["لو واحد صح", "لو الاتنين صح", "دايماً"], correct: 1 },
+    { question: "True and True = ؟", answers: ["True", "False", "خطأ"], correct: 0 },
+    { question: "and مفيدة في؟", answers: ["شروط متعددة", "الحذف", "الطباعة"], correct: 0 },
+    { question: "False and anything = ؟", answers: ["True", "False", "حسب"], correct: 1 }
+  ]
+},
 };
