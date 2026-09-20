@@ -1426,4 +1426,84 @@ j10: {
     { question: "typeof true = ؟", answers: ["boolean", "bool", "int"], correct: 0 }
   ]
 },
+j11: {
+  chapters: [
+    { title: "Boolean و null", content: "<p><strong>boolean</strong>: true/false</p><p><strong>null</strong>: قيمة فاضية متعمدة</p><p><strong>undefined</strong>: قيمة مش متعينة</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let isActive = true;<br>let data = null;<br>let x;<br>console.log(x);  // undefined</div>" },
+    { title: "typeof", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>typeof true       // \"boolean\"<br>typeof null       // \"object\" (مفاجأة!)<br>typeof undefined  // \"undefined\"</div>" },
+    { title: "الفرق بينهم", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>null</strong>: إنتا حطيتها فاضية</li><li><strong>undefined</strong>: مش حاططها أصلاً</li></ul>" },
+    { title: "الاستخدام", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let user = null;  // لسه مجاش<br>if (user === null) {<br>    console.log(\"مفيش مستخدم\");<br>}</div>" },
+    { title: "نصيحة", content: "<p>💡 استخدم <code>null</code> لو إنتا قاصد تسيبها فاضية، وسيب <code>undefined</code> للحالات اللي مش متعينة.</p>" }
+  ],
+  quizzes: [
+    { question: "typeof true = ؟", answers: ["boolean", "bool", "int"], correct: 0 },
+    { question: "typeof undefined = ؟", answers: ["undefined", "null", "void"], correct: 0 },
+    { question: "null يعني إيه؟", answers: ["فاضية متعمدة", "مش موجودة", "صفر"], correct: 0 },
+    { question: "undefined يعني إيه؟", answers: ["مش متعينة", "فاضية", "خطأ"], correct: 0 },
+    { question: "typeof null = ؟", answers: ["object", "null", "undefined"], correct: 0 }
+  ]
+},
+j12: {
+  chapters: [
+    { title: "التحويل", content: "<p>تحويل النوع من نوع لنوع:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>Number(\"42\")      // 42<br>String(42)        // \"42\"<br>Boolean(0)        // false<br>Boolean(1)        // true</div>" },
+    { title: "parseInt و parseFloat", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>parseInt(\"42px\")     // 42<br>parseFloat(\"3.14abc\") // 3.14</div>" },
+    { title: "التحويل التلقائي", content: "<p>JS بتحول لوحدها في بعض الحالات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>\"5\" + 3   // \"53\" (دمج)<br>\"5\" - 3   // 2 (طرح)</div>" },
+    { title: "مهم", content: "<p>خد بالك من التحويل التلقائي لأنه ممكن يسبب أخطاء غريبة.</p>" },
+    { title: "نصيحة", content: "<p>💡 استخدم <code>Number()</code> بوضوح عشان الكود يكون مفهوم.</p>" }
+  ],
+  quizzes: [
+    { question: "Number(\"42\") = ؟", answers: ["42", "\"42\"", "خطأ"], correct: 0 },
+    { question: "String(42) = ؟", answers: ["\"42\"", "42", "خطأ"], correct: 0 },
+    { question: "\"5\" + 3 = ؟", answers: ["\"53\"", "8", "خطأ"], correct: 0 },
+    { question: "\"5\" - 3 = ؟", answers: ["2", "\"53\"", "خطأ"], correct: 0 },
+    { question: "parseInt(\"42px\") = ؟", answers: ["42", "42px", "خطأ"], correct: 0 }
+  ]
+},
+j13: {
+  chapters: [
+    { title: "العمليات الحسابية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>5 + 3   // 8<br>10 - 4  // 6<br>6 * 7   // 42<br>20 / 4  // 5<br>10 % 3  // 1<br>2 ** 3  // 8</div>" },
+    { title: "مع ++ و --", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let x = 5;<br>x++;  // x = 6<br>x--;  // x = 5</div>" },
+    { title: "+= و -=", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let x = 5;<br>x += 3;  // 8<br>x -= 2;  // 6<br>x *= 2;  // 12</div>" },
+    { title: "مع النصوص", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>\"أهلاً\" + \" بيك\"  // \"أهلاً بيك\"<br>\"ها\" * 3          // NaN</div>" },
+    { title: "نصيحة", content: "<p>💡 كل العمليات زي Python، بس خد بالك من <code>+</code> مع النصوص.</p>" }
+  ],
+  quizzes: [
+    { question: "5 + 3 = ؟", answers: ["8", "53", "خطأ"], correct: 0 },
+    { question: "10 % 3 = ؟", answers: ["1", "3", "0"], correct: 0 },
+    { question: "x = 5; x++ = ؟", answers: ["6", "5", "4"], correct: 0 },
+    { question: "\"أهلاً\" + \" بيك\" = ؟", answers: ["\"أهلاً بيك\"", "خطأ", "NaN"], correct: 0 },
+    { question: "2 ** 3 = ؟", answers: ["8", "6", "23"], correct: 0 }
+  ]
+},
+j14: {
+  chapters: [
+    { title: "== vs ===", content: "<p><code>==</code> يقارن القيمة، <code>===</code> يقارن القيمة والنوع:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>5 == \"5\"   // true<br>5 === \"5\"  // false<br>5 === 5    // true</div>" },
+    { title: "ليه مهمة؟", content: "<p><code>==</code> بتحول تلقائياً وده ممكن يسبب مشاكل. <code>===</code> أأمن.</p>" },
+    { title: "!= و !==", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>5 != \"5\"   // false<br>5 !== \"5\"  // true</div>" },
+    { title: "أمثلة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>null == undefined   // true<br>null === undefined  // false</div>" },
+    { title: "نصيحة", content: "<p>💡 استخدم <code>===</code> دايماً. <code>==</code> قديمة ومصدر مشاكل.</p>" }
+  ],
+  quizzes: [
+    { question: "5 === \"5\" = ؟", answers: ["false", "true", "خطأ"], correct: 0 },
+    { question: "5 == \"5\" = ؟", answers: ["true", "false", "خطأ"], correct: 0 },
+    { question: "== بتقارن؟", answers: ["القيمة", "القيمة والنوع", "النوع"], correct: 0 },
+    { question: "=== بتقارن؟", answers: ["القيمة والنوع", "القيمة", "النوع"], correct: 0 },
+    { question: "الأفضل؟", answers: ["===", "==", "الاتنين"], correct: 0 }
+  ]
+},
+j15: {
+  chapters: [
+    { title: "&& و ||", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>true && true    // true<br>true && false   // false<br>true || false   // true<br>false || false  // false</div>" },
+    { title: "! (not)", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>!true   // false<br>!false  // true</div>" },
+    { title: "مع الشروط", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let age = 20;<br>if (age &gt;= 18 &amp;&amp; age &lt;= 30) {<br>    console.log(\"شباب\");<br>}</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>and, or, not</code></li><li>JS: <code>&&, ||, !</code></li></ul>" },
+    { title: "نصيحة", content: "<p>💡 نفس المنطق، بس الرموز مختلفة.</p>" }
+  ],
+  quizzes: [
+    { question: "true && false = ؟", answers: ["false", "true", "خطأ"], correct: 0 },
+    { question: "true || false = ؟", answers: ["true", "false", "خطأ"], correct: 0 },
+    { question: "!true = ؟", answers: ["false", "true", "خطأ"], correct: 0 },
+    { question: "and في JS؟", answers: ["&&", "and", "AND"], correct: 0 },
+    { question: "or في JS؟", answers: ["||", "or", "OR"], correct: 0 }
+  ]
+},
 };
