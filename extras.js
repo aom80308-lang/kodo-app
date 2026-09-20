@@ -722,4 +722,84 @@ p43: {
     { question: "for بيوفر؟", answers: ["الكود المكرر", "الطباعة", "الحذف"], correct: 0 }
   ]
 },
+p44: {
+  chapters: [
+    { title: "while إيه؟", content: "<p><code>while</code> بتكرر الكود <strong>طالما</strong> الشرط صح:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>i = 0<br>while i &lt; 3:<br>    print(i)<br>    i += 1</div><p>النتيجة: 0, 1, 2</p>" },
+    { title: "الفرق من for", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>for</strong>: بتعرف عدد المرات مقدماً</li><li><strong>while</strong>: بتكرر لحد ما الشرط يبقى غلط</li></ul>" },
+    { title: "حلقة لا نهائية", content: "<p>لو الشرط بيفضل صح للأبد:</p><div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>while True:<br>    print(\"أبدي\")  ❌</div><p>💡 لازم تعدل الشرط في الداخل عشان يوقف.</p>" },
+    { title: "تعديل الشرط", content: "<p>لازم تعدل المتغير جوه الحلقة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>count = 5<br>while count &gt; 0:<br>    print(count)<br>    count -= 1</div>" },
+    { title: "استخدامات", content: "<p>while مفيدة في:</p><ul style='padding-right:20px;line-height:2;'><li>قوائم انتظار المدخلات</li><li>ألعاب (لحد ما تخسر)</li><li>العمليات اللي مش معروف عدد مراتها</li></ul>" }
+  ],
+  quizzes: [
+    { question: "while بتكرر إمتى؟", answers: ["لحد ما الشرط يبقى غلط", "مرة واحدة", "أبداً"], correct: 0 },
+    { question: "while True بتعمل إيه؟", answers: ["حلقة لا نهائية", "توقف", "مرة واحدة"], correct: 0 },
+    { question: "i=0; while i<3; print(i); i+=1 = ؟", answers: ["0,1,2", "1,2,3", "3"], correct: 0 },
+    { question: "الفرق من for؟", answers: ["مفيش", "while مش معروف عدد المرات", "for أقوى"], correct: 1 },
+    { question: "لازم إيه في while؟", answers: ["تعديل الشرط", "لا حاجة", "نقطة"], correct: 0 }
+  ]
+},
+p45: {
+  chapters: [
+    { title: "break إيه؟", content: "<p><code>break</code> بتوقف الحلقة فوراً:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(5):<br>    if i == 2:<br>        break<br>    print(i)<br># 0, 1</div>" },
+    { title: "continue إيه؟", content: "<p><code>continue</code> بتتخطى الدورة الحالية وتكمل:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>for i in range(5):<br>    if i == 2:<br>        continue<br>    print(i)<br># 0, 1, 3, 4</div>" },
+    { title: "الفرق", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>break</strong>: توقف الحلقة كلها</li><li><strong>continue</strong>: تخطى الدورة الحالية بس</li></ul>" },
+    { title: "مع while", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>i = 0<br>while True:<br>    if i == 5:<br>        break<br>    print(i)<br>    i += 1</div>" },
+    { title: "استخدامات", content: "<p>break مفيدة في:</p><ul style='padding-right:20px;line-height:2;'><li>البحث عن قيمة</li><li>الخروج من حلقة بناءً على شرط</li><li>القوائم</li></ul>" }
+  ],
+  quizzes: [
+    { question: "break بتعمل إيه؟", answers: ["توقف الحلقة", "تتخطى دورة", "تطبع"], correct: 0 },
+    { question: "continue بتعمل إيه؟", answers: ["تتخطى دورة", "توقف الحلقة", "تحذف"], correct: 0 },
+    { question: "for i in range(5): if i==2: break = ؟", answers: ["0,1", "0,1,2", "0,1,3,4"], correct: 0 },
+    { question: "for i in range(5): if i==2: continue = ؟", answers: ["0,1,3,4", "0,1,2", "لا شيء"], correct: 0 },
+    { question: "break بتستخدم في؟", answers: ["البحث", "الطباعة", "الحساب"], correct: 0 }
+  ]
+},
+p46: {
+  chapters: [
+    { title: "List إيه؟", content: "<p>List = <strong>قائمة</strong> بنحفظ فيها كذا قيمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>arr = [1, 2, 3]<br>fruits = [\"تفاح\", \"موز\", \"عنب\"]<br>mixed = [1, \"نص\", True]</div>" },
+    { title: "مع القيم", content: "<p>ممكن تحط أي نوع في القائمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>data = [25, \"أحمد\", 3.14, True]<br>print(data)</div>" },
+    { title: "القائمة الفاضية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>empty = []<br>print(empty)  # []</div>" },
+    { title: "القائمة في القائمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>matrix = [[1, 2], [3, 4]]<br>print(matrix[0])  # [1, 2]</div>" },
+    { title: "الفايدة", content: "<p>بدل ما تعمل متغير لكل قيمة، بتعمل قائمة واحدة فيها الكل.</p>" }
+  ],
+  quizzes: [
+    { question: "List إيه؟", answers: ["قائمة", "رقم", "نص"], correct: 0 },
+    { question: "تقدر تحط أنواع مختلفة في List؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "[1,2,3] من نوع؟", answers: ["List", "int", "str"], correct: 0 },
+    { question: "القائمة الفاضية بـ؟", answers: ["[]", "{}", "()"], correct: 0 },
+    { question: "List بتساعد في؟", answers: ["تجميع البيانات", "الحذف", "الحساب"], correct: 0 }
+  ]
+},
+p47: {
+  chapters: [
+    { title: "الفهارس", content: "<p>كل عنصر في القائمة ليه <strong>رقم</strong> (index):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>arr = [\"أ\", \"ب\", \"ج\"]<br>#  index: 0, 1, 2</div>" },
+    { title: "الوصول لعنصر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(arr[0])  # أ<br>print(arr[1])  # ب<br>print(arr[2])  # ج</div>" },
+    { title: "الفهرس السلبي", content: "<p>من الآخر بـ <code>-1</code>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(arr[-1])  # ج<br>print(arr[-2])  # ب</div>" },
+    { title: "الفهرس خطأ", content: "<p>لو حاولت توصل لعنصر مش موجود:</p><div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(arr[5])  ❌ IndexError</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>scores = [90, 85, 70]<br>print(\"الأول:\", scores[0])<br>print(\"الأخير:\", scores[-1])</div>" }
+  ],
+  quizzes: [
+    { question: "الفهرس بيبدأ من؟", answers: ["0", "1", "-1"], correct: 0 },
+    { question: "arr[0] بتجيب؟", answers: ["أول عنصر", "تاني عنصر", "آخر عنصر"], correct: 0 },
+    { question: "arr[-1] بتجيب؟", answers: ["أول عنصر", "آخر عنصر", "وسط"], correct: 1 },
+    { question: "arr[5] لو القائمة 3 عناصر؟", answers: ["خطأ", "5", "None"], correct: 0 },
+    { question: "الفهرس بيساعد في؟", answers: ["الوصول لعنصر", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
+p48: {
+  chapters: [
+    { title: "append()", content: "<p><code>append()</code> بتضيف عنصر في الآخر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>arr = [1, 2]<br>arr.append(3)<br>print(arr)  # [1, 2, 3]</div>" },
+    { title: "remove()", content: "<p><code>remove()</code> بتحذف عنصر بالقيمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>arr = [1, 2, 3]<br>arr.remove(2)<br>print(arr)  # [1, 3]</div>" },
+    { title: "pop()", content: "<p><code>pop()</code> بتحذف بالفهرس:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>arr = [1, 2, 3]<br>arr.pop(0)<br>print(arr)  # [2, 3]</div>" },
+    { title: "insert()", content: "<p><code>insert()</code> بتضيف في مكان معين:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>arr = [1, 3]<br>arr.insert(1, 2)<br>print(arr)  # [1, 2, 3]</div>" },
+    { title: "الفرق", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>append</strong>: إضافة في الآخر</li><li><strong>remove</strong>: حذف بالقيمة</li><li><strong>pop</strong>: حذف بالفهرس</li><li><strong>insert</strong>: إضافة في مكان</li></ul>" }
+  ],
+  quizzes: [
+    { question: "append بتعمل إيه؟", answers: ["تضيف في الآخر", "تحذف", "ترتب"], correct: 0 },
+    { question: "remove بتحذف بـ؟", answers: ["القيمة", "الفهرس", "العشوائي"], correct: 0 },
+    { question: "pop بتحذف بـ؟", answers: ["القيمة", "الفهرس", "العشوائي"], correct: 1 },
+    { question: "insert بتعمل إيه؟", answers: ["تضيف في مكان", "تحذف", "ترتب"], correct: 0 },
+    { question: "[1,2]; append(3) = ؟", answers: ["[1,2,3]", "[3,1,2]", "[1,3,2]"], correct: 0 }
+  ]
+},
 };
