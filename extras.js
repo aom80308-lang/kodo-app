@@ -1986,4 +1986,84 @@ j45: {
     { question: "بديل try/catch؟", answers: ["catch في then", "finally", "throw"], correct: 0 }
   ]
 },
+j46: {
+  chapters: [
+    { title: "fetch و JSON", content: "<p>fetch بتروح تجيب بيانات من النت:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>fetch(\"https://api.example.com/data\")<br>  .then(res =&gt; res.json())<br>  .then(data =&gt; console.log(data))<br>  .catch(e =&gt; console.log(e));</div>" },
+    { title: "مع async/await", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>async function getData() {<br>    try {<br>        let res = await fetch(url);<br>        let data = await res.json();<br>        console.log(data);<br>    } catch (e) {<br>        console.log(e);<br>    }<br>}</div>" },
+    { title: "JSON إيه؟", content: "<p>JSON = JavaScript Object Notation، صيغة لتبادل البيانات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>{<br>  \"name\": \"أحمد\",<br>  \"age\": 25<br>}</div>" },
+    { title: "التحويل", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>JSON.stringify(obj)  // object → string<br>JSON.parse(str)      // string → object</div>" },
+    { title: "نصيحة", content: "<p>💡 fetch أساسية لأي تطبيق بيجيب بيانات من API.</p>" }
+  ],
+  quizzes: [
+    { question: "fetch بتعمل إيه؟", answers: ["تجيب بيانات", "تحذف", "تطبع"], correct: 0 },
+    { question: "JSON إيه؟", answers: ["صيغة بيانات", "دالة", "متغير"], correct: 0 },
+    { question: "res.json() بتعمل إيه؟", answers: ["تحول لـ object", "تحذف", "تطبع"], correct: 0 },
+    { question: "JSON.parse بتعمل إيه؟", answers: ["string → object", "object → string", "حذف"], correct: 0 },
+    { question: "fetch مع async؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 }
+  ]
+},
+j47: {
+  chapters: [
+    { title: "try/catch", content: "<p>التقاط الأخطاء:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try {<br>    let x = JSON.parse(\"نص غلط\");<br>} catch (e) {<br>    console.log(\"خطأ:\", e.message);<br>}</div>" },
+    { title: "finally", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try {<br>    // كود<br>} catch (e) {<br>    // معالجة<br>} finally {<br>    // دايماً<br>}</div>" },
+    { title: "throw", content: "<p>لإطلاق خطأ بنفسك:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function f(x) {<br>    if (x &lt; 0) throw new Error(\"مش مسموح\");<br>    return x;<br>}</div>" },
+    { title: "أنواع الأخطاء", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>Error</strong>: عام</li><li><strong>TypeError</strong>: نوع غلط</li><li><strong>ReferenceError</strong>: متغير غير موجود</li><li><strong>SyntaxError</strong>: كتابة غلط</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 متبلعش الأخطاء. عالجها وسجلها.</p>" }
+  ],
+  quizzes: [
+    { question: "try/catch بتعمل إيه؟", answers: ["تلتقط الأخطاء", "تحذف", "تطبع"], correct: 0 },
+    { question: "throw بتعمل إيه؟", answers: ["ترفع خطأ", "تلتقط", "تطبع"], correct: 0 },
+    { question: "finally بتتنفذ؟", answers: ["دايماً", "أبداً", "أحياناً"], correct: 0 },
+    { question: "e.message بترجع؟", answers: ["الرسالة", "النوع", "السطر"], correct: 0 },
+    { question: "ReferenceError معناها؟", answers: ["متغير غير موجود", "كتابة غلط", "نوع غلط"], correct: 0 }
+  ]
+},
+j48: {
+  chapters: [
+    { title: "throw", content: "<p>لإطلاق خطأ مخصص:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function checkAge(age) {<br>    if (age &lt; 0) {<br>        throw new Error(\"العمر مش صحيح\");<br>    }<br>    return age;<br>}</div>" },
+    { title: "أخطاء مخصصة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class ValidationError extends Error {<br>    constructor(msg) {<br>        super(msg);<br>        this.name = \"ValidationError\";<br>    }<br>}</div>" },
+    { title: "مع try/catch", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try {<br>    checkAge(-5);<br>} catch (e) {<br>    console.log(e.message);<br>}</div>" },
+    { title: "متى تستخدم throw؟", content: "<ul style='padding-right:20px;line-height:2;'><li>التحقق من البيانات</li><li>حالات غير متوقعة</li><li>رسائل خطأ واضحة</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 throw بيوقف التنفيذ. استخدمها بحكمة.</p>" }
+  ],
+  quizzes: [
+    { question: "throw بتعمل إيه؟", answers: ["ترفع خطأ", "تلتقط", "تطبع"], correct: 0 },
+    { question: "throw new Error('x')؟", answers: ["ترفع خطأ", "تطبع", "تحذف"], correct: 0 },
+    { question: "throw بتحتاج try/catch؟", answers: ["مستحسن", "مش شرط", "أيوة دايماً"], correct: 1 },
+    { question: "Error إيه؟", answers: ["كلاس خطأ", "متغير", "دالة"], correct: 0 },
+    { question: "throw بتحصل امتى؟", answers: ["عند الخطأ", "دايماً", "أبداً"], correct: 0 }
+  ]
+},
+j49: {
+  chapters: [
+    { title: "class إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Dog {<br>    bark() {<br>        console.log(\"هوهو\");<br>    }<br>}<br><br>let d = new Dog();<br>d.bark();</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>class Dog:</code></li><li>JS: <code>class Dog { }</code></li></ul>" },
+    { title: "الدوال جوه الكلاس", content: "<p>في JS، مش محتاج <code>self</code> كباراميتر أول:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Person {<br>    greet() {<br>        console.log(\"أهلاً\");<br>    }<br>}</div>" },
+    { title: "new", content: "<p>عشان تعمل كائن جديد:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let p = new Person();<br>p.greet();</div>" },
+    { title: "نصيحة", content: "<p>💡 الكلاسات بتساعد في تنظيم الكود الكبير.</p>" }
+  ],
+  quizzes: [
+    { question: "class بتعمل إيه؟", answers: ["قالب كائنات", "متغير", "دالة"], correct: 0 },
+    { question: "الدوال جوه class بتاخد؟", answers: ["مفيش self", "self", "this"], correct: 0 },
+    { question: "إزاي نعمل كائن؟", answers: ["new Person()", "Person()", "create Person"], correct: 0 },
+    { question: "في Python بـ؟", answers: ["class", "def", "func"], correct: 0 },
+    { question: "class مفيدة في؟", answers: ["تنظيم الكود", "الطباعة", "الحذف"], correct: 0 }
+  ]
+},
+j50: {
+  chapters: [
+    { title: "constructor", content: "<p>بتنفذ أول ما تعمل كائن جديد:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Person {<br>    constructor(name, age) {<br>        this.name = name;<br>        this.age = age;<br>    }<br>}<br><br>let p = new Person(\"أحمد\", 25);<br>console.log(p.name);</div>" },
+    { title: "this", content: "<p><code>this</code> بتشير للكائن الحالي:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Counter {<br>    constructor() {<br>        this.count = 0;<br>    }<br>    inc() {<br>        this.count++;<br>    }<br>}</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>def __init__(self, name):</code></li><li>JS: <code>constructor(name) { }</code></li></ul>" },
+    { title: "مع دوال", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Person {<br>    constructor(name) {<br>        this.name = name;<br>    }<br>    greet() {<br>        console.log(\"أهلاً \" + this.name);<br>    }<br>}<br><br>new Person(\"علي\").greet();</div>" },
+    { title: "نصيحة", content: "<p>💡 this مهمة جداً. خد وقتك تفهمها كويس.</p>" }
+  ],
+  quizzes: [
+    { question: "constructor بتتنفذ إمتى؟", answers: ["أول ما تعمل كائن", "بعدين", "أبداً"], correct: 0 },
+    { question: "this بتشير لـ؟", answers: ["الكائن", "المتغير", "الدالة"], correct: 0 },
+    { question: "في Python بـ؟", answers: ["__init__", "constructor", "init"], correct: 0 },
+    { question: "new Person('أحمد') = ؟", answers: ["ينشئ كائن", "يحذف", "يطبع"], correct: 0 },
+    { question: "this.count = ؟", answers: ["خاصية في الكائن", "متغير عام", "خطأ"], correct: 0 }
+  ]
+},
 };
