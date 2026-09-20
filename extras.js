@@ -2146,4 +2146,68 @@ j55: {
     { question: "Regex سهلة؟", answers: ["معقدة", "بسيطة", "بدون فايدة"], correct: 0 }
   ]
 },
+j56: {
+  chapters: [
+    { title: "آلة حاسبة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function add(a, b) {<br>    return a + b;<br>}<br>function sub(a, b) {<br>    return a - b;<br>}<br>function mul(a, b) {<br>    return a * b;<br>}<br>function div(a, b) {<br>    return a / b;<br>}<br><br>console.log(add(3, 5));  // 8</div>" },
+    { title: "مع switch", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function calc(a, b, op) {<br>    switch(op) {<br>        case \"+\": return a + b;<br>        case \"-\": return a - b;<br>        case \"*\": return a * b;<br>        case \"/\": return a / b;<br>        default: return \"عملية غير معروفة\";<br>    }<br>}</div>" },
+    { title: "مع HTML", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>&lt;input id=\"a\" type=\"number\"&gt;<br>&lt;input id=\"b\" type=\"number\"&gt;<br>&lt;button onclick=\"calc()\"&gt;احسب&lt;/button&gt;</div>" },
+    { title: "القراءة من inputs", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function calc() {<br>    let a = Number(document.getElementById(\"a\").value);<br>    let b = Number(document.getElementById(\"b\").value);<br>    alert(a + b);<br>}</div>" },
+    { title: "نصيحة", content: "<p>💡 جرب تضيف أزرار للعمليات المختلفة.</p>" }
+  ],
+  quizzes: [
+    { question: "function add(a,b) { return a+b; }", answers: ["ترجع المجموع", "الفرق", "الضرب"], correct: 0 },
+    { question: "Number() بتحول؟", answers: ["لرقم", "لنص", "لBoolean"], correct: 0 },
+    { question: "switch مع العمليات؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "لجمع رقمين؟", answers: ["+", "*", "/"], correct: 0 },
+    { question: "المدخلات من؟", answers: ["input", "div", "span"], correct: 0 }
+  ]
+},
+j57: {
+  chapters: [
+    { title: "To-Do List", content: "<p>قائمة مهام بسيطة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let tasks = [];<br><br>function addTask(text) {<br>    tasks.push({text: text, done: false});<br>}<br><br>function render() {<br>    console.log(tasks);<br>}</div>" },
+    { title: "حذف مهمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function removeTask(index) {<br>    tasks.splice(index, 1);<br>    render();<br>}</div>" },
+    { title: "تبديل الحالة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function toggle(index) {<br>    tasks[index].done = !tasks[index].done;<br>    render();<br>}</div>" },
+    { title: "حفظ في LocalStorage", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function save() {<br>    localStorage.setItem(\"tasks\", JSON.stringify(tasks));<br>}<br>function load() {<br>    let s = localStorage.getItem(\"tasks\");<br>    if (s) tasks = JSON.parse(s);<br>}</div>" },
+    { title: "تطويرات", content: "<ul style='padding-right:20px;line-height:2;'><li>إضافة تاريخ</li><li>تصنيفات</li><li>بحث</li></ul>" }
+  ],
+  quizzes: [
+    { question: "To-Do List بتعمل إيه؟", answers: ["قائمة مهام", "طباعة", "حذف"], correct: 0 },
+    { question: "push بتعمل إيه؟", answers: ["تضيف", "تحذف", "ترتب"], correct: 0 },
+    { question: "splice بتعمل إيه؟", answers: ["تحذف", "تضيف", "ترتب"], correct: 0 },
+    { question: "LocalStorage بـ؟", answers: ["JSON.stringify", "toString", "String"], correct: 0 },
+    { question: "toggle بتعمل إيه؟", answers: ["تعكس", "تحذف", "تضيف"], correct: 0 }
+  ]
+},
+j58: {
+  chapters: [
+    { title: "Weather App", content: "<p>تطبيق طقس بسيط بـ fetch:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>async function getWeather(city) {<br>    let key = \"YOUR_API_KEY\";<br>    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&amp;appid=${key}`;<br>    let res = await fetch(url);<br>    let data = await res.json();<br>    console.log(data);<br>}</div>" },
+    { title: "عرض البيانات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>document.getElementById(\"temp\").textContent = data.main.temp;<br>document.getElementById(\"desc\").textContent = data.weather[0].description;</div>" },
+    { title: "معالجة الأخطاء", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>async function getWeather(city) {<br>    try {<br>        let res = await fetch(url);<br>        if (!res.ok) throw new Error(\"فشل\");<br>        let data = await res.json();<br>    } catch (e) {<br>        console.log(e);<br>    }<br>}</div>" },
+    { title: "APIs مجانية", content: "<ul style='padding-right:20px;line-height:2;'><li>OpenWeatherMap</li><li>WeatherAPI</li><li>Open-Meteo (بدون مفتاح)</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 ابدأ بـ Open-Meteo (مش محتاج API key).</p>" }
+  ],
+  quizzes: [
+    { question: "Weather App بتستخدم؟", answers: ["fetch", "for", "while"], correct: 0 },
+    { question: "fetch بترجع؟", answers: ["Promise", "value", "خطأ"], correct: 0 },
+    { question: "res.json() بترجع؟", answers: ["Promise", "object", "خطأ"], correct: 0 },
+    { question: "لازم try/catch؟", answers: ["مستحسن", "أيوة دايماً", "لأ"], correct: 0 },
+    { question: "مفتاح API ضروري؟", answers: ["حسب الموقع", "أيوة دايماً", "لأ دايماً"], correct: 0 }
+  ]
+},
+j59: {
+  chapters: [
+    { title: "Quiz App", content: "<p>تطبيق اختبارات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let questions = [<br>    {q: \"2+2 = ؟\", answers: [\"3\", \"4\", \"5\"], correct: 1},<br>    {q: \"عاصمة مصر؟\", answers: [\"القاهرة\", \"الإسكندرية\"], correct: 0}<br>];</div>" },
+    { title: "عرض السؤال", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function showQuestion(i) {<br>    let q = questions[i];<br>    document.getElementById(\"q\").textContent = q.q;<br>    // ...<br>}</div>" },
+    { title: "حساب النتيجة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let score = 0;<br>function checkAnswer(idx, qIndex) {<br>    if (idx === questions[qIndex].correct) score++;<br>}</div>" },
+    { title: "عرض النتيجة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>function showResult() {<br>    alert(\"جبت \" + score + \" من \" + questions.length);<br>}</div>" },
+    { title: "مبروك!", content: "<p>🎉 <strong>مبروك يا أحمد!</strong> خلصت كل الدروس في التطبيق. دلوقتي عندك أساس قوي في Python و JavaScript. جرب تبني مشاريعك الخاصة، واستمتع بالرحلة.</p>" }
+  ],
+  quizzes: [
+    { question: "Quiz App بتعمل إيه؟", answers: ["اختبارات", "طباعة", "حذف"], correct: 0 },
+    { question: "أسئلة بتتخزن في؟", answers: ["Array", "متغير", "دالة"], correct: 0 },
+    { question: "النتيجة بـ؟", answers: ["عداد", "طباعة", "حذف"], correct: 0 },
+    { question: "التحقق من الإجابة بـ؟", answers: ["if", "for", "while"], correct: 0 },
+    { question: "مبروك على إيه؟", answers: ["خلصت الدروس", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
 };
