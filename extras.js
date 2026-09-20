@@ -1746,4 +1746,84 @@ j30: {
     { question: "أضيف في الأول بـ؟", answers: ["unshift", "push", "pop"], correct: 0 }
   ]
 },
+j31: {
+  chapters: [
+    { title: "map", content: "<p>بتعمل قائمة جديدة بتطبيق دالة على كل عنصر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = [1, 2, 3];<br>let doubled = a.map(x =&gt; x * 2);<br>console.log(doubled);  // [2, 4, 6]</div>" },
+    { title: "filter", content: "<p>بتفلتر العناصر حسب شرط:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let nums = [1, 2, 3, 4, 5];<br>let evens = nums.filter(x =&gt; x % 2 === 0);<br>console.log(evens);  // [2, 4]</div>" },
+    { title: "reduce", content: "<p>بتجمع كل العناصر في قيمة واحدة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let nums = [1, 2, 3, 4];<br>let sum = nums.reduce((a, b) =&gt; a + b, 0);<br>console.log(sum);  // 10</div>" },
+    { title: "المقارنة", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>map</strong>: يحول كل عنصر</li><li><strong>filter</strong>: يختار عناصر</li><li><strong>reduce</strong>: يجمعهم</li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let prices = [100, 200, 300];<br>let taxed = prices.map(p =&gt; p * 1.14);<br>let expensive = prices.filter(p =&gt; p &gt; 150);<br>console.log(taxed, expensive);</div>" }
+  ],
+  quizzes: [
+    { question: "map بتعمل إيه؟", answers: ["تحول كل عنصر", "تختار", "تجمع"], correct: 0 },
+    { question: "filter بتعمل إيه؟", answers: ["تختار عناصر", "تحول", "تجمع"], correct: 0 },
+    { question: "reduce بتعمل إيه؟", answers: ["تجمع في قيمة", "تحول", "تختار"], correct: 0 },
+    { question: "[1,2,3].map(x=>x*2) = ؟", answers: ["[2,4,6]", "[1,2,3]", "6"], correct: 0 },
+    { question: "[1,2,3,4].filter(x=>x>2) = ؟", answers: ["[3,4]", "[1,2]", "[1,2,3,4]"], correct: 0 }
+  ]
+},
+j32: {
+  chapters: [
+    { title: "Object إيه؟", content: "<p>كائن = مجموعة من المفتاح والقيمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let person = {<br>    name: \"أحمد\",<br>    age: 25,<br>    city: \"القاهرة\"<br>};<br>console.log(person.name);  // أحمد</div>" },
+    { title: "الوصول للقيم", content: "<ul style='padding-right:20px;line-height:2;'><li><code>person.name</code> — dot notation</li><li><code>person[\"name\"]</code> — bracket notation</li></ul>" },
+    { title: "إضافة وتعديل", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>person.email = \"a@b.com\";<br>person.age = 26;<br>delete person.city;</div>" },
+    { title: "الفرق من dict Python", content: "<p>نفس الفكرة، بس المفاتيح مش لازم تكون بين علامات تنصيص.</p>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let car = {<br>    brand: \"Toyota\",<br>    year: 2020,<br>    start: function() {<br>        console.log(\"العربية اشتغلت\");<br>    }<br>};<br>car.start();</div>" }
+  ],
+  quizzes: [
+    { question: "Object بـ؟", answers: ["{ }", "[ ]", "( )"], correct: 0 },
+    { question: "الوصول بـ؟", answers: ["النقطة أو [ ]", "الفهرس", "الحذف"], correct: 0 },
+    { question: "في Python؟", answers: ["dict", "list", "tuple"], correct: 0 },
+    { question: "person.name = ؟", answers: ["القيمة", "المفتاح", "خطأ"], correct: 0 },
+    { question: "Object مفيد في؟", answers: ["تمثيل البيانات", "الطباعة", "الحذف"], correct: 0 }
+  ]
+},
+j33: {
+  chapters: [
+    { title: "Destructuring", content: "<p>تفكيك Object لمتغيرات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let person = {name: \"أحمد\", age: 25};<br>let {name, age} = person;<br>console.log(name, age);  // أحمد 25</div>" },
+    { title: "مع Arrays", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let [a, b] = [1, 2];<br>console.log(a, b);  // 1 2</div>" },
+    { title: "مع أسماء مختلفة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let {name: userName} = {name: \"علي\"};<br>console.log(userName);  // علي</div>" },
+    { title: "قيم افتراضية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let {name, age = 0} = {name: \"علي\"};<br>console.log(age);  // 0</div>" },
+    { title: "نصيحة", content: "<p>💡 Destructuring بتوفر كتير من الكود المتكرر.</p>" }
+  ],
+  quizzes: [
+    { question: "Destructuring بتعمل إيه؟", answers: ["تفكك", "تجمع", "تحذف"], correct: 0 },
+    { question: "let {a} = {a:1}; a = ؟", answers: ["1", "{a:1}", "خطأ"], correct: 0 },
+    { question: "let [x,y] = [1,2]; y = ؟", answers: ["2", "1", "خطأ"], correct: 0 },
+    { question: "مع Object بـ؟", answers: ["{ }", "[ ]", "( )"], correct: 0 },
+    { question: "مع Array بـ؟", answers: ["[ ]", "{ }", "( )"], correct: 0 }
+  ]
+},
+j34: {
+  chapters: [
+    { title: "querySelector", content: "<p>لاختيار عنصر من الصفحة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let el = document.querySelector(\"#myId\");<br>let btn = document.querySelector(\".myBtn\");<br>let div = document.querySelector(\"div\");</div>" },
+    { title: "أنواع المحددات", content: "<ul style='padding-right:20px;line-height:2;'><li><code>#id</code> — بالـ id</li><li><code>.class</code> — بالـ class</li><li><code>tag</code> — بالاسم</li></ul>" },
+    { title: "DOM إيه؟", content: "<p>DOM = تمثيل الصفحة كشجرة عناصر. JS بتقدر تعدل فيها.</p>" },
+    { title: "querySelectorAll", content: "<p>لاختيار كل العناصر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let all = document.querySelectorAll(\"p\");<br>console.log(all.length);</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let heading = document.querySelector(\"h1\");<br>console.log(heading.textContent);</div>" }
+  ],
+  quizzes: [
+    { question: "querySelector بتعمل إيه؟", answers: ["تختار عنصر", "تحذف", "تضيف"], correct: 0 },
+    { question: "# بتشير لـ؟", answers: ["id", "class", "tag"], correct: 0 },
+    { question: ". بتشير لـ؟", answers: ["class", "id", "tag"], correct: 0 },
+    { question: "كل العناصر بـ؟", answers: ["querySelectorAll", "querySelector", "getAll"], correct: 0 },
+    { question: "DOM إيه؟", answers: ["تمثيل الصفحة", "لغة", "مكتبة"], correct: 0 }
+  ]
+},
+j35: {
+  chapters: [
+    { title: "textContent", content: "<p>لقراءة أو تغيير نص عنصر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let h1 = document.querySelector(\"h1\");<br>h1.textContent = \"نص جديد\";</div>" },
+    { title: "innerHTML", content: "<p>زي textContent بس بتقدر تحط HTML:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>el.innerHTML = \"&lt;strong&gt;نص&lt;/strong&gt;\";</div>" },
+    { title: "الفرق", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>textContent</strong>: نص عادي</li><li><strong>innerHTML</strong>: يفهم HTML</li></ul>" },
+    { title: "style", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>el.style.color = \"red\";<br>el.style.fontSize = \"20px\";<br>el.style.display = \"none\";</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let btn = document.querySelector(\"button\");<br>btn.textContent = \"اضغطني\";<br>btn.style.background = \"blue\";</div>" }
+  ],
+  quizzes: [
+    { question: "textContent بتعمل إيه؟", answers: ["تغير النص", "تحذف", "تضيف"], correct: 0 },
+    { question: "innerHTML تقدر تحط؟", answers: ["HTML", "نص بس", "لا شيء"], correct: 0 },
+    { question: "style بتعمل إيه؟", answers: ["تغير التنسيق", "تحذف", "تضيف"], correct: 0 },
+    { question: "إخفاء عنصر بـ؟", answers: ["display=none", "hide()", "delete"], correct: 0 },
+    { question: "الفرق من textContent؟", answers: ["innerHTML يفهم HTML", "مفيش", "أسرع"], correct: 0 }
+  ]
+},
 };
