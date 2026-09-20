@@ -962,4 +962,84 @@ p58: {
     { question: "دالة بباراميتر؟", answers: ["تاخد مدخل", "مفيش مدخل", "طباعة"], correct: 0 }
   ]
 },
+p59: {
+  chapters: [
+    { title: "return إيه؟", content: "<p><code>return</code> بترجع قيمة من الدالة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def sq(x):<br>    return x * x<br><br>result = sq(4)<br>print(result)  # 16</div>" },
+    { title: "الفرق من print", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>print</strong>: بتعرض القيمة</li><li><strong>return</strong>: بترجع القيمة للاستخدام</li></ul><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = sq(4)  # شغال<br># x = print(4)  # خطأ</div>" },
+    { title: "بدون return", content: "<p>لو مش فيه return، الدالة بترجع None:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def f():<br>    print(\"hi\")<br><br>x = f()<br>print(x)  # None</div>" },
+    { title: "return بتوقف الدالة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def f():<br>    return 1<br>    print(\"مش هيتنفذ\")<br><br>print(f())  # 1</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def add(a, b):<br>    return a + b<br><br>total = add(3, 5)<br>print(total * 2)  # 16</div>" }
+  ],
+  quizzes: [
+    { question: "return بتعمل إيه؟", answers: ["ترجع قيمة", "تطبع", "تحفظ"], correct: 0 },
+    { question: "الفرق من print؟", answers: ["return ترجع القيمة", "مفيش فرق", "print أسرع"], correct: 0 },
+    { question: "لو مش فيه return؟", answers: ["ترجع None", "خطأ", "ترجع 0"], correct: 0 },
+    { question: "return بتوقف الدالة؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "def sq(x): return x*x; sq(4) = ؟", answers: ["16", "8", "4"], correct: 0 }
+  ]
+},
+p60: {
+  chapters: [
+    { title: "Default Parameters", content: "<p>بتقدر تحدد قيمة افتراضية للباراميتر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def greet(name=\"كودو\"):<br>    print(\"أهلاً \" + name)<br><br>greet()        # أهلاً كودو<br>greet(\"أحمد\")  # أهلاً أحمد</div>" },
+    { title: "أكتر من واحد", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def power(base, exp=2):<br>    return base ** exp<br><br>print(power(5))     # 25<br>print(power(5, 3))  # 125</div>" },
+    { title: "الترتيب", content: "<p>الباراميترات الافتراضية لازم تكون في الآخر:</p><div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def f(a=1, b):  ❌</div><p>الصح:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def f(b, a=1):  ✅</div>" },
+    { title: "ليه مفيدة؟", content: "<ul style='padding-right:20px;line-height:2;'><li>مرونة أكتر</li><li>كود أنضف</li><li>قيم شائعة</li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def introduce(name, age=0):<br>    print(\"اسمي\", name)<br>    if age &gt; 0:<br>        print(\"عمري\", age)<br><br>introduce(\"أحمد\")<br>introduce(\"علي\", 25)</div>" }
+  ],
+  quizzes: [
+    { question: "الباراميتر الافتراضي إيه؟", answers: ["قيمة افتراضية", "قيمة نهائية", "متغير"], correct: 0 },
+    { question: "def g(name=\"كودو\"): g() = ؟", answers: ["كودو", "خطأ", "None"], correct: 0 },
+    { question: "الباراميترات الافتراضية في؟", answers: ["الآخر", "الأول", "الوسط"], correct: 0 },
+    { question: "def p(b, e=2): p(5) = ؟", answers: ["25", "5", "خطأ"], correct: 0 },
+    { question: "مفيدة في؟", answers: ["قيم شائعة", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
+p61: {
+  chapters: [
+    { title: "lambda إيه؟", content: "<p><code>lambda</code> = دالة مختصرة في سطر واحد:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>sq = lambda x: x * x<br>print(sq(5))  # 25</div>" },
+    { title: "المقارنة", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>def</strong>: دالة عادية</li><li><strong>lambda</strong>: دالة مختصرة</li></ul><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def sq(x): return x * x<br>sq = lambda x: x * x  # نفس الحاجة</div>" },
+    { title: "بدون اسم", content: "<p>ممكن تستخدمها بدون تخزين:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print((lambda x: x + 1)(5))  # 6</div>" },
+    { title: "أكتر من باراميتر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>add = lambda a, b: a + b<br>print(add(3, 5))  # 8</div>" },
+    { title: "متى تستخدمها؟", content: "<ul style='padding-right:20px;line-height:2;'><li>دالة بسيطة</li><li>مع map و filter</li><li>مش محتاجة اسم</li></ul>" }
+  ],
+  quizzes: [
+    { question: "lambda إيه؟", answers: ["دالة مختصرة", "متغير", "حلقة"], correct: 0 },
+    { question: "f=lambda x:x*2; f(5) = ؟", answers: ["10", "5", "خطأ"], correct: 0 },
+    { question: "lambda تقدر تكون بدون اسم؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "lambda a,b:a+b = ؟", answers: ["ترجع المجموع", "الفرق", "الضرب"], correct: 0 },
+    { question: "lambda مفيدة في؟", answers: ["الدوال البسيطة", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
+p62: {
+  chapters: [
+    { title: "map إيه؟", content: "<p><code>map()</code> بتطبق دالة على كل عنصر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>nums = [1, 2, 3]<br>doubled = list(map(lambda x: x * 2, nums))<br>print(doubled)  # [2, 4, 6]</div>" },
+    { title: "مع def", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>def sq(x):<br>    return x * x<br><br>nums = [1, 2, 3]<br>result = list(map(sq, nums))<br>print(result)  # [1, 4, 9]</div>" },
+    { title: "ملاحظة", content: "<p>لازم تحولها لـ list:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(map(lambda x: x*2, [1,2]))<br># &lt;map object&gt;<br>print(list(map(...)))  # القيم</div>" },
+    { title: "مع for", content: "<p>بدون map:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>nums = [1, 2, 3]<br>doubled = []<br>for n in nums:<br>    doubled.append(n * 2)</div><p>مع map: سطر واحد.</p>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>تحويل قيم</li><li>تطبيق دالة على قائمة</li><li>تنظيف بيانات</li></ul>" }
+  ],
+  quizzes: [
+    { question: "map بتعمل إيه؟", answers: ["تطبق دالة على كل عنصر", "تحذف", "ترتب"], correct: 0 },
+    { question: "map(lambda x:x*2, [1,2]) = ؟", answers: ["[2,4]", "[1,2]", "خطأ"], correct: 0 },
+    { question: "لازم نحولها لـ؟", answers: ["list", "int", "str"], correct: 0 },
+    { question: "map بترجع؟", answers: ["map object", "list", "int"], correct: 0 },
+    { question: "map مفيدة في؟", answers: ["تحويل قيم", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
+p63: {
+  chapters: [
+    { title: "List Comprehension", content: "<p>طريقة مختصرة لإنشاء قائمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>s = [x * 2 for x in range(3)]<br>print(s)  # [0, 2, 4]</div>" },
+    { title: "المقارنة", content: "<p>الطريقة العادية:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>s = []<br>for x in range(3):<br>    s.append(x * 2)</div><p>مع Comprehension: سطر واحد.</p>" },
+    { title: "التركيب", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>[التعبير for المتغير in السلسلة]</div><p>مثال: <code>[x*2 for x in range(3)]</code></p>" },
+    { title: "أمثلة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>squares = [x**2 for x in range(5)]<br># [0, 1, 4, 9, 16]<br>uppers = [c.upper() for c in \"abc\"]<br># ['A', 'B', 'C']</div>" },
+    { title: "نصيحة", content: "<p>💡 خليها بسيطة. لو معقدة، استخدم for عادي.</p>" }
+  ],
+  quizzes: [
+    { question: "Comprehension إيه؟", answers: ["إنشاء سريع", "حذف", "ترتيب"], correct: 0 },
+    { question: "[x*2 for x in range(3)] = ؟", answers: ["[0,2,4]", "[2,4,6]", "[1,2,3]"], correct: 0 },
+    { question: "[x**2 for x in range(3)] = ؟", answers: ["[0,1,4]", "[1,4,9]", "[0,1,2]"], correct: 0 },
+    { question: "التركيب فيه؟", answers: ["for", "if بس", "while"], correct: 0 },
+    { question: "أحسن من؟", answers: ["for + append", "print", "del"], correct: 0 }
+  ]
+},
 };
