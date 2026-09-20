@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="manifest" href="manifest.json">
 <script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('pwabuilder-sw.js'); }); }</script>
+<script src="extras.js"></script>
 <title>Kodo - كودو</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
@@ -3675,6 +3676,116 @@ if (window.matchMedia) {
     } else {
       chip.style.display = 'none';
     }
+  };
+})();
+</script>
+<script>
+(function() {
+  if (typeof EXTRAS === 'undefined') return;
+  var origOpenLesson = App.openLesson;
+  App.openLesson = function(lesson, unitCount, globalIdx) {
+    var extra = EXTRAS[lesson.id];
+    if (!extra) { return origOpenLesson.call(this, lesson, unitCount, globalIdx); }
+    this._extraChapters = extra.chapters;
+    this._extraQuizzes = extra.quizzes;
+    this._extraChapterIdx = 0;
+    this._extraQuizIdx = 0;
+    this._extraScore = 0;
+    this._showExtraChapter(lesson);
+  };
+  App._showExtraChapter = function(lesson) {
+    var ch = this._extraChapters[this._extraChapterIdx];
+    document.getElementById('lesson-title').textContent = ch.title;
+    document.getElementById('lesson-content').innerHTML = ch.content;
+    document.getElementById('code-container').innerHTML = '';
+    document.getElementById('run-area').innerHTML = '';
+    document.getElementById('output-box').classList.remove('show');
+    var btn = document.getElementById('btn-to-quiz');
+    btn.textContent = (this._extraChapterIdx < this._extraChapters.length - 1) ? 'التالي ←' : 'ابدأ الاختبار ←';
+    this.go('lesson-screen');
+  };
+  var origGoToQuiz = App.goToQuiz;
+  App.goToQuiz = function() {
+    if (this._extraChapters && this._extraChapterIdx < this._extraChapters.length - 1) {
+      this._extraChapterIdx++;
+      this._showExtraChapter(this.state.currentLesson);
+      return;
+    }
+    if (this._extraQuizzes) {
+      this._extraQuizIdx = 0;
+      this._extraScore = 0;
+      this._showExtraQuiz();
+      return;
+    }
+    origGoToQuiz.call(this);
+  };
+  App._showExtraQuiz = function() {
+    var q = this._extraQuizzes[this._extraQuizIdx];
+    document.getElementById('quiz-question').textContent = '(' + (this._extraQuizIdx + 1) + '/' + this._extraQuizzes.length + ') ' + q.question;
+    var ac = document.getElementById('answers-container');
+    ac.innerHTML = '';
+    var self = this;
+    for (var i = 0; i < q.answers.length; i++) {
+      var b = document.createElement('button');
+      b.className = 'answer-btn';
+      b.textContent = q.answers[i];
+      b.onclick = (function(idx) { return function() { self._selectExtraAnswer(idx); }; })(i);
+      ac.appendChild(b);
+    }
+    this.go('quiz-screen');
+  };
+  App._selectExtraAnswer = function(sel) {
+    var q = this._extraQuizzes[this._extraQuizIdx];
+    var all = document.querySelectorAll('.answer-btn');
+    for (var i = 0; i < all.length; i++) all[i].classList.add('disabled');
+    var xpMult = this.state._xpMultiplier || 1;
+    if (sel === q.correct) {
+      all[sel].classList.add('correct');
+      this._extraScore++;
+      this.state.xp += 10 * xpMult;
+      this.state.stats.correctAnswers += 1;
+      this.playSound('correct');
+      this.toast('صح! +' + (10 * xpMult) + ' XP ⭐');
+    } else {
+      all[sel].classList.add('wrong');
+      if (all[q.correct]) all[q.correct].classList.add('correct');
+      this.state.hearts = Math.max(0, this.state.hearts - 1);
+      this.playSound('wrong');
+      this.toast('غلط! -1 ❤️');
+    }
+    this.updateStatsUI();
+    this.saveState();
+    var self = this;
+    setTimeout(function() {
+      self._extraQuizIdx++;
+      if (self._extraQuizIdx < self._extraQuizzes.length) {
+        self._showExtraQuiz();
+      } else {
+        self._finishExtraQuiz();
+      }
+    }, 1500);
+  };
+  App._finishExtraQuiz = function() {
+    var course = this.state.currentCourse;
+    if (!this.state.completed[course]) this.state.completed[course] = {};
+    this.state.completed[course][this.state.currentLesson.id] = true;
+    this.state.stats.totalLessons = this.getTotalCompleted();
+    this.state.stats.levelsComplete = this.getLevelsComplete();
+    var score = this._extraScore;
+    var total = this._extraQuizzes.length;
+    var gemMult = this._gemsMultiplier || 1;
+    this.state.gems += (score >= total / 2 ? 10 : 5) * gemMult;
+    this.saveState();
+    this.checkAchievements();
+    document.getElementById('result-title').textContent = (score >= total / 2) ? 'برافو! 🎉' : 'محاولة كويسة! 💪';
+    document.getElementById('result-subtitle').textContent = 'جبت ' + score + ' من ' + total;
+    document.getElementById('result-xp').textContent = '+' + (score * 10);
+    document.getElementById('result-score').textContent = score + '/' + total;
+    this.go('result-screen');
+    this.playSound('complete');
+    if (score >= total / 2) this.confetti();
+    this._extraChapters = null;
+    this._extraQuizzes = null;
   };
 })();
 </script>
