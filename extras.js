@@ -322,4 +322,84 @@ p18: {
     { question: "type(5) هيطبع؟", answers: ["int", "class", "5"], correct: 0 }
   ]
 },
+p19: {
+  chapters: [
+    { title: "قواعد التسمية", content: "<p>اسم المتغير لازم يتبع قواعد:</p><ul style='padding-right:20px;line-height:2;'><li>يبدأ بحرف أو _</li><li>مفيش مسافات</li><li>مفيش رموز خاصة (@#$%)</li><li>ممكن يحتوي على أرقام</li></ul>" },
+    { title: "أمثلة صح", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>user_name = \"علي\"<br>age2 = 25<br>_count = 10<br>firstName = \"أحمد\"</div>" },
+    { title: "أمثلة غلط", content: "<div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>2user = \"علي\"   ❌<br>user name = \"علي\"  ❌<br>user@name = \"علي\"  ❌</div>" },
+    { title: "حساسية الحالة", content: "<p>Python حساسة لحالة الأحرف:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = \"أحمد\"<br>Name = \"علي\"<br>NAME = \"محمد\"</div><p>💡 3 متغيرات مختلفة.</p>" },
+    { title: "أسماء مميزة", content: "<p>خلي أسماء المتغيرات واضحة:</p><ul style='padding-right:20px;line-height:2;'><li>✅ <code>user_age</code></li><li>❌ <code>x</code></li><li>✅ <code>total_price</code></li></ul>" }
+  ],
+  quizzes: [
+    { question: "الصح من دول؟", answers: ["2user", "user_name", "user name"], correct: 1 },
+    { question: "name و Name نفس المتغير؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "المتغير يبدأ بـ؟", answers: ["رقم", "حرف أو _", "رمز"], correct: 1 },
+    { question: "أحسن اسم لمتغير؟", answers: ["x", "user_age", "a"], correct: 1 },
+    { question: "المسافات مسموحة؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 }
+  ]
+},
+p20: {
+  chapters: [
+    { title: "تعديل القيمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 5<br>print(x)  # 5<br>x = 10<br>print(x)  # 10</div>" },
+    { title: "زيادة القيمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 5<br>x = x + 3<br>print(x)  # 8</div>" },
+    { title: "اختصار الزيادة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 5<br>x += 3   # نفس x = x + 3<br>print(x)  # 8</div>" },
+    { title: "كل العمليات", content: "<ul style='padding-right:20px;line-height:2;'><li><code>x += 3</code> ← زيادة</li><li><code>x -= 3</code> ← نقصان</li><li><code>x *= 2</code> ← ضرب</li><li><code>x /= 2</code> ← قسمة</li></ul>" },
+    { title: "الترتيب مهم", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 5<br>y = x + 1<br>x = 10<br>print(y)  # 6</div><p>💡 y خد القيمة القديمة.</p>" }
+  ],
+  quizzes: [
+    { question: "x=5; x=10; print(x) = ؟", answers: ["5", "10", "15"], correct: 1 },
+    { question: "x=5; x+=3; print(x) = ؟", answers: ["5", "8", "53"], correct: 1 },
+    { question: "x += 3 يعني؟", answers: ["x = 3", "x = x + 3", "x + 3"], correct: 1 },
+    { question: "x *= 2 بيعمل إيه؟", answers: ["x = x * 2", "x + 2", "x = 2"], correct: 0 },
+    { question: "الترتيب بيأثر؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 }
+  ]
+},
+p21: {
+  chapters: [
+    { title: "int إيه؟", content: "<p><code>int</code> = عدد صحيح.</p><p>أمثلة: 5، 100، -3، 0</p>" },
+    { title: "float إيه؟", content: "<p><code>float</code> = عدد عشري.</p><p>أمثلة: 3.14، 2.5، -1.75</p>" },
+    { title: "الفرق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(5)     # int<br>print(5.0)   # float</div>" },
+    { title: "تغيير النوع", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = int(5.9)   # 5<br>y = float(5)   # 5.0</div>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>int:</strong> العمر، العدد</li><li><strong>float:</strong> السعر، الوزن</li></ul>" }
+  ],
+  quizzes: [
+    { question: "3.14 من أي نوع؟", answers: ["int", "float", "نص"], correct: 1 },
+    { question: "5 من أي نوع؟", answers: ["int", "float", "نص"], correct: 0 },
+    { question: "int(5.9) = ؟", answers: ["5", "6", "5.9"], correct: 0 },
+    { question: "float(5) = ؟", answers: ["5", "5.0", "5.5"], correct: 1 },
+    { question: "السعر من نوع؟", answers: ["int", "float", "نص"], correct: 1 }
+  ]
+},
+p22: {
+  chapters: [
+    { title: "type()", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(type(5))<br>print(type(3.14))<br>print(type(\"أهلاً\"))<br>print(type(True))</div>" },
+    { title: "النتائج", content: "<div style='background:#0F172A;color:#22C55E;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;'>class 'int'<br>class 'float'<br>class 'str'<br>class 'bool'</div>" },
+    { title: "مع المتغيرات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 10<br>print(type(x))  # int</div>" },
+    { title: "ليه مهمة؟", content: "<ul style='padding-right:20px;line-height:2;'><li>تعرف نوع القيمة</li><li>تكتشف الأخطاء</li><li>تتحقق من البيانات</li></ul>" },
+    { title: "نصيحة", content: "<p>💡 استخدم type() كتير لو مش متأكد من نوع قيمة.</p>" }
+  ],
+  quizzes: [
+    { question: "type(5) = ؟", answers: ["int", "class 'int'", "5"], correct: 1 },
+    { question: "type(\"نص\") = ؟", answers: ["str", "int", "class"], correct: 0 },
+    { question: "type(True) = ؟", answers: ["int", "bool", "float"], correct: 1 },
+    { question: "type(3.14) = ؟", answers: ["float", "int", "str"], correct: 0 },
+    { question: "type بتساعد في؟", answers: ["الحذف", "معرفة النوع", "الحساب"], correct: 1 }
+  ]
+},
+p23: {
+  chapters: [
+    { title: "الجمع", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(5 + 3)     # 8<br>print(10 + 20)   # 30</div>" },
+    { title: "الطرح", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(10 - 4)    # 6<br>print(5 - 10)    # -5</div>" },
+    { title: "خلط العمليات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(5 + 3 - 2)   # 6<br>print(10 - 5 + 3)  # 8</div><p>💡 من الشمال لليمين.</p>" },
+    { title: "مع المتغيرات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = 10<br>y = 5<br>print(x + y)   # 15<br>print(x - y)   # 5</div>" },
+    { title: "نصيحة", content: "<p>💡 جرب بنفسك:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(2026 - 1991)</div>" }
+  ],
+  quizzes: [
+    { question: "5 + 3 = ؟", answers: ["8", "53", "2"], correct: 0 },
+    { question: "10 - 4 = ؟", answers: ["6", "14", "4"], correct: 0 },
+    { question: "الترتيب من؟", answers: ["اليمين للشمال", "الشمال لليمين", "مش مهم"], correct: 1 },
+    { question: "5 + 3 - 2 = ؟", answers: ["6", "10", "4"], correct: 0 },
+    { question: "x=10; y=5; x-y = ؟", answers: ["15", "5", "-5"], correct: 1 }
+  ]
+},
 };
