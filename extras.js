@@ -1506,4 +1506,84 @@ j15: {
     { question: "or في JS؟", answers: ["||", "or", "OR"], correct: 0 }
   ]
 },
+j16: {
+  chapters: [
+    { title: "Template Literals", content: "<p>طريقة حديثة لدمج النصوص بـ <code>` `</code> و <code>${}</code>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let name = \"أحمد\";<br>let age = 25;<br>console.log(`أهلاً ${name}، عمرك ${age}`);</div><p>النتيجة: أهلاً أحمد، عمرك 25</p>" },
+    { title: "المقارنة", content: "<p>الطريقة القديمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>\"أهلاً \" + name + \" عمرك \" + age</div><p>Template: أنضف وأسهل.</p>" },
+    { title: "متعدد الأسطر", content: "<p>تقدر تكتب نص على أكتر من سطر:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let msg = `سطر 1<br>سطر 2<br>سطر 3`;</div>" },
+    { title: "مع العمليات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let a = 5, b = 3;<br>console.log(`المجموع: ${a + b}`);<br>// المجموع: 8</div>" },
+    { title: "نصيحة", content: "<p>💡 استخدم Template Literals دايماً. أسهل وأوضح من الدمج بـ +.</p>" }
+  ],
+  quizzes: [
+    { question: "Template Literals بـ؟", answers: ["` `", "\" \"", "' '"], correct: 0 },
+    { question: "المتغير جوه بـ؟", answers: ["${}", "{}", "[]"], correct: 0 },
+    { question: "`أهلاً ${name}` = ؟", answers: ["أهلاً + قيمة name", "أهلاً name", "خطأ"], correct: 0 },
+    { question: "Template بتسمح بأسطر متعددة؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "الأفضل؟", answers: ["Template", "+", "concat"], correct: 0 }
+  ]
+},
+j17: {
+  chapters: [
+    { title: "length", content: "<p><code>length</code> بترجع طول النص:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let name = \"hello\";<br>console.log(name.length);  // 5</div>" },
+    { title: "مع النصوص العربية", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>\"أحمد\".length  // 4</div>" },
+    { title: "مع المسافات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>\"a b c\".length  // 5</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>len(\"hello\")</code></li><li>JS: <code>\"hello\".length</code></li></ul>" },
+    { title: "استخدامات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let pass = \"abc123\";<br>if (pass.length &lt; 8) {<br>    console.log(\"قصيرة\");<br>}</div>" }
+  ],
+  quizzes: [
+    { question: "length بترجع؟", answers: ["طول النص", "النص", "الحجم"], correct: 0 },
+    { question: "\"hello\".length = ؟", answers: ["5", "hello", "خطأ"], correct: 0 },
+    { question: "في Python؟", answers: ["len()", "length", "size"], correct: 0 },
+    { question: "المسافات بتتحسب؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "length خاصية ولا دالة؟", answers: ["خاصية", "دالة", "متغير"], correct: 0 }
+  ]
+},
+j18: {
+  chapters: [
+    { title: "toUpperCase", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let s = \"hello\";<br>console.log(s.toUpperCase());  // HELLO</div>" },
+    { title: "toLowerCase", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let s = \"HELLO\";<br>console.log(s.toLowerCase());  // hello</div>" },
+    { title: "بدون تعديل الأصلي", content: "<p>النص الأصلي مبيتغيرش:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let s = \"hello\";<br>let up = s.toUpperCase();<br>console.log(s);    // hello<br>console.log(up);   // HELLO</div>" },
+    { title: "مع الشرط", content: "<p>مفيدة لمقارنة بدون حساسية للحالة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let input = \"YES\";<br>if (input.toLowerCase() === \"yes\") {<br>    console.log(\"تم\");<br>}</div>" },
+    { title: "أدوات نصية تانية", content: "<ul style='padding-right:20px;line-height:2;'><li><code>trim()</code> — شيل مسافات</li><li><code>replace()</code> — استبدال</li><li><code>split()</code> — تقسيم</li><li><code>includes()</code> — بحث</li></ul>" }
+  ],
+  quizzes: [
+    { question: "\"hello\".toUpperCase() = ؟", answers: ["HELLO", "hello", "Hello"], correct: 0 },
+    { question: "\"HELLO\".toLowerCase() = ؟", answers: ["hello", "HELLO", "Hello"], correct: 0 },
+    { question: "بتغير النص الأصلي؟", answers: ["لأ", "أيوة", "أحياناً"], correct: 0 },
+    { question: "المقارنة بدون حساسية؟", answers: ["toLowerCase", "upper", "trim"], correct: 0 },
+    { question: "trim بتعمل إيه؟", answers: ["شيل مسافات", "كبر", "صغر"], correct: 0 }
+  ]
+},
+j19: {
+  chapters: [
+    { title: "if إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let x = 10;<br>if (x &gt; 5) {<br>    console.log(\"كبير\");<br>}</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>if x &gt; 5:</code></li><li>JS: <code>if (x &gt; 5) { }</code></li></ul>" },
+    { title: "الأقواس", content: "<p>الأقواس <code>{ }</code> لازم، حتى لو سطر واحد (يفضل تستخدمها دايماً):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>if (x &gt; 5) console.log(\"كبير\");  // شغال<br>if (x &gt; 5) {<br>    console.log(\"كبير\");<br>}</div>" },
+    { title: "مقارنات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>&gt;, &lt;, &gt;=, &lt;=, ===, !==</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let age = 20;<br>if (age &gt;= 18) {<br>    console.log(\"بالغ\");<br>}</div>" }
+  ],
+  quizzes: [
+    { question: "if في JS بـ؟", answers: ["( ) { }", ":", "بدون أقواس"], correct: 0 },
+    { question: "if (x > 5) بتعمل إيه؟", answers: ["شرط", "طباعة", "حذف"], correct: 0 },
+    { question: "الفرق من Python؟", answers: ["أقواس", "مفيش فرق", "نقطة"], correct: 0 },
+    { question: "المقارنة بـ؟", answers: ["===", "=", ":="], correct: 0 },
+    { question: "الأقواس إلزامية؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 }
+  ]
+},
+j20: {
+  chapters: [
+    { title: "else", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let x = 3;<br>if (x &gt; 5) {<br>    console.log(\"كبير\");<br>} else {<br>    console.log(\"صغير\");<br>}</div>" },
+    { title: "else if", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let grade = 85;<br>if (grade &gt;= 90) {<br>    console.log(\"ممتاز\");<br>} else if (grade &gt;= 75) {<br>    console.log(\"جيد جداً\");<br>} else {<br>    console.log(\"مقبول\");<br>}</div>" },
+    { title: "الفرق من Python", content: "<ul style='padding-right:20px;line-height:2;'><li>Python: <code>elif</code></li><li>JS: <code>else if</code></li></ul>" },
+    { title: "ترتيب الشروط", content: "<p>بيتحقق من فوق لتحت، وأول شرط صح يتنفذ، الباقي يتجاهل.</p>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let temp = 30;<br>if (temp &gt; 35) {<br>    console.log(\"حر جداً\");<br>} else if (temp &gt; 25) {<br>    console.log(\"حلو\");<br>} else {<br>    console.log(\"بارد\");<br>}</div>" }
+  ],
+  quizzes: [
+    { question: "else بتنفذ إمتى؟", answers: ["لو الشرط غلط", "لو الشرط صح", "دايماً"], correct: 0 },
+    { question: "elif في JS؟", answers: ["else if", "elif", "else"], correct: 0 },
+    { question: "x=3; if(x>5) else = ؟", answers: ["else", "if", "خطأ"], correct: 0 },
+    { question: "الترتيب من؟", answers: ["فوق لتحت", "تحت لفوق", "عشوائي"], correct: 0 },
+    { question: "else لازم قبلها؟", answers: ["if", "else if", "for"], correct: 0 }
+  ]
+},
 };
