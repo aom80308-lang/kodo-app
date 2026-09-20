@@ -802,4 +802,84 @@ p48: {
     { question: "[1,2]; append(3) = ؟", answers: ["[1,2,3]", "[3,1,2]", "[1,3,2]"], correct: 0 }
   ]
 },
+p49: {
+  chapters: [
+    { title: "sort()", content: "<p><code>sort()</code> بترتب القائمة تصاعدياً:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a = [3, 1, 2]<br>a.sort()<br>print(a)  # [1, 2, 3]</div>" },
+    { title: "reverse()", content: "<p><code>reverse()</code> بتعكس ترتيب القائمة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a = [1, 2, 3]<br>a.reverse()<br>print(a)  # [3, 2, 1]</div>" },
+    { title: "ترتيب تنازلي", content: "<p>بـ <code>reverse=True</code>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a = [1, 3, 2]<br>a.sort(reverse=True)<br>print(a)  # [3, 2, 1]</div>" },
+    { title: "مع النصوص", content: "<p>بتشتغل مع النصوص كمان:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>names = [\"ج\", \"أ\", \"ب\"]<br>names.sort()<br>print(names)</div>" },
+    { title: "مهم", content: "<p>💡 <code>sort()</code> بتعدل القائمة الأصلية، مش بترجع واحدة جديدة.</p>" }
+  ],
+  quizzes: [
+    { question: "sort بتعمل إيه؟", answers: ["ترتب تصاعدي", "تحذف", "تضيف"], correct: 0 },
+    { question: "reverse بتعمل إيه؟", answers: ["تعكس", "ترتب", "تحذف"], correct: 0 },
+    { question: "[3,1,2].sort() = ؟", answers: ["[1,2,3]", "[3,2,1]", "[3,1,2]"], correct: 0 },
+    { question: "ترتيب تنازلي بـ؟", answers: ["sort(reverse=True)", "sort()", "reverse()"], correct: 0 },
+    { question: "sort بتعدل القائمة الأصلية؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 }
+  ]
+},
+p50: {
+  chapters: [
+    { title: "Tuple إيه؟", content: "<p><code>tuple</code> = قائمة <strong>ثابتة</strong>، مش بتتغير بعد الإنشاء:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>t = (1, 2, 3)<br>print(t[0])  # 1</div>" },
+    { title: "الفرق من List", content: "<ul style='padding-right:20px;line-height:2;'><li><strong>List</strong>: [ ] — قابلة للتغيير</li><li><strong>Tuple</strong>: ( ) — ثابتة</li></ul>" },
+    { title: "محاولة تغيير", content: "<div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>t = (1, 2, 3)<br>t[0] = 10  ❌ TypeError</div>" },
+    { title: "Tuple بدون أقواس", content: "<p>ممكن تعملها بدون أقواس:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>t = 1, 2, 3<br>print(t)  # (1, 2, 3)</div>" },
+    { title: "ليه نستخدمها؟", content: "<ul style='padding-right:20px;line-height:2;'><li>لما البيانات مش هتتغير</li><li>أسرع من List</li><li>مأمونة أكتر</li></ul>" }
+  ],
+  quizzes: [
+    { question: "Tuple إيه؟", answers: ["قائمة ثابتة", "قائمة متغيرة", "نص"], correct: 0 },
+    { question: "Tuple بتتعمل بـ؟", answers: ["[ ]", "( )", "{ }"], correct: 1 },
+    { question: "ممكن نغير Tuple؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "Tuple أسرع من List؟", answers: ["أيوة", "لأ", "نفس السرعة"], correct: 0 },
+    { question: "t=(1,2,3); t[0] = ؟", answers: ["1", "0", "خطأ"], correct: 0 }
+  ]
+},
+p51: {
+  chapters: [
+    { title: "Unpacking إيه؟", content: "<p>تفكيك Tuple لمتغيرات منفصلة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a, b = (1, 2)<br>print(a)  # 1<br>print(b)  # 2</div>" },
+    { title: "مع List", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x, y, z = [10, 20, 30]<br>print(x, y, z)</div>" },
+    { title: "عدد العناصر", content: "<p>عدد المتغيرات لازم يساوي عدد العناصر:</p><div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a, b = (1, 2, 3)  ❌</div>" },
+    { title: "مع *", content: "<p>عشان تاخد الباقي:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a, *b = (1, 2, 3, 4)<br>print(a)  # 1<br>print(b)  # [2, 3, 4]</div>" },
+    { title: "استخدامات", content: "<p>مفيدة في:</p><ul style='padding-right:20px;line-height:2;'><li>استقبال قيم من دالة</li><li>تبديل قيم متغيرين</li><li>التعامل مع البيانات</li></ul>" }
+  ],
+  quizzes: [
+    { question: "Unpacking بتعمل إيه؟", answers: ["تفكك Tuple", "تحذف", "ترتب"], correct: 0 },
+    { question: "a,b = (1,2); print(a) = ؟", answers: ["1", "2", "(1,2)"], correct: 0 },
+    { question: "عدد المتغيرات لازم يساوي؟", answers: ["عدد العناصر", "1", "أكتر"], correct: 0 },
+    { question: "a,*b = (1,2,3); b = ؟", answers: ["[2,3]", "2", "[1,2,3]"], correct: 0 },
+    { question: "Unpacking مفيدة في؟", answers: ["تبديل قيم", "الحذف", "الطباعة"], correct: 0 }
+  ]
+},
+p52: {
+  chapters: [
+    { title: "Set إيه؟", content: "<p><code>set</code> = مجموعة <strong>بدون تكرار</strong>:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>s = {1, 2, 2, 3}<br>print(s)  # {1, 2, 3}</div>" },
+    { title: "بدون ترتيب", content: "<p>Set مش بتحافظ على الترتيب:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>s = {3, 1, 2}<br>print(s)  # ممكن يطلع أي ترتيب</div>" },
+    { title: "حذف التكرار", content: "<p>مفيدة لحذف التكرار من List:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a = [1, 2, 2, 3]<br>b = set(a)<br>print(b)  # {1, 2, 3}</div>" },
+    { title: "العمليات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>s = {1, 2, 3}<br>s.add(4)<br>s.remove(1)</div>" },
+    { title: "متى تستخدمها؟", content: "<ul style='padding-right:20px;line-height:2;'><li>حذف التكرار</li><li>العمليات الرياضية (اتحاد، تقاطع)</li><li>فحص سرعة العضوية</li></ul>" }
+  ],
+  quizzes: [
+    { question: "Set إيه؟", answers: ["مجموعة بدون تكرار", "قائمة", "نص"], correct: 0 },
+    { question: "Set بـ؟", answers: ["[ ]", "( )", "{ }"], correct: 2 },
+    { question: "{1,2,2,3} = ؟", answers: ["{1,2,3}", "{1,2,2,3}", "خطأ"], correct: 0 },
+    { question: "Set بتحافظ على الترتيب؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "Set مفيدة في؟", answers: ["حذف التكرار", "الطباعة", "الحساب"], correct: 0 }
+  ]
+},
+p53: {
+  chapters: [
+    { title: "union", content: "<p>اتحاد مجموعتين (كل العناصر):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a = {1, 2}<br>b = {2, 3}<br>print(a | b)  # {1, 2, 3}</div>" },
+    { title: "intersection", content: "<p>تقاطع (العناصر المشتركة):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a = {1, 2}<br>b = {2, 3}<br>print(a &amp; b)  # {2}</div>" },
+    { title: "difference", content: "<p>الفرق (اللي في a بس):</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>a = {1, 2}<br>b = {2, 3}<br>print(a - b)  # {1}</div>" },
+    { title: "بالأسماء", content: "<p>أو بالأسماء:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(a.union(b))<br>print(a.intersection(b))<br>print(a.difference(b))</div>" },
+    { title: "تطبيق", content: "<p>إيجاد الطلاب اللي حضروا محاضرتين:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>cls1 = {\"أحمد\", \"علي\", \"محمد\"}<br>cls2 = {\"علي\", \"محمد\", \"سارة\"}<br>print(cls1 &amp; cls2)<br># {'علي', 'محمد'}</div>" }
+  ],
+  quizzes: [
+    { question: "union إيه؟", answers: ["اتحاد", "تقاطع", "حذف"], correct: 0 },
+    { question: "intersection إيه؟", answers: ["اتحاد", "تقاطع", "حذف"], correct: 1 },
+    { question: "{1,2}|{2,3} = ؟", answers: ["{1,2,3}", "{2}", "{1,3}"], correct: 0 },
+    { question: "{1,2}&{2,3} = ؟", answers: ["{1,2,3}", "{2}", "{1,3}"], correct: 1 },
+    { question: "difference بتعمل إيه؟", answers: ["الفرق", "الاتحاد", "التقاطع"], correct: 0 }
+  ]
+},
 };
