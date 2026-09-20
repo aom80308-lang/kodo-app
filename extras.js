@@ -1,4 +1,4 @@
-var EXTRAS = {
+window.EXTRAS = {
   p1: {
     chapters: [
       {
@@ -2211,3 +2211,4 @@ j59: {
   ]
 },
 };
+console.log('Extras keys:', Object.keys(window.EXTRAS).length);
