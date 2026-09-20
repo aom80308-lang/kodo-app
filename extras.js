@@ -2066,4 +2066,84 @@ j50: {
     { question: "this.count = ؟", answers: ["خاصية في الكائن", "متغير عام", "خطأ"], correct: 0 }
   ]
 },
+j51: {
+  chapters: [
+    { title: "extends", content: "<p>الوراثة: كلاس يورث من كلاس تاني:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Animal {<br>    eat() { console.log(\"بيأكل\"); }<br>}<br><br>class Dog extends Animal {<br>    bark() { console.log(\"هوهو\"); }<br>}<br><br>let d = new Dog();<br>d.eat();   // من Animal<br>d.bark();  // من Dog</div>" },
+    { title: "super", content: "<p>لنادي دوال الأب:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Parent {<br>    constructor(name) { this.name = name; }<br>}<br><br>class Child extends Parent {<br>    constructor(name, age) {<br>        super(name);<br>        this.age = age;<br>    }<br>}</div>" },
+    { title: "إعادة التعريف", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>class Animal {<br>    sound() { console.log(\"...\"); }<br>}<br><br>class Cat extends Animal {<br>    sound() { console.log(\"مياو\"); }<br>}</div>" },
+    { title: "الفرق من Python", content: "<p>نفس المبدأ، بس في JS تستخدم <code>extends</code> و <code>super</code>.</p>" },
+    { title: "نصيحة", content: "<p>💡 الوراثة بتساعد في إعادة استخدام الكود.</p>" }
+  ],
+  quizzes: [
+    { question: "extends بتعمل إيه؟", answers: ["وراثة", "حذف", "طباعة"], correct: 0 },
+    { question: "super بتعمل إيه؟", answers: ["تنادي الأب", "تحذف", "تطبع"], correct: 0 },
+    { question: "الابن يقدر يعيد تعريف دوال الأب؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "class Child extends Parent؟", answers: ["Child يورث Parent", "العكس", "خطأ"], correct: 0 },
+    { question: "super(name) في constructor بتعمل إيه؟", answers: ["تنادي constructor الأب", "تحذف", "تطبع"], correct: 0 }
+  ]
+},
+j52: {
+  chapters: [
+    { title: "setItem و getItem", content: "<p>LocalStorage بيحفظ بيانات في المتصفح:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>localStorage.setItem(\"name\", \"أحمد\");<br>let n = localStorage.getItem(\"name\");<br>console.log(n);  // أحمد</div>" },
+    { title: "البيانات بتفضل", content: "<p>البيانات بتفضل حتى بعد ما تقفل المتصفح.</p>" },
+    { title: "حفظ Object", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let user = {name: \"أحمد\", age: 25};<br>localStorage.setItem(\"user\", JSON.stringify(user));<br>let u = JSON.parse(localStorage.getItem(\"user\"));</div>" },
+    { title: "الفرق من Cookies", content: "<ul style='padding-right:20px;line-height:2;'><li>LocalStorage: أكبر، مش بتبعت للسيرفر</li><li>Cookies: أصغر، بتبعت مع كل request</li></ul>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>localStorage.setItem(\"theme\", \"dark\");<br>let theme = localStorage.getItem(\"theme\");<br>if (theme === \"dark\") document.body.style.background = \"black\";</div>" }
+  ],
+  quizzes: [
+    { question: "setItem بتعمل إيه؟", answers: ["تحفظ", "تقرأ", "تحذف"], correct: 0 },
+    { question: "getItem بتعمل إيه؟", answers: ["تقرأ", "تحفظ", "تحذف"], correct: 0 },
+    { question: "البيانات بتفضل بعد قفل المتصفح؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 0 },
+    { question: "لحفظ object بـ؟", answers: ["JSON.stringify", "toString", "String"], correct: 0 },
+    { question: "الفرق من Cookies؟", answers: ["مش بتبعت للسيرفر", "أصغر", "بتبعت دايماً"], correct: 0 }
+  ]
+},
+j53: {
+  chapters: [
+    { title: "removeItem", content: "<p>لحذف عنصر من LocalStorage:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>localStorage.setItem(\"name\", \"أحمد\");<br>localStorage.removeItem(\"name\");<br>console.log(localStorage.getItem(\"name\"));  // null</div>" },
+    { title: "clear", content: "<p>لحذف كل حاجة:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>localStorage.clear();</div>" },
+    { title: "الفرق من Cookies", content: "<ul style='padding-right:20px;line-height:2;'><li>LocalStorage: كبيرة الحجم، مفيش انتهاء صلاحية</li><li>Cookies: صغيرة، ليها انتهاء</li></ul>" },
+    { title: "sessionStorage", content: "<p>زي LocalStorage، بس بتتمسح لما تقفل التاب:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>sessionStorage.setItem(\"k\", \"v\");</div>" },
+    { title: "نصيحة", content: "<p>💡 استخدم LocalStorage لتخزين الإعدادات و localStorage للجلسات المؤقتة.</p>" }
+  ],
+  quizzes: [
+    { question: "removeItem بتعمل إيه؟", answers: ["تحذف", "تحفظ", "تقرأ"], correct: 0 },
+    { question: "clear بتعمل إيه؟", answers: ["تحذف كل حاجة", "تحفظ", "تقرأ"], correct: 0 },
+    { question: "لو حذفت عنصر؟", answers: ["getItem ترجع null", "خطأ", "صفر"], correct: 0 },
+    { question: "sessionStorage بتتمسح إمتى؟", answers: ["قفل التاب", "قفل المتصفح", "أبداً"], correct: 0 },
+    { question: "LocalStorage ليها انتهاء؟", answers: ["لأ", "أيوة", "بعد سنة"], correct: 0 }
+  ]
+},
+j54: {
+  chapters: [
+    { title: "Regex إيه؟", content: "<p>نمط للبحث في النصوص:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let r = /hello/;<br>console.log(r.test(\"hello world\"));  // true</div>" },
+    { title: "test()", content: "<p>بترجع true/false حسب وجود النمط:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>/cat/.test(\"I have a cat\")  // true<br>/dog/.test(\"I have a cat\")  // false</div>" },
+    { title: "match()", content: "<p>بترجع كل المطابقات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>\"a1b2c3\".match(/\\d/g);<br>// ['1', '2', '3']</div>" },
+    { title: "الرموز الشائعة", content: "<ul style='padding-right:20px;line-height:2;'><li><code>\\d</code> — رقم</li><li><code>\\w</code> — حرف أو رقم</li><li><code>\\s</code> — مسافة</li><li><code>+</code> — واحد أو أكتر</li><li><code>*</code> — صفر أو أكتر</li></ul>" },
+    { title: "تطبيق", content: "<p>التحقق من إيميل:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let email = /^[^@]+@[^@]+\\.[^@]+$/;<br>console.log(email.test(\"a@b.com\"));  // true</div>" }
+  ],
+  quizzes: [
+    { question: "Regex إيه؟", answers: ["نمط بحث", "دالة", "متغير"], correct: 0 },
+    { question: "test بتعمل إيه؟", answers: ["تختبر وجود", "تحذف", "تطبع"], correct: 0 },
+    { question: "\\d بيعني؟", answers: ["رقم", "حرف", "مسافة"], correct: 0 },
+    { question: "/cat/.test('I have cat') = ؟", answers: ["true", "false", "خطأ"], correct: 0 },
+    { question: "match بترجع؟", answers: ["المطابقات", "true/false", "رقم"], correct: 0 }
+  ]
+},
+j55: {
+  chapters: [
+    { title: "تطبيقات Regex", content: "<p>أشهر استخداماتها:</p><ul style='padding-right:20px;line-height:2;'><li>التحقق من الإيميل</li><li>التحقق من رقم الهاتف</li><li>التحقق من كلمة السر</li></ul>" },
+    { title: "التحقق من كلمة السر", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let strong = /^(?=.*[A-Z])(?=.*\\d).{8,}$/;<br>console.log(strong.test(\"Pass1234\"));  // true</div>" },
+    { title: "التحقق من رقم مصري", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>let phone = /^01[0-2,5]\\d{8}$/;<br>console.log(phone.test(\"01012345678\"));  // true</div>" },
+    { title: "استبدال", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>\"a1b2\".replace(/\\d/g, \"\");<br>// \"ab\"</div>" },
+    { title: "نصيحة", content: "<p>💡 Regex قوية بس معقدة. اتعلم الأساسيات الأول.</p>" }
+  ],
+  quizzes: [
+    { question: "Regex بتستخدم في؟", answers: ["التحقق", "الطباعة", "الحذف"], correct: 0 },
+    { question: "/\\d/ بيعني؟", answers: ["أرقام", "حروف", "مسافات"], correct: 0 },
+    { question: "replace بـ regex بتعمل إيه؟", answers: ["استبدال", "حذف", "طباعة"], correct: 0 },
+    { question: "التحقق من إيميل بـ؟", answers: ["Regex", "if بس", "for"], correct: 0 },
+    { question: "Regex سهلة؟", answers: ["معقدة", "بسيطة", "بدون فايدة"], correct: 0 }
+  ]
+},
 };
