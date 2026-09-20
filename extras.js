@@ -482,4 +482,84 @@ p28: {
     { question: "len مفيدة في؟", answers: ["الحذف", "طول النص", "الحساب"], correct: 1 }
   ]
 },
+p29: {
+  chapters: [
+    { title: "upper()", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"hello\".upper())    # HELLO</div>" },
+    { title: "lower()", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"HELLO\".lower())    # hello</div>" },
+    { title: "مع المتغيرات", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = \"Ahmed\"<br>print(name.upper())  # AHMED</div><p>💡 مش بيعدلوا المتغير الأصلي.</p>" },
+    { title: "capitalize()", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"hello world\".capitalize())  # Hello world</div>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>مقارنة نصوص</li><li>تنسيق الإدخال</li><li>عرض البيانات</li></ul>" }
+  ],
+  quizzes: [
+    { question: "\"hello\".upper() = ؟", answers: ["HELLO", "hello", "Hello"], correct: 0 },
+    { question: "\"HELLO\".lower() = ؟", answers: ["HELLO", "hello", "Hello"], correct: 1 },
+    { question: "capitalize بتعمل إيه؟", answers: ["أول حرف كبير", "كل الحروف كبيرة", "كلها صغيرة"], correct: 0 },
+    { question: "upper و lower بيغيروا المتغير الأصلي؟", answers: ["أيوة", "لأ", "أحياناً"], correct: 1 },
+    { question: "مفيدة في؟", answers: ["الحذف", "مقارنة نصوص", "الحساب"], correct: 1 }
+  ]
+},
+p30: {
+  chapters: [
+    { title: "replace()", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"Java\".replace(\"J\", \"P\"))<br># Pava</div>" },
+    { title: "تبديل كلمة", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>text = \"أنا بحب Java\"<br>print(text.replace(\"Java\", \"Python\"))<br># أنا بحب Python</div>" },
+    { title: "حذف حرف", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"a-b-c\".replace(\"-\", \"\"))<br># abc</div>" },
+    { title: "تبديل متعدد", content: "<p>بتبدل كل الظهورات:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"a a a\".replace(\"a\", \"b\"))<br># b b b</div>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>تنظيف النصوص</li><li>تبديل كلمات ممنوعة</li><li>تصحيح تلقائي</li></ul>" }
+  ],
+  quizzes: [
+    { question: "\"Java\".replace(\"J\",\"P\") = ؟", answers: ["Pava", "JavaP", "JP"], correct: 0 },
+    { question: "replace بتبدل إيه؟", answers: ["حرف أو نص", "رقم", "كل حاجة"], correct: 0 },
+    { question: "لو حطيت نص فاضي؟", answers: ["بيحذف", "بيضيف", "مش بيشتغل"], correct: 0 },
+    { question: "بتبدل كام ظهور؟", answers: ["الأول", "الأخير", "الكل"], correct: 2 },
+    { question: "مفيدة في؟", answers: ["الحذف", "تنظيف النصوص", "الحساب"], correct: 1 }
+  ]
+},
+p31: {
+  chapters: [
+    { title: "strip()", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"  hi  \".strip())<br># hi</div>" },
+    { title: "lstrip و rstrip", content: "<ul style='padding-right:20px;line-height:2;'><li><code>lstrip()</code> — من الأول بس</li><li><code>rstrip()</code> — من الآخر بس</li></ul>" },
+    { title: "split()", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"a,b,c\".split(\",\"))<br># ['a', 'b', 'c']</div>" },
+    { title: "split بدون فاصل", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"a b c\".split())<br># ['a', 'b', 'c']</div>" },
+    { title: "استخدامات", content: "<ul style='padding-right:20px;line-height:2;'><li>تنظيف المدخلات</li><li>تحليل بيانات CSV</li><li>تقسيم جمل لكلمات</li></ul>" }
+  ],
+  quizzes: [
+    { question: "\"  hi  \".strip() = ؟", answers: ["hi", "  hi", "hi  "], correct: 0 },
+    { question: "lstrip بتشيل من؟", answers: ["الأول", "الآخر", "الوسط"], correct: 0 },
+    { question: "\"a,b\".split(\",\") = ؟", answers: ["['a','b']", "a,b", "ab"], correct: 0 },
+    { question: "split بدون فاصل؟", answers: ["مش بيشتغل", "على المسافات", "على الحروف"], correct: 1 },
+    { question: "strip مفيدة في؟", answers: ["الحذف", "تنظيف المدخلات", "الحساب"], correct: 1 }
+  ]
+},
+p32: {
+  chapters: [
+    { title: "input() إيه؟", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = input(\"اسمك إيه؟ \")<br>print(\"أهلاً \" + name)</div>" },
+    { title: "الرسالة", content: "<p>اللي بين الأقواس بيكون رسالة تظهر للمستخدم:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>age = input(\"عمرك كام؟ \")</div>" },
+    { title: "input ترجع نص", content: "<p><strong>مهم:</strong> input دايماً ترجع نص حتى لو المستخدم كتب رقم:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>x = input(\"رقم: \")<br>print(type(x))  # str</div>" },
+    { title: "تحويل الرقم", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>age = int(input(\"عمرك؟ \"))<br>print(age + 1)</div>" },
+    { title: "تطبيق", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>name = input(\"اسمك؟ \")<br>age = int(input(\"عمرك؟ \"))<br>print(\"أهلاً\", name)<br>print(\"عمرك\", age)</div>" }
+  ],
+  quizzes: [
+    { question: "input() بتعمل إيه؟", answers: ["تطبع", "تاخد مدخل", "تحفظ"], correct: 1 },
+    { question: "input ترجع من نوع؟", answers: ["int", "float", "str"], correct: 2 },
+    { question: "عشان تحول لرقم؟", answers: ["int()", "str()", "print()"], correct: 0 },
+    { question: "int(input()) بتحول إيه؟", answers: ["لنص", "لرقم", "لBoolean"], correct: 1 },
+    { question: "input مفيدة في؟", answers: ["الطباعة", "التفاعل مع المستخدم", "الحذف"], correct: 1 }
+  ]
+},
+p33: {
+  chapters: [
+    { title: "int(input())", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>age = int(input(\"عمرك؟ \"))<br>print(age + 1)</div>" },
+    { title: "لو كتب نص", content: "<div style='background:#FEE2E2;color:#DC2626;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>int(\"أحمد\")  ❌ ValueError</div>" },
+    { title: "float(input())", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>price = float(input(\"السعر؟ \"))<br>print(price * 1.14)</div>" },
+    { title: "معالج الأخطاء", content: "<div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>try:<br>    age = int(input(\"عمرك؟ \"))<br>    print(age)<br>except:<br>    print(\"لازم رقم!\")</div>" },
+    { title: "نصيحة", content: "<p>💡 دايماً استخدم int() أو float() مع input() لو عايز رقم.</p>" }
+  ],
+  quizzes: [
+    { question: "int(input()) بتعمل إيه؟", answers: ["تطبع", "تحول لرقم", "تحفظ"], correct: 1 },
+    { question: "int(\"أحمد\") = ؟", answers: ["0", "أحمد", "خطأ"], correct: 2 },
+    { question: "للأرقام العشرية؟", answers: ["int()", "float()", "str()"], correct: 1 },
+    { question: "معالج الأخطاء في؟", answers: ["try", "if", "for"], correct: 0 },
+    { question: "input ترجع من نوع؟", answers: ["int", "str", "float"], correct: 1 }
+  ]
+},
 };
