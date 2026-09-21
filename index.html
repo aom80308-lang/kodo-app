@@ -3790,26 +3790,5 @@ if (window.matchMedia) {
   };
 })();
 </script>
-<div id="debug-test" style="position:fixed;top:0;left:0;right:0;background:red;color:white;padding:15px;z-index:999999;font-size:12px;direction:ltr;text-align:center;font-family:monospace;">جاري الفحص...</div>
-<script>
-setTimeout(function() {
-  var el = document.getElementById('debug-test');
-  var info = 'EXTRAS: ' + typeof EXTRAS;
-  fetch('extras2.js?v=' + Date.now())
-    .then(function(r) { return r.text(); })
-    .then(function(t) {
-      info += '<br>size: ' + t.length;
-      try {
-        eval(t);
-        info += '<br>eval: OK';
-        info += '<br>after eval EXTRAS: ' + typeof EXTRAS;
-      } catch(e) {
-        info += '<br>ERROR: ' + e.message;
-      }
-      el.innerHTML = info;
-    })
-    .catch(function(e) { info += '<br>fetch err: ' + e.message; el.innerHTML = info; });
-}, 2000);
-</script>
 </body>
 </html>
