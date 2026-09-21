@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Kodo Privacy Policy - سياسة الخصوصية لتطبيق كودو لتعليم البرمجة">
+<meta name="theme-color" content="#3B82F6">
+<title>Privacy Policy | سياسة الخصوصية - Kodo</title>
+<link rel="icon" href="icon-512.png" type="image/png">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Segoe UI','Helvetica Neue',Tahoma,Arial,sans-serif;
+  background:#F9FAFB;
+  color:#1F2937;
+  line-height:1.9;
+  font-size:15px;
+}
+.wrapper {
+  max-width:860px;
+  margin:0 auto;
+  background:#fff;
+  min-height:100vh;
+  box-shadow:0 0 60px rgba(0,0,0,.06);
+}
+
+/* HERO HEADER */
+.hero {
+  background:linear-gradient(135deg,#3B82F6 0%,#8B5CF6 100%);
+  color:#fff;
+  padding:50px 24px 40px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute;
+  top:-50%; right:-50%;
+  width:200%; height:200%;
+  background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 60%);
+  animation:float 20s infinite linear;
+}
+@keyframes float {
+  from { transform:rotate(0deg); }
+  to { transform:rotate(360deg); }
+}
+.hero .logo-box {
+  width:90px; height:90px;
+  background:rgba(255,255,255,.18);
+  border-radius:24px;
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 18px;
+  font-size:52px;
+  backdrop-filter:blur(10px);
+  border:2px solid rgba(255,255,255,.3);
+  position:relative;
+  z-index:2;
+}
+.hero h1 {
+  font-size:30px;
+  font-weight:800;
+  margin-bottom:8px;
+  letter-spacing:-.5px;
+  position:relative; z-index:2;
+}
+.hero .en-title {
+  font-size:17px;
+  opacity:.9;
+  font-weight:500;
+  position:relative; z-index:2;
+}
+.hero .meta {
+  display:inline-block;
+  background:rgba(255,255,255,.2);
+  padding:6px 16px;
+  border-radius:20px;
+  font-size:13px;
+  margin-top:14px;
+  backdrop-filter:blur(8px);
+  position:relative; z-index:2;
+}
+
+/* TABS */
+.lang-tabs {
+  display:flex;
+  background:#F3F4F6;
+  padding:6px;
+  gap:6px;
+  margin:0;
+  position:sticky;
+  top:0;
+  z-index:10;
+  border-bottom:1px solid #E5E7EB;
+}
+.lang-tab {
+  flex:1;
+  padding:12px;
+  border:none;
+  background:transparent;
+  font-family:inherit;
+  font-size:14px;
+  font-weight:700;
+  color:#6B7280;
+  cursor:pointer;
+  border-radius:10px;
+  transition:all .2s;
+}
+.lang-tab.active {
+  background:#fff;
+  color:#3B82F6;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+/* CONTENT */
+.content {
+  padding:30px 24px 60px;
+}
+.content.en {
+  direction:ltr;
+  text-align:left;
+}
+.content.hidden { display:none; }
+
+/* QUICK SUMMARY */
+.summary {
+  background:linear-gradient(135deg,#EFF6FF 0%,#F0FDF4 100%);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:32px;
+  border:1px solid #DBEAFE;
+}
+.summary h3 {
+  font-size:17px;
+  color:#1E40AF;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.summary ul {
+  list-style:none;
+  display:grid;
+  gap:8px;
+}
+.summary li {
+  font-size:14px;
+  padding-right:24px;
+  position:relative;
+  color:#374151;
+}
+.summary li::before {
+  content:'✓';
+  position:absolute;
+  right:0;
+  color:#22C55E;
+  font-weight:800;
+  font-size:16px;
+}
+.content.en .summary li { padding-right:0; padding-left:24px; }
+.content.en .summary li::before { right:auto; left:0; }
+
+/* TABLE OF CONTENTS */
+.toc {
+  background:#F9FAFB;
+  border:1px solid #E5E7EB;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:32px;
+}
+.toc h3 {
+  font-size:15px;
+  color:#1F2937;
+  margin-bottom:14px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.toc ol {
+  padding-right:22px;
+  padding-left:0;
+}
+.content.en .toc ol { padding-right:0; padding-left:22px; }
+.toc li {
+  font-size:13px;
+  margin-bottom:6px;
+  color:#4B5563;
+}
+.toc a {
+  color:#3B82F6;
+  text-decoration:none;
+  font-weight:600;
+}
+.toc a:hover { text-decoration:underline; }
+
+/* SECTIONS */
+.section {
+  margin-bottom:36px;
+  scroll-margin-top:70px;
+}
+.section h2 {
+  font-size:20px;
+  color:#1F2937;
+  margin-bottom:14px;
+  padding-bottom:10px;
+  border-bottom:2px solid #EFF6FF;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+}
+.section h2 .num {
+  background:linear-gradient(135deg,#3B82F6,#8B5CF6);
+  color:#fff;
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  font-weight:800;
+  flex-shrink:0;
+  box-shadow:0 3px 8px rgba(59,130,246,.3);
+}
+.section h3 {
+  font-size:16px;
+  color:#374151;
+  margin:18px 0 10px;
+  font-weight:700;
+}
+.section p {
+  font-size:14.5px;
+  color:#4B5563;
+  margin-bottom:12px;
+}
+.section ul, .section ol {
+  margin:10px 0 14px;
+  padding-right:22px;
+}
+.content.en .section ul, .content.en .section ol { padding-right:0; padding-left:22px; }
+.section li {
+  font-size:14.5px;
+  color:#4B5563;
+  margin-bottom:8px;
+  line-height:1.8;
+}
+.section strong { color:#1F2937; font-weight:700; }
+.section code {
+  background:#F3F4F6;
+  color:#DC2626;
+  padding:2px 8px;
+  border-radius:6px;
+  font-size:13px;
+  font-family:'Courier New',monospace;
+  direction:ltr;
+  display:inline-block;
+}
+
+/* CALLOUT BOXES */
+.callout {
+  border-radius:14px;
+  padding:16px 18px;
+  margin:16px 0;
+  font-size:14px;
+  line-height:1.8;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+.callout .icon {
+  font-size:22px;
+  flex-shrink:0;
+  line-height:1.4;
+}
+.callout.info { background:#EFF6FF; border-right:4px solid #3B82F6; color:#1E40AF; }
+.callout.success { background:#F0FDF4; border-right:4px solid #22C55E; color:#166534; }
+.callout.warning { background:#FEF3C7; border-right:4px solid #F59E0B; color:#92400E; }
+.callout.danger { background:#FEE2E2; border-right:4px solid #EF4444; color:#991B1B; }
+.content.en .callout { border-right:none; border-left:4px solid; }
+.content.en .callout.info { border-left-color:#3B82F6; }
+.content.en .callout.success { border-left-color:#22C55E; }
+.content.en .callout.warning { border-left-color:#F59E0B; }
+.content.en .callout.danger { border-left-color:#EF4444; }
+.callout strong { color:inherit; }
+
+/* DATA TABLE */
+.data-table {
+  width:100%;
+  border-collapse:collapse;
+  margin:14px 0;
+  font-size:13.5px;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.data-table th {
+  background:#F3F4F6;
+  color:#1F2937;
+  padding:12px;
+  text-align:right;
+  font-weight:800;
+  font-size:13px;
+  border-bottom:2px solid #E5E7EB;
+}
+.content.en .data-table th { text-align:left; }
+.data-table td {
+  padding:11px 12px;
+  border-bottom:1px solid #F3F4F6;
+  color:#4B5563;
+}
+.data-table tr:last-child td { border-bottom:none; }
+.data-table tr:nth-child(even) { background:#FAFBFC; }
+
+/* THIRD PARTY CARD */
+.third-party {
+  background:#F9FAFB;
+  border:1px solid #E5E7EB;
+  border-radius:14px;
+  padding:16px;
+  margin:12px 0;
+}
+.third-party .tp-header {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.third-party .tp-logo {
+  width:40px; height:40px;
+  background:#fff;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  border:1px solid #E5E7EB;
+}
+.third-party .tp-name {
+  font-weight:800;
+  color:#1F2937;
+  font-size:15px;
+}
+.third-party .tp-purpose {
+  font-size:12.5px;
+  color:#6B7280;
+}
+.third-party ul {
+  margin-top:8px;
+}
+.third-party li { font-size:13.5px; }
+
+/* CONTACT CARD */
+.contact-card {
+  background:linear-gradient(135deg,#3B82F6,#8B5CF6);
+  color:#fff;
+  border-radius:18px;
+  padding:26px 22px;
+  text-align:center;
+  margin:20px 0;
+}
+.contact-card h3 {
+  color:#fff;
+  font-size:18px;
+  margin-bottom:14px;
+  font-weight:800;
+}
+.contact-card p {
+  color:rgba(255,255,255,.95);
+  font-size:14px;
+  margin-bottom:14px;
+}
+.contact-card .email {
+  display:inline-block;
+  background:rgba(255,255,255,.2);
+  padding:10px 22px;
+  border-radius:30px;
+  font-size:15px;
+  font-weight:700;
+  text-decoration:none;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.3);
+  backdrop-filter:blur(8px);
+  word-break:break-all;
+}
+.contact-card .dev {
+  margin-top:16px;
+  font-size:13px;
+  opacity:.85;
+}
+
+/* FOOTER */
+.footer {
+  background:#1F2937;
+  color:#9CA3AF;
+  padding:30px 24px;
+  text-align:center;
+  font-size:13px;
+  line-height:1.8;
+}
+.footer strong { color:#fff; }
+.footer .heart { color:#EF4444; }
+
+/* BACK TO TOP */
+.back-to-top {
+  position:fixed;
+  bottom:24px;
+  left:24px;
+  width:46px;
+  height:46px;
+  background:linear-gradient(135deg,#3B82F6,#8B5CF6);
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(59,130,246,.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  transition:transform .2s;
+}
+.back-to-top.show { display:flex; }
+.back-to-top:active { transform:scale(.9); }
+
+@media (max-width:500px) {
+  .hero { padding:36px 18px 28px; }
+  .hero h1 { font-size:24px; }
+  .hero .logo-box { width:74px; height:74px; font-size:42px; }
+  .content { padding:22px 18px 50px; }
+  .section h2 { font-size:17px; }
+  .section h2 .num { width:28px; height:28px; font-size:13px; }
+  .data-table { font-size:12.5px; }
+  .data-table th, .data-table td { padding:9px 8px; }
+  .back-to-top { left:14px; bottom:14px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="logo-box">🤖</div>
+    <h1>سياسة الخصوصية</h1>
+    <div class="en-title">Privacy Policy</div>
+    <div class="meta">📅 آخر تحديث: 1 يناير 2026</div>
+  </div>
+
+  <!-- LANG TABS -->
+  <div class="lang-tabs">
+    <button class="lang-tab active" onclick="switchLang('ar', this)">🇪🇬 العربية</button>
+    <button class="lang-tab" onclick="switchLang('en', this)">🇬🇧 English</button>
+  </div>
+
+  <!-- ARABIC CONTENT -->
+  <div class="content ar" id="content-ar">
+
+    <!-- Quick Summary -->
+    <div class="summary">
+      <h3>⚡ ملخص سريع في 30 ثانية</h3>
+      <ul>
+        <li><strong>مابنبيعش بياناتك</strong> لأي طرف تالت نهائياً</li>
+        <li><strong>مابنطلبش</strong> إيميل أو رقم موبايل أو بيانات بنكية</li>
+        <li>بنجمع <strong>الحد الأدنى</strong> من البيانات عشان التطبيق يشتغل</li>
+        <li>إنتا بتقدر <strong>تحذف بياناتك</strong> في أي وقت</li>
+        <li>التطبيق <strong>آمن للأطفال</strong> من سن 8 سنين وفوق</li>
+        <li>بنستخدم <strong>Firebase (Google)</strong> لتخزين تقدمك فقط</li>
+      </ul>
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+      <h3>📑 محتويات السياسة</h3>
+      <ol>
+        <li><a href="#ar-1">مقدمة وتعريفات</a></li>
+        <li><a href="#ar-2">البيانات اللي بنجمعها</a></li>
+        <li><a href="#ar-3">إزاي بنستخدم بياناتك</a></li>
+        <li><a href="#ar-4">الأساس القانوني للمعالجة</a></li>
+        <li><a href="#ar-5">مشاركة البيانات مع أطراف تالتة</a></li>
+        <li><a href="#ar-6">الإعلانات والتحليلات</a></li>
+        <li><a href="#ar-7">مدة الاحتفاظ بالبيانات</a></li>
+        <li><a href="#ar-8">أمان البيانات</a></li>
+        <li><a href="#ar-9">نقل البيانات دولياً</a></li>
+        <li><a href="#ar-10">خصوصية الأطفال</a></li>
+        <li><a href="#ar-11">حقوقك القانونية</a></li>
+        <li><a href="#ar-12">ملفات تعريف الارتباط (Cookies)</a></li>
+        <li><a href="#ar-13">التغييرات على السياسة</a></li>
+        <li><a href="#ar-14">القانون الحاكم</a></li>
+        <li><a href="#ar-15">التواصل معانا</a></li>
+      </ol>
+    </div>
+
+    <!-- 1 -->
+    <div class="section" id="ar-1">
+      <h2><span class="num">1</span>مقدمة وتعريفات</h2>
+      <p>مرحباً بيك في <strong>Kodo (كودو)</strong> — تطبيق تعليمي متخصص في تعليم البرمجة باللغة العربية، من تطوير <strong>أحمد بسيوني</strong>.</p>
+      <p>خصوصيتك أمانة في رقبتنا، والسياسة دي مكتوبة بلغة واضحة عشان تفهم بالظبط:</p>
+      <ul>
+        <li>إيه البيانات اللي بنجمعها</li>
+        <li>ليه بنجمعها وإزاي بنستخدمها</li>
+        <li>مع مين بنشاركها وإمتى</li>
+        <li>إيه حقوقك القانونية وإزاي تمارسها</li>
+      </ul>
+      
+      <h3>📖 تعريفات مهمة</h3>
+      <ul>
+        <li><strong>«التطبيق» أو «Kodo»:</strong> تطبيق كودو لتعليم البرمجة بكل نسخه (الويب، Android، iOS).</li>
+        <li><strong>«إحنا» أو «نحن»:</strong> فريق تطوير Kodo.</li>
+        <li><strong>«إنتا» أو «المستخدم»:</strong> أي شخص بيستخدم التطبيق.</li>
+        <li><strong>«البيانات الشخصية»:</strong> أي معلومة تقدر تحدد هويتك بشكل مباشر أو غير مباشر.</li>
+        <li><strong>«المعالجة»:</strong> أي عملية على بياناتك (جمع، تخزين، استخدام، حذف).</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="icon">ℹ️</span>
+        <div>باستخدامك التطبيق، إنتا بتوافق على السياسة دي. لو مش موافق على أي جزء منها، من فضلك وقف استخدام التطبيق فوراً.</div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="section" id="ar-2">
+      <h2><span class="num">2</span>البيانات اللي بنجمعها</h2>
+      <p>بنجمع أقل قدر ممكن من البيانات — بس اللي التطبيق محتاجه عشان يشتغل بشكل صح.</p>
+
+      <h3>📝 أ) بيانات بتقدمها بنفسك</h3>
+      <table class="data-table">
+        <tr><th>نوع البيانات</th><th>الغرض</th><th>إلزامي؟</th></tr>
+        <tr><td>اسم المستخدم</td><td>عرضه في حسابك ولوحة المتصدرين</td><td>اختياري</td></tr>
+        <tr><td>رسائل الدعم الفني</td><td>الرد على استفساراتك</td><td>اختياري</td></tr>
+      </table>
+
+      <h3>⚙️ ب) بيانات بتتجمع تلقائياً</h3>
+      <table class="data-table">
+        <tr><th>نوع البيانات</th><th>الغرض</th></tr>
+        <tr><td>معرّف الجهاز (Device ID)</td><td>ربط تقدمك في التعلم بحسابك</td></tr>
+        <tr><td>نوع الجهاز ونظام التشغيل</td><td>تحسين أداء التطبيق</td></tr>
+        <tr><td>عنوان IP</td><td>الحماية ومنع الغش والإساءة</td></tr>
+        <tr><td>لغة الجهاز</td><td>عرض المحتوى بلغتك المفضلة</td></tr>
+        <tr><td>تقدم التعلم (دروس، نقاط)</td><td>حفظ تقدمك ومزامنته</td></tr>
+        <tr><td>وقت آخر استخدام</td><td>إحصائيات وتحسين التجربة</td></tr>
+      </table>
+
+      <h3>🚫 ج) بيانات مابنجمعهاش نهائياً</h3>
+      <div class="callout danger">
+        <span class="icon">🛡️</span>
+        <div>
+          <strong>مابنجمعش ولانطلب البيانات دي إطلاقاً:</strong>
+          <ul style="margin-top:8px;">
+            <li>❌ البريد الإلكتروني</li>
+            <li>❌ رقم الهاتف</li>
+            <li>❌ الصور أو الفيديوهات أو الملفات</li>
+            <li>❌ جهات الاتصال في جهازك</li>
+            <li>❌ الموقع الجغرافي (GPS)</li>
+            <li>❌ البيانات البنكية أو بطاقات الائتمان</li>
+            <li>❌ رسائل SMS أو المكالمات</li>
+            <li>❌ بيانات صحية أو بيومترية</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="section" id="ar-3">
+      <h2><span class="num">3</span>إزاي بنستخدم بياناتك</h2>
+      <p>بنجمع بياناتك لأغراض محددة وواضحة بس:</p>
+      <ul>
+        <li>✅ <strong>تشغيل التطبيق:</strong> حفظ تقدمك في الدروس ومزامنة إنجازاتك.</li>
+        <li>✅ <strong>لوحة المتصدرين:</strong> عرض ترتيبك مقارنة بمستخدمين تانيين.</li>
+        <li>✅ <strong>الدعم الفني:</strong> الرد على رسائلك وحل مشاكلك.</li>
+        <li>✅ <strong>تحسين التجربة:</strong> معرفة الدروس الأنسب للمستخدمين.</li>
+        <li>✅ <strong>الأمان:</strong> اكتشاف ومنع السلوك المسيء أو الغش.</li>
+        <li>✅ <strong>الإشعارات:</strong> إرسال تنبيهات عن تحديثات مهمة (لو وافقت).</li>
+      </ul>
+
+      <div class="callout warning">
+        <span class="icon">⚠️</span>
+        <div><strong>مابنستخدمش بياناتك أبداً في:</strong> البيع، الإيجار، التمييز، التتبع الإعلاني بدون موافقتك.</div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="section" id="ar-4">
+      <h2><span class="num">4</span>الأساس القانوني للمعالجة</h2>
+      <p>لو إنتا في الاتحاد الأوروبي (GDPR) أو مناطق تانية ليها قوانين حماية بيانات، إحنا بنعالج بياناتك على أساس قانوني واضح:</p>
+      <ul>
+        <li><strong>تنفيذ العقد:</strong> عشان نقدملك خدمة التطبيق اللي إنتا وافقت عليها.</li>
+        <li><strong>الموافقة:</strong> عشان الإشعارات، أو أي حاجة اختيارية.</li>
+        <li><strong>المصلحة المشروعة:</strong> عشان نحمي التطبيق من الغش، ونحسّن الخدمة.</li>
+        <li><strong>الالتزام القانوني:</strong> لو القانون طلب مننا نحفظ بيانات معينة.</li>
+      </ul>
+    </div>
+
+    <!-- 5 -->
+    <div class="section" id="ar-5">
+      <h2><span class="num">5</span>مشاركة البيانات مع أطراف تالتة</h2>
+      
+      <div class="callout success">
+        <span class="icon">🤝</span>
+        <div><strong>مابنبيعش بياناتك ولانأجّرها ولانشاركها لأي شركة تجارية.</strong> بس بنستخدم خدمات تقنية موثوقة عشان التطبيق يشتغل:</div>
+      </div>
+
+      <div class="third-party">
+        <div class="tp-header">
+          <div class="tp-logo">🔥</div>
+          <div>
+            <div class="tp-name">Firebase (Google LLC)</div>
+            <div class="tp-purpose">قواعد بيانات + إشعارات + دعم</div>
+          </div>
+        </div>
+        <ul>
+          <li><strong>بنستخدمها في:</strong> حفظ التقدم، الإشعارات، رسائل الدعم، لوحة المتصدرين</li>
+          <li><strong>بتجمع:</strong> Device ID، IP، وقت الاستخدام</li>
+          <li><strong>سياسة الخصوصية:</strong> <code>firebase.google.com/support/privacy</code></li>
+        </ul>
+      </div>
+
+      <div class="third-party">
+        <div class="tp-header">
+          <div class="tp-logo">📢</div>
+          <div>
+            <div class="tp-name">Google AdMob</div>
+            <div class="tp-purpose">الإعلانات (سيتم تفعيلها مستقبلاً)</div>
+          </div>
+        </div>
+        <ul>
+          <li><strong>بنستخدمها في:</strong> عرض إعلانات تموّل التطبيق</li>
+          <li><strong>بتجمع:</strong> معرّف الإعلان، بيانات الجهاز، تفاعلات مع الإعلانات</li>
+          <li><strong>سياسة الخصوصية:</strong> <code>policies.google.com/technologies/ads</code></li>
+          <li><strong>ملاحظة:</strong> هنطلب موافقتك قبل تفعيل الإعلانات المخصصة في مناطق GDPR</li>
+        </ul>
+      </div>
+
+      <div class="third-party">
+        <div class="tp-header">
+          <div class="tp-logo">⚙️</div>
+          <div>
+            <div class="tp-name">GitHub Pages</div>
+            <div class="tp-purpose">استضافة الموقع</div>
+          </div>
+        </div>
+        <ul>
+          <li><strong>بنستخدمها في:</strong> استضافة نسخة الويب من التطبيق</li>
+          <li><strong>بتجمع:</strong> IP، بيانات المتصفح (لأغراض أمنية)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="section" id="ar-6">
+      <h2><span class="num">6</span>الإعلانات والتحليلات</h2>
+      
+      <h3>📺 الإعلانات (مستقبلاً)</h3>
+      <p>التطبيق هيكون مجاني، وعشان نستمر في التطوير ممكن نستخدم إعلانات <strong>Google AdMob</strong>. لما ده يحصل:</p>
+      <ul>
+        <li>هنطلب موافقتك الأول (خصوصاً في الاتحاد الأوروبي)</li>
+        <li>هنحدّث السياسة دي ونبلغك</li>
+        <li>هتكون قادر على شراء نسخة بدون إعلانات</li>
+      </ul>
+
+      <h3>📊 التحليلات</h3>
+      <p>بنستخدم Firebase Analytics عشان نفهم إزاي الناس بتستخدم التطبيق. البيانات مجمعة (Anonymous) ومابتحددش شخصك.</p>
+
+      <h3>📱 معرّف الإعلان (Advertising ID)</h3>
+      <p>لو الإعلانات اتفعّلت، ممكن نستخدم معرّف الإعلان الخاص بالجهاز. تقدر توقفه من:</p>
+      <ul>
+        <li>Android: Settings → Google → Ads → Opt out</li>
+        <li>iOS: Settings → Privacy → Tracking</li>
+      </ul>
+    </div>
+
+    <!-- 7 -->
+    <div class="section" id="ar-7">
+      <h2><span class="num">7</span>مدة الاحتفاظ بالبيانات</h2>
+      <p>بنحتفظ ببياناتك للمدة الضرورية بس:</p>
+      <table class="data-table">
+        <tr><th>نوع البيانات</th><th>مدة الاحتفاظ</th></tr>
+        <tr><td>بيانات الحساب (اسم، تقدم)</td><td>مدة استخدامك للتطبيق</td></tr>
+        <tr><td>رسائل الدعم الفني</td><td>3 سنوات من آخر رسالة</td></tr>
+        <tr><td>بيانات الحماية (IP، Device ID)</td><td>سنة كحد أقصى</td></tr>
+        <tr><td>بيانات الإعلانات</td><td>حسب سياسة Google AdMob</td></tr>
+      </table>
+      <p>لما تطلب حذف حسابك، بنمسح كل بياناتك نهائياً خلال <strong>30 يوم</strong>.</p>
+    </div>
+
+    <!-- 8 -->
+    <div class="section" id="ar-8">
+      <h2><span class="num">8</span>أمان البيانات</h2>
+      <p>بنستخدم أعلى معايير الأمان المتاحة:</p>
+      <ul>
+        <li>🔒 <strong>تشفير HTTPS/TLS:</strong> كل البيانات بتنتقل مشفرة</li>
+        <li>🔒 <strong>تشفير البيانات المخزنة:</strong> Firebase بتشفّر البيانات at-rest</li>
+        <li>🔒 <strong>صلاحيات محدودة:</strong> بس فريق التطوير اللي يقدر يوصل للبيانات</li>
+        <li>🔒 <strong>مراقبة مستمرة:</strong> كشف أي وصول غير مصرح به</li>
+        <li>🔒 <strong>نسخ احتياطية:</strong> لحماية البيانات من الفقدان</li>
+      </ul>
+      <div class="callout warning">
+        <span class="icon">⚠️</span>
+        <div><strong>ملاحظة:</strong> مفيش نظام على الإنترنت آمن 100%. لو اكتشفنا أي خرق للبيانات، هنبلغك وهنبلغ السلطات المختصة خلال <strong>72 ساعة</strong> حسب GDPR.</div>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="section" id="ar-9">
+      <h2><span class="num">9</span>نقل البيانات دولياً</h2>
+      <p>خدمات Firebase (Google) بتخزن البيانات في مراكز بيانات عالمية، معظمها في:</p>
+      <ul>
+        <li>🇺🇸 الولايات المتحدة</li>
+        <li>🇪🇺 الاتحاد الأوروبي</li>
+      </ul>
+      <p>بنستخدم <strong>البنود التعاقدية القياسية (SCCs)</strong> المعتمدة من الاتحاد الأوروبي لضمان حماية بياناتك.</p>
+    </div>
+
+    <!-- 10 -->
+    <div class="section" id="ar-10">
+      <h2><span class="num">10</span>خصوصية الأطفال</h2>
+      <div class="callout info">
+        <span class="icon">👶</span>
+        <div><strong>التطبيق مناسب لسن 8 سنين وفوق.</strong> واحنا ملتزمين بحماية خصوصية الأطفال.</div>
+      </div>
+      <p>بنطبق القواعد دي بصرامة:</p>
+      <ul>
+        <li>❌ مابنطلبش أي بيانات شخصية حساسة من الأطفال</li>
+        <li>❌ مابنعرضش إعلانات مخصصة للأطفال تحت 13 سنة (COPPA)</li>
+        <li>❌ مابنسمحش للأطفال ينشروا محتوى أو يبعتوا رسائل لبعض</li>
+        <li>✅ المحتوى كله تعليمي وآمن ومراقب</li>
+        <li>✅ لو اكتشفنا حساب لطفل تحت السن بدون موافقة ولي الأمر، بنمسحه فوراً</li>
+      </ul>
+      <p>لو إنتا ولي أمر وحابب تحذف بيانات ابنك، تواصل معانا على <code>aom80308@gmail.com</code>.</p>
+    </div>
+
+    <!-- 11 -->
+    <div class="section" id="ar-11">
+      <h2><span class="num">11</span>حقوقك القانونية</h2>
+      <p>ليك حقوق كاملة على بياناتك. تقدر تمارسها في أي وقت من غير أي تكلفة:</p>
+      
+      <h3>📖 حق الوصول (Right to Access)</h3>
+      <p>تعرف إيه البيانات اللي عندنا عنك. ابعتلنا طلب وهنرد عليك خلال <strong>30 يوم</strong>.</p>
+
+      <h3>✏️ حق التصحيح (Right to Rectification)</h3>
+      <p>تعدل أي بيانات غلط عنك، من إعدادات التطبيق أو بالتواصل معانا.</p>
+
+      <h3>🗑️ حق الحذف / «الحق في النسيان» (Right to Erasure)</h3>
+      <p>تطلب حذف كل بياناتك نهائياً. من الإعدادات → <code>إعادة تعيين التقدم</code> أو بالتواصل معانا.</p>
+
+      <h3>📦 حق نقل البيانات (Right to Data Portability)</h3>
+      <p>تطلب نسخة من بياناتك بصيغة مقروءة (JSON). من الإعدادات → <code>نسخ احتياطي</code>.</p>
+
+      <h3>🚫 حق الاعتراض (Right to Object)</h3>
+      <p>تعترض على أي معالجة لبياناتك، زي الإعلانات المخصصة.</p>
+
+      <h3>⏸️ حق التقييد (Right to Restriction)</h3>
+      <p>تطلب نوقف معالجة بياناتك مؤقتاً.</p>
+
+      <div class="callout success">
+        <span class="icon">💬</span>
+        <div>لممارسة أي حق من الحقوق دي، تواصل معانا على <strong>aom80308@gmail.com</strong> وهنرد خلال <strong>30 يوم</strong>.</div>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="section" id="ar-12">
+      <h2><span class="num">12</span>ملفات تعريف الارتباط (Cookies)</h2>
+      <p>التطبيق بيستخدم تقنيات تخزين محلية:</p>
+      <ul>
+        <li><strong>LocalStorage:</strong> لتخزين تقدمك وإعداداتك على جهازك</li>
+        <li><strong>Service Worker Cache:</strong> لعمل التطبيق بدون إنترنت</li>
+        <li><strong>Firebase cookies:</strong> لعمليات Firebase (إن وجدت)</li>
+      </ul>
+      <p>الملفات دي <strong>ضرورية</strong> لعمل التطبيق، ومابتتنقلش لأي طرف تالت.</p>
+    </div>
+
+    <!-- 13 -->
+    <div class="section" id="ar-13">
+      <h2><span class="num">13</span>التغييرات على السياسة</h2>
+      <p>ممكن نحدّث السياسة دي من وقت للتاني عشان:</p>
+      <ul>
+        <li>نضيف ميزات جديدة (زي الإعلانات)</li>
+        <li>نلتزم بقوانين جديدة</li>
+        <li>نحسّن الشفافية</li>
+      </ul>
+      <p>عند أي تغيير مهم:</p>
+      <ul>
+        <li>📅 هنحدّث تاريخ «آخر تحديث» فوق</li>
+        <li>📱 هنظهر إشعار من جوه التطبيق</li>
+        <li>📧 هنبلغ المستخدمين النشطين</li>
+      </ul>
+      <p>استخدامك للتطبيق بعد التغيير = موافقتك على السياسة الجديدة.</p>
+    </div>
+
+    <!-- 14 -->
+    <div class="section" id="ar-14">
+      <h2><span class="num">14</span>القانون الحاكم</h2>
+      <p>السياسة دي محكومة بـ:</p>
+      <ul>
+        <li>🇪🇬 <strong>قانون حماية البيانات الشخصية المصري</strong> (قانون رقم 151 لسنة 2020)</li>
+        <li>🇪🇺 <strong>GDPR</strong> (لو إنتا في الاتحاد الأوروبي)</li>
+        <li>🇺🇸 <strong>CCPA</strong> (لو إنتا في كاليفورنيا)</li>
+        <li>📜 قوانين المتاجر (Google Play, Amazon, Huawei, Samsung)</li>
+      </ul>
+      <p>أي نزاع بيتم حله ودياً، ولو محصلش توافق، بيتم اللجوء للجهات القضائية المختصة.</p>
+    </div>
+
+    <!-- 15 -->
+    <div class="section" id="ar-15">
+      <h2><span class="num">15</span>التواصل معانا</h2>
+      <p>لأي سؤال أو استفسار أو شكوى بخصوص السياسة دي، تواصل معانا:</p>
+
+      <div class="contact-card">
+        <h3>📬 فريق Kodo</h3>
+        <p>يسعدنا نسمع منك في أي وقت</p>
+        <a href="mailto:aom80308@gmail.com" class="email">📧 aom80308@gmail.com</a>
+        <div class="dev">
+          <strong>المطور:</strong> أحمد بسيوني (Ahmed Bassiouny)<br>
+          💬 أو من جوه التطبيق: الإعدادات → الدعم الفني
+        </div>
+      </div>
+
+      <p style="text-align:center;color:#6B7280;font-size:13px;margin-top:20px;">وقت الرد المعتاد: خلال <strong>48 ساعة</strong> في أيام العمل.</p>
+    </div>
+
+  </div>
+
+  <!-- ENGLISH CONTENT -->
+  <div class="content en hidden" id="content-en">
+
+    <div class="summary">
+      <h3>⚡ Quick Summary in 30 Seconds</h3>
+      <ul>
+        <li><strong>We NEVER sell</strong> your data to anyone</li>
+        <li>We <strong>don't ask</strong> for email, phone, or banking info</li>
+        <li>We collect the <strong>minimum data</strong> needed for the app to work</li>
+        <li>You can <strong>delete your data</strong> anytime</li>
+        <li>The app is <strong>safe for children</strong> ages 8 and up</li>
+        <li>We use <strong>Firebase (Google)</strong> only to save your progress</li>
+      </ul>
+    </div>
+
+    <div class="toc">
+      <h3>📑 Table of Contents</h3>
+      <ol>
+        <li><a href="#en-1">Introduction & Definitions</a></li>
+        <li><a href="#en-2">Data We Collect</a></li>
+        <li><a href="#en-3">How We Use Your Data</a></li>
+        <li><a href="#en-4">Legal Basis for Processing</a></li>
+        <li><a href="#en-5">Sharing with Third Parties</a></li>
+        <li><a href="#en-6">Advertising & Analytics</a></li>
+        <li><a href="#en-7">Data Retention</a></li>
+        <li><a href="#en-8">Data Security</a></li>
+        <li><a href="#en-9">International Data Transfers</a></li>
+        <li><a href="#en-10">Children's Privacy</a></li>
+        <li><a href="#en-11">Your Legal Rights</a></li>
+        <li><a href="#en-12">Cookies</a></li>
+        <li><a href="#en-13">Policy Changes</a></li>
+        <li><a href="#en-14">Governing Law</a></li>
+        <li><a href="#en-15">Contact Us</a></li>
+      </ol>
+    </div>
+
+    <div class="section" id="en-1">
+      <h2><span class="num">1</span>Introduction & Definitions</h2>
+      <p>Welcome to <strong>Kodo</strong>, an Arabic programming education app developed by <strong>Ahmed Bassiouny</strong>.</p>
+      <p>Your privacy matters to us. This policy clearly explains:</p>
+      <ul>
+        <li>What data we collect</li>
+        <li>Why and how we use it</li>
+        <li>Who we share it with and when</li>
+        <li>Your legal rights and how to exercise them</li>
+      </ul>
+      
+      <h3>📖 Key Definitions</h3>
+      <ul>
+        <li><strong>"App" or "Kodo":</strong> Kodo programming education application (web, Android, iOS)</li>
+        <li><strong>"We" or "Us":</strong> Kodo development team</li>
+        <li><strong>"You" or "User":</strong> Anyone using the app</li>
+        <li><strong>"Personal Data":</strong> Any info that can identify you directly or indirectly</li>
+        <li><strong>"Processing":</strong> Any operation on your data (collection, storage, usage, deletion)</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="icon">ℹ️</span>
+        <div>By using the app, you agree to this policy. If you disagree with any part, please stop using the app immediately.</div>
+      </div>
+    </div>
+
+    <div class="section" id="en-2">
+      <h2><span class="num">2</span>Data We Collect</h2>
+      <p>We collect the minimum amount of data needed for the app to function properly.</p>
+
+      <h3>📝 A) Data You Provide</h3>
+      <table class="data-table">
+        <tr><th>Data Type</th><th>Purpose</th><th>Required?</th></tr>
+        <tr><td>Username</td><td>Display in your profile and leaderboard</td><td>Optional</td></tr>
+        <tr><td>Support messages</td><td>Respond to your inquiries</td><td>Optional</td></tr>
+      </table>
+
+      <h3>⚙️ B) Automatically Collected Data</h3>
+      <table class="data-table">
+        <tr><th>Data Type</th><th>Purpose</th></tr>
+        <tr><td>Device ID</td><td>Link your learning progress to your account</td></tr>
+        <tr><td>Device type & OS</td><td>Improve app performance</td></tr>
+        <tr><td>IP Address</td><td>Security and abuse prevention</td></tr>
+        <tr><td>Device language</td><td>Show content in your preferred language</td></tr>
+        <tr><td>Learning progress</td><td>Save and sync your progress</td></tr>
+        <tr><td>Last usage time</td><td>Analytics and experience improvement</td></tr>
+      </table>
+
+      <h3>🚫 C) Data We DO NOT Collect</h3>
+      <div class="callout danger">
+        <span class="icon">🛡️</span>
+        <div>
+          <strong>We never collect or request:</strong>
+          <ul style="margin-top:8px;">
+            <li>❌ Email address</li>
+            <li>❌ Phone number</li>
+            <li>❌ Photos, videos, or files</li>
+            <li>❌ Device contacts</li>
+            <li>❌ Location (GPS)</li>
+            <li>❌ Banking or credit card data</li>
+            <li>❌ SMS or call logs</li>
+            <li>❌ Health or biometric data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="en-3">
+      <h2><span class="num">3</span>How We Use Your Data</h2>
+      <p>We collect your data for specific, clear purposes:</p>
+      <ul>
+        <li>✅ <strong>App operation:</strong> Save and sync your lesson progress</li>
+        <li>✅ <strong>Leaderboard:</strong> Show your rank among other users</li>
+        <li>✅ <strong>Support:</strong> Respond to your messages and solve issues</li>
+        <li>✅ <strong>Improvement:</strong> Understand which lessons help most</li>
+        <li>✅ <strong>Security:</strong> Detect and prevent abuse or cheating</li>
+        <li>✅ <strong>Notifications:</strong> Send important updates (with your consent)</li>
+      </ul>
+
+      <div class="callout warning">
+        <span class="icon">⚠️</span>
+        <div><strong>We NEVER use your data for:</strong> Selling, renting, discrimination, or ad tracking without your consent.</div>
+      </div>
+    </div>
+
+    <div class="section" id="en-4">
+      <h2><span class="num">4</span>Legal Basis for Processing</h2>
+      <p>If you're in the EU (GDPR) or other jurisdictions with data protection laws, we process your data based on:</p>
+      <ul>
+        <li><strong>Contract performance:</strong> To deliver the app service you agreed to</li>
+        <li><strong>Consent:</strong> For notifications and optional features</li>
+        <li><strong>Legitimate interest:</strong> To prevent fraud and improve service</li>
+        <li><strong>Legal obligation:</strong> When the law requires us to retain certain data</li>
+      </ul>
+    </div>
+
+    <div class="section" id="en-5">
+      <h2><span class="num">5</span>Sharing with Third Parties</h2>
+      
+      <div class="callout success">
+        <span class="icon">🤝</span>
+        <div><strong>We NEVER sell, rent, or share your data with commercial companies.</strong> We only use trusted technical services:</div>
+      </div>
+
+      <div class="third-party">
+        <div class="tp-header">
+          <div class="tp-logo">🔥</div>
+          <div>
+            <div class="tp-name">Firebase (Google LLC)</div>
+            <div class="tp-purpose">Database + Notifications + Support</div>
+          </div>
+        </div>
+        <ul>
+          <li><strong>Used for:</strong> Progress saving, notifications, support, leaderboard</li>
+          <li><strong>Collects:</strong> Device ID, IP, usage time</li>
+          <li><strong>Policy:</strong> <code>firebase.google.com/support/privacy</code></li>
+        </ul>
+      </div>
+
+      <div class="third-party">
+        <div class="tp-header">
+          <div class="tp-logo">📢</div>
+          <div>
+            <div class="tp-name">Google AdMob</div>
+            <div class="tp-purpose">Advertising (to be activated in the future)</div>
+          </div>
+        </div>
+        <ul>
+          <li><strong>Used for:</strong> Displaying ads that fund the app</li>
+          <li><strong>Collects:</strong> Ad ID, device data, ad interactions</li>
+          <li><strong>Policy:</strong> <code>policies.google.com/technologies/ads</code></li>
+          <li><strong>Note:</strong> We'll request your consent before enabling personalized ads in GDPR regions</li>
+        </ul>
+      </div>
+
+      <div class="third-party">
+        <div class="tp-header">
+          <div class="tp-logo">⚙️</div>
+          <div>
+            <div class="tp-name">GitHub Pages</div>
+            <div class="tp-purpose">Website hosting</div>
+          </div>
+        </div>
+        <ul>
+          <li><strong>Used for:</strong> Hosting the web version of the app</li>
+          <li><strong>Collects:</strong> IP, browser data (for security purposes)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section" id="en-6">
+      <h2><span class="num">6</span>Advertising & Analytics</h2>
+      
+      <h3>📺 Ads (Future)</h3>
+      <p>The app will be free. To support development, we may use <strong>Google AdMob</strong>. When this happens:</p>
+      <ul>
+        <li>We'll request your consent first (especially in the EU)</li>
+        <li>We'll update this policy and notify you</li>
+        <li>You'll be able to buy an ad-free version</li>
+      </ul>
+
+      <h3>📊 Analytics</h3>
+      <p>We use Firebase Analytics to understand how people use the app. Data is aggregated (anonymous) and doesn't identify you personally.</p>
+
+      <h3>📱 Advertising ID</h3>
+      <p>If ads are enabled, we may use your device's Advertising ID. You can disable it:</p>
+      <ul>
+        <li>Android: Settings → Google → Ads → Opt out</li>
+        <li>iOS: Settings → Privacy → Tracking</li>
+      </ul>
+    </div>
+
+    <div class="section" id="en-7">
+      <h2><span class="num">7</span>Data Retention</h2>
+      <p>We keep your data only as long as necessary:</p>
+      <table class="data-table">
+        <tr><th>Data Type</th><th>Retention Period</th></tr>
+        <tr><td>Account data (name, progress)</td><td>As long as you use the app</td></tr>
+        <tr><td>Support messages</td><td>3 years from last message</td></tr>
+        <tr><td>Security data (IP, Device ID)</td><td>1 year max</td></tr>
+        <tr><td>Advertising data</td><td>Per Google AdMob policy</td></tr>
+      </table>
+      <p>When you request account deletion, we permanently remove all your data within <strong>30 days</strong>.</p>
+    </div>
+
+    <div class="section" id="en-8">
+      <h2><span class="num">8</span>Data Security</h2>
+      <p>We use the highest available security standards:</p>
+      <ul>
+        <li>🔒 <strong>HTTPS/TLS encryption:</strong> All data is encrypted in transit</li>
+        <li>🔒 <strong>Data-at-rest encryption:</strong> Firebase encrypts stored data</li>
+        <li>🔒 <strong>Limited access:</strong> Only the dev team can access data</li>
+        <li>🔒 <strong>Continuous monitoring:</strong> Detect unauthorized access</li>
+        <li>🔒 <strong>Backups:</strong> Protect data from loss</li>
+      </ul>
+      <div class="callout warning">
+        <span class="icon">⚠️</span>
+        <div><strong>Note:</strong> No system is 100% secure. If we detect a data breach, we'll notify you and authorities within <strong>72 hours</strong> per GDPR.</div>
+      </div>
+    </div>
+
+    <div class="section" id="en-9">
+      <h2><span class="num">9</span>International Data Transfers</h2>
+      <p>Firebase (Google) stores data in global data centers, mostly in:</p>
+      <ul>
+        <li>🇺🇸 United States</li>
+        <li>🇪🇺 European Union</li>
+      </ul>
+      <p>We use EU-approved <strong>Standard Contractual Clauses (SCCs)</strong> to ensure your data protection.</p>
+    </div>
+
+    <div class="section" id="en-10">
+      <h2><span class="num">10</span>Children's Privacy</h2>
+      <div class="callout info">
+        <span class="icon">👶</span>
+        <div><strong>The app is suitable for ages 8 and up.</strong> We're committed to protecting children's privacy.</div>
+      </div>
+      <p>We strictly enforce these rules:</p>
+      <ul>
+        <li>❌ We don't ask for sensitive personal data from children</li>
+        <li>❌ We don't show personalized ads to children under 13 (COPPA)</li>
+        <li>❌ We don't allow children to post content or message each other</li>
+        <li>✅ All content is educational, safe, and moderated</li>
+        <li>✅ If we detect an underage account without parental consent, we delete it immediately</li>
+      </ul>
+      <p>If you're a parent and want to delete your child's data, contact us at <code>aom80308@gmail.com</code>.</p>
+    </div>
+
+    <div class="section" id="en-11">
+      <h2><span class="num">11</span>Your Legal Rights</h2>
+      <p>You have full rights over your data. You can exercise them anytime, free of charge:</p>
+      
+      <h3>📖 Right to Access</h3>
+      <p>Know what data we have on you. Send a request; we'll respond within <strong>30 days</strong>.</p>
+
+      <h3>✏️ Right to Rectification</h3>
+      <p>Correct any inaccurate data via app settings or by contacting us.</p>
+
+      <h3>🗑️ Right to Erasure / "Right to be Forgotten"</h3>
+      <p>Request permanent deletion of all your data. Via Settings → <code>Reset Progress</code> or by contacting us.</p>
+
+      <h3>📦 Right to Data Portability</h3>
+      <p>Request a copy of your data in readable format (JSON). Via Settings → <code>Backup</code>.</p>
+
+      <h3>🚫 Right to Object</h3>
+      <p>Object to any processing of your data, such as personalized ads.</p>
+
+      <h3>⏸️ Right to Restriction</h3>
+      <p>Request temporary suspension of your data processing.</p>
+
+      <div class="callout success">
+        <span class="icon">💬</span>
+        <div>To exercise any of these rights, contact us at <strong>aom80308@gmail.com</strong>. We'll respond within <strong>30 days</strong>.</div>
+      </div>
+    </div>
+
+    <div class="section" id="en-12">
+      <h2><span class="num">12</span>Cookies</h2>
+      <p>The app uses local storage technologies:</p>
+      <ul>
+        <li><strong>LocalStorage:</strong> Stores your progress and settings on your device</li>
+        <li><strong>Service Worker Cache:</strong> Allows the app to work offline</li>
+        <li><strong>Firebase cookies:</strong> For Firebase operations (if any)</li>
+      </ul>
+      <p>These files are <strong>necessary</strong> for the app to function and are never shared with third parties.</p>
+    </div>
+
+    <div class="section" id="en-13">
+      <h2><span class="num">13</span>Policy Changes</h2>
+      <p>We may update this policy occasionally to:</p>
+      <ul>
+        <li>Add new features (like ads)</li>
+        <li>Comply with new laws</li>
+        <li>Improve transparency</li>
+      </ul>
+      <p>For any significant change:</p>
+      <ul>
+        <li>📅 We'll update the "Last Updated" date above</li>
+        <li>📱 We'll show a notification inside the app</li>
+        <li>📧 We'll notify active users</li>
+      </ul>
+      <p>Continued use of the app after changes = acceptance of the new policy.</p>
+    </div>
+
+    <div class="section" id="en-14">
+      <h2><span class="num">14</span>Governing Law</h2>
+      <p>This policy is governed by:</p>
+      <ul>
+        <li>🇪🇬 <strong>Egyptian Personal Data Protection Law</strong> (Law No. 151 of 2020)</li>
+        <li>🇪🇺 <strong>GDPR</strong> (if you're in the EU)</li>
+        <li>🇺🇸 <strong>CCPA</strong> (if you're in California)</li>
+        <li>📜 App Store policies (Google Play, Amazon, Huawei, Samsung)</li>
+      </ul>
+      <p>Any dispute will first be resolved amicably; if not, through competent judicial authorities.</p>
+    </div>
+
+    <div class="section" id="en-15">
+      <h2><span class="num">15</span>Contact Us</h2>
+      <p>For any questions, inquiries, or complaints about this policy, contact us:</p>
+
+      <div class="contact-card">
+        <h3>📬 Kodo Team</h3>
+        <p>We'd love to hear from you anytime</p>
+        <a href="mailto:aom80308@gmail.com" class="email">📧 aom80308@gmail.com</a>
+        <div class="dev">
+          <strong>Developer:</strong> Ahmed Bassiouny<br>
+          💬 Or via in-app: Settings → Support
+        </div>
+      </div>
+
+      <p style="text-align:center;color:#6B7280;font-size:13px;margin-top:20px;">Typical response time: within <strong>48 hours</strong> on business days.</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>Made with <span class="heart">❤</span> by <strong>Ahmed Bassiouny</strong></div>
+    <div style="margin-top:6px;">© 2026 Kodo — All rights reserved</div>
+  </div>
+
+</div>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function switchLang(lang, btn) {
+  document.querySelectorAll('.lang-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.content').forEach(function(c) { c.classList.add('hidden'); });
+  document.getElementById('content-' + lang).classList.remove('hidden');
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('backToTop');
+  if (window.scrollY > 400) btn.classList.add('show');
+  else btn.classList.remove('show');
+});
+</script>
+
+</body>
+</html>
