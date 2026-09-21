@@ -241,7 +241,7 @@ p13: {
     { question: "print(\"a\",\"b\",sep=\"\") هيطبع؟", answers: ["a b", "ab", "a-b"], correct: 1 },
     { question: "من استخدامات sep؟", answers: ["الطباعة بس", "تنسيق التواريخ والإيميلات", "الحذف"], correct: 1 }
   ]
-}
+},
   p14: {
   chapters: [
     { title: "end إيه؟", content: "<p><code>end</code> بتحدد إيه اللي يتحط في نهاية الطباعة.</p><p>الافتراضي: سطر جديد (\\n)</p><p>مثال:</p><div style='background:#1E293B;color:#86EFAC;padding:12px;border-radius:8px;direction:ltr;text-align:left;font-family:monospace;font-size:14px;margin:10px 0;'>print(\"أهلاً\")<br>print(\"بيك\")</div><p>النتيجة: سطرين منفصلين.</p>" },
