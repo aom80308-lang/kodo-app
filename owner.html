@@ -396,6 +396,63 @@ try {
 } catch(e) {
   console.error('Firebase init error:', e);
 }
+/* ========== Owner Config (from Firebase) ========== */
+var ownerConfig = { telegram_token: '', telegram_chat_id: '' };
+
+function loadOwnerConfig(callback) {
+  if (!fbDB) { if (callback) callback(); return; }
+  fbDB.ref('owner_config').once('value').then(function(snap) {
+    var data = snap.val();
+    if (data) {
+      ownerConfig.telegram_token = data.telegram_token || '';
+      ownerConfig.telegram_chat_id = data.telegram_chat_id || '';
+    }
+    if (callback) callback();
+  }).catch(function() {
+    if (callback) callback();
+  });
+}
+
+/* ========== Telegram Notification ========== */
+function sendTelegram(text, callback) {
+  if (!ownerConfig.telegram_token || !ownerConfig.telegram_chat_id) {
+    if (callback) callback(false, 'مفيش إعدادات تليجرام');
+    return;
+  }
+  var url = 'https://api.telegram.org/bot' + ownerConfig.telegram_token + '/sendMessage';
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'chat_id=' + encodeURIComponent(ownerConfig.telegram_chat_id) + '&text=' + encodeURIComponent(text) + '&parse_mode=HTML'
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) { if (callback) callback(d.ok, d.description); })
+  .catch(function(e) { if (callback) callback(false, e.message); });
+}
+
+/* ========== Get Device Info ========== */
+function getDeviceInfo() {
+  return {
+    ua: navigator.userAgent || 'Unknown',
+    platform: navigator.platform || 'Unknown',
+    lang: navigator.language || 'ar',
+    screen: window.screen.width + 'x' + window.screen.height,
+    time: Date.now()
+  };
+}
+
+/* ========== Log Login Attempt ========== */
+function logLoginAttempt(success, email) {
+  if (!fbDB) return;
+  var id = 'att_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+  var device = getDeviceInfo();
+  fbDB.ref('login_attempts/' + id).set({
+    email: email,
+    success: success,
+    device: device.platform + ' - ' + device.ua.substring(0, 60),
+    time: Date.now()
+  }).catch(function() {});
+}
 
 /* ========== Helpers ========== */
 function show(id) {
@@ -423,6 +480,11 @@ function togglePass() {
     btn.textContent = '👁️';
   }
 }
+
+/* ========== Load Config on Start ========== */
+loadOwnerConfig(function() {
+  console.log('✅ Owner config loaded');
+});
 
 /* ========== Auth State ========== */
 if (fbAuth) {
@@ -463,13 +525,17 @@ document.getElementById('btn-login').addEventListener('click', function() {
     .then(function(cred) {
       if (cred.user.email !== OWNER_EMAIL) {
         msg('error', '❌ ده مش حساب المالك');
+        logLoginAttempt(false, email);
+        sendTelegram('🚨 <b>محاولة دخول مرفوضة</b>\n\n📧 الإيميل: <code>' + email + '</code>\n❌ السبب: مش حساب المالك');
         fbAuth.signOut();
         btn.disabled = false;
         btn.textContent = '🔓 دخول';
         return;
       }
       msg('success', '✅ تم الدخول بنجاح!');
-      // onAuthStateChanged هيتولى الباقي
+      logLoginAttempt(true, email);
+      var dev = getDeviceInfo();
+      sendTelegram('✅ <b>دخول ناجح للوحة المالك</b>\n\n📧 ' + email + '\n📱 ' + dev.platform + '\n🌐 ' + dev.screen + '\n🕐 ' + new Date().toLocaleString('ar-EG'));
     })
     .catch(function(err) {
       btn.disabled = false;
@@ -483,10 +549,13 @@ document.getElementById('btn-login').addEventListener('click', function() {
         'auth/network-request-failed': '❌ مشكلة في الشبكة',
         'auth/user-disabled': '🚫 الحساب معطل'
       };
-      msg('error', msgs[err.code] || ('❌ خطأ: ' + err.message));
+      var errMsg = msgs[err.code] || ('❌ خطأ: ' + err.message);
+      msg('error', errMsg);
+      logLoginAttempt(false, email);
+      var dev = getDeviceInfo();
+      sendTelegram('🚨 <b>محاولة دخول فاشلة!</b>\n\n📧 الإيميل: <code>' + email + '</code>\n❌ السبب: ' + (msgs[err.code] || 'خطأ') + '\n📱 ' + dev.platform + '\n🌐 ' + dev.screen + '\n🕐 ' + new Date().toLocaleString('ar-EG'));
     });
 });
-
 /* ========== Logout ========== */
 document.getElementById('btn-logout').addEventListener('click', function() {
   if (confirm('متأكد إنك عايز تسجل خروج؟')) {
