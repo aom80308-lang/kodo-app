@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار البوت - Kodo</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  direction: rtl;
+}
+.card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 30px 24px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.header .icon {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+.header h1 {
+  font-size: 22px;
+  color: #1F2937;
+  margin-bottom: 6px;
+}
+.header p {
+  font-size: 14px;
+  color: #6B7280;
+}
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #F9FAFB;
+  transition: border-color .2s;
+}
+input:focus {
+  outline: none;
+  border-color: #3B82F6;
+  background: #fff;
+}
+button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  background: #3B82F6;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 20px;
+  font-family: inherit;
+  box-shadow: 0 4px 0 #1D4ED8;
+  transition: transform .1s;
+}
+button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #1D4ED8;
+}
+button:disabled {
+  background: #9CA3AF;
+  box-shadow: 0 4px 0 #6B7280;
+}
+.result {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: none;
+  word-break: break-word;
+}
+.result.show { display: block; }
+.result.success {
+  background: #DCFCE7;
+  color: #166534;
+  border-right: 4px solid #22C55E;
+}
+.result.error {
+  background: #FEE2E2;
+  color: #991B1B;
+  border-right: 4px solid #EF4444;
+}
+.result.loading {
+  background: #EFF6FF;
+  color: #1E40AF;
+  border-right: 4px solid #3B82F6;
+}
+.result pre {
+  background: rgba(0,0,0,.05);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  direction: ltr;
+  text-align: left;
+}
+.note {
+  font-size: 12px;
+  color: #6B7280;
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #E5E7EB;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="icon">🤖</div>
+    <h1>اختبار Kodo Bot</h1>
+    <p>تأكد إن البوت شغال بيبعت رسائل</p>
+  </div>
+
+  <label>🔑 التوكن (Token)</label>
+  <input id="token" type="text" placeholder="1234567890:ABC..." dir="ltr" autocomplete="off">
+
+  <label>💬 الشات ID (Chat ID)</label>
+  <input id="chatid" type="text" placeholder="123456789" dir="ltr" autocomplete="off">
+
+  <button id="btn">📤 ابعت رسالة تجريبية</button>
+
+  <div class="result" id="result"></div>
+
+  <div class="note">
+    🔒 بياناتك متبعتة لتليجرام على طول — مش بتتحفظ في أي مكان
+  </div>
+</div>
+
+<script>
+var btn = document.getElementById('btn');
+var result = document.getElementById('result');
+
+btn.addEventListener('click', function() {
+  var token = document.getElementById('token').value.trim();
+  var chatid = document.getElementById('chatid').value.trim();
+
+  if (!token) {
+    showResult('error', '❌ اكتب التوكن');
+    return;
+  }
+  if (!chatid) {
+    showResult('error', '❌ اكتب الـ Chat ID');
+    return;
+  }
+
+  btn.disabled = true;
+  showResult('loading', '⏳ جاري الإرسال...');
+
+  var url = 'https://api.telegram.org/bot' + token + '/sendMessage';
+  var body = 'chat_id=' + encodeURIComponent(chatid) + '&text=' + encodeURIComponent('✅ اختبار Kodo Bot - الرسالة وصلت!');
+
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    btn.disabled = false;
+    if (data.ok) {
+      showResult('success', '🎉 تم الإرسال!<br>افتح تليجرام وشوف الرسالة.');
+    } else {
+      showResult('error', '❌ فشل<br>السبب: ' + (data.description || 'غير معروف') + '<pre>' + JSON.stringify(data, null, 2) + '</pre>');
+    }
+  })
+  .catch(function(err) {
+    btn.disabled = false;
+    showResult('error', '❌ خطأ في الاتصال<br><pre>' + err.message + '</pre>');
+  });
+});
+
+function showResult(type, msg) {
+  result.className = 'result show ' + type;
+  result.innerHTML = msg;
+}
+</script>
+</body>
+</html>
