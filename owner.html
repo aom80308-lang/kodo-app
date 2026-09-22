@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kodo Owner Panel</title>
+<link rel="icon" href="icon-512.png" type="image/png">
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { height:100%; overflow:hidden; }
+body {
+  font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+  background:#0F172A;
+  color:#F1F5F9;
+  direction:rtl;
+  user-select:none;
+}
+.screen {
+  position:absolute; inset:0;
+  display:none; flex-direction:column;
+  overflow-y:auto;
+  background:linear-gradient(135deg,#0F172A 0%,#1E293B 100%);
+}
+.screen.active { display:flex; }
+
+/* LOGIN SCREEN */
+#login-screen { justify-content:center; align-items:center; padding:24px; }
+.login-card {
+  background:rgba(30,41,59,.9);
+  border:1.5px solid rgba(251,191,36,.3);
+  border-radius:24px;
+  padding:36px 24px;
+  max-width:440px; width:100%;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  backdrop-filter:blur(10px);
+  animation:fadeUp .5s ease;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulse { 0%,100% { box-shadow:0 0 30px rgba(251,191,36,.4); } 50% { box-shadow:0 0 60px rgba(251,191,36,.8); } }
+.crown {
+  font-size:70px; display:inline-block;
+  animation:pulse 2s infinite;
+  margin-bottom:16px;
+}
+.login-card h1 {
+  font-size:26px; font-weight:800;
+  margin-bottom:8px;
+  background:linear-gradient(135deg,#FBBF24,#F59E0B);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.login-card .sub {
+  font-size:14px; color:#94A3B8;
+  margin-bottom:28px;
+}
+.field {
+  text-align:right; margin-bottom:16px;
+}
+.field label {
+  display:block; font-size:13px;
+  font-weight:700; color:#CBD5E1;
+  margin-bottom:6px;
+}
+.field input {
+  width:100%; padding:14px 16px;
+  background:#0F172A;
+  border:1.5px solid #334155;
+  border-radius:12px;
+  color:#F1F5F9;
+  font-size:15px;
+  font-family:inherit;
+  transition:border-color .2s;
+}
+.field input:focus {
+  outline:none;
+  border-color:#FBBF24;
+  box-shadow:0 0 0 3px rgba(251,191,36,.15);
+}
+.field input::placeholder { color:#475569; }
+.pass-wrap { position:relative; }
+.pass-wrap .eye {
+  position:absolute; left:14px; top:50%;
+  transform:translateY(-50%);
+  background:none; border:none;
+  color:#94A3B8; font-size:20px;
+  cursor:pointer; padding:6px;
+}
+.btn-login {
+  width:100%; padding:16px;
+  border:none; border-radius:14px;
+  background:linear-gradient(135deg,#FBBF24,#F59E0B);
+  color:#1F2937; font-size:17px;
+  font-weight:800; font-family:inherit;
+  cursor:pointer; margin-top:8px;
+  box-shadow:0 4px 0 #B45309;
+  transition:transform .1s;
+}
+.btn-login:active { transform:translateY(3px); box-shadow:0 1px 0 #B45309; }
+.btn-login:disabled { opacity:.6; }
+.msg {
+  margin-top:16px; padding:12px;
+  border-radius:10px; font-size:13.5px;
+  display:none; text-align:center;
+  line-height:1.7;
+}
+.msg.show { display:block; }
+.msg.error { background:rgba(239,68,68,.15); border:1px solid rgba(239,68,68,.4); color:#FCA5A5; }
+.msg.success { background:rgba(34,197,94,.15); border:1px solid rgba(34,197,94,.4); color:#86EFAC; }
+.msg.info { background:rgba(59,130,246,.15); border:1px solid rgba(59,130,246,.4); color:#93C5FD; }
+.footer-note {
+  font-size:11px; color:#475569;
+  margin-top:24px; line-height:1.7;
+}
+
+/* DASHBOARD SCREEN */
+#dashboard-screen { background:#0F172A; }
+.topbar {
+  display:flex; align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  background:linear-gradient(135deg,#FBBF24,#F59E0B);
+  box-shadow:0 4px 20px rgba(251,191,36,.3);
+}
+.topbar h2 {
+  font-size:17px; font-weight:800;
+  color:#1F2937;
+}
+.topbar .user-info {
+  font-size:11px; color:rgba(31,41,55,.8);
+  font-weight:700;
+}
+.btn-logout {
+  background:rgba(31,41,55,.2);
+  border:none; color:#1F2937;
+  padding:8px 14px; border-radius:10px;
+  font-size:13px; font-weight:800;
+  font-family:inherit; cursor:pointer;
+}
+.welcome-box {
+  padding:24px 20px;
+  text-align:center;
+  border-bottom:1px solid #1E293B;
+}
+.welcome-box .emoji {
+  font-size:60px;
+  display:block; margin-bottom:10px;
+}
+.welcome-box h3 {
+  font-size:22px; font-weight:800;
+  color:#FBBF24; margin-bottom:6px;
+}
+.welcome-box p { font-size:13px; color:#94A3B8; }
+.stats-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:20px 16px;
+}
+.stat-card {
+  background:linear-gradient(135deg,#1E293B,#0F172A);
+  border:1.5px solid rgba(251,191,36,.2);
+  border-radius:16px;
+  padding:18px 12px;
+  text-align:center;
+}
+.stat-card .icon { font-size:32px; display:block; margin-bottom:8px; }
+.stat-card .num {
+  font-size:24px; font-weight:800;
+  color:#FBBF24; display:block;
+  margin-bottom:4px;
+}
+.stat-card .lbl { font-size:12px; color:#94A3B8; font-weight:700; }
+.actions-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:0 16px 24px;
+}
+.action-card {
+  background:rgba(30,41,59,.85);
+  border:1.5px solid rgba(251,191,36,.25);
+  border-radius:14px;
+  padding:16px 12px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .15s;
+}
+.action-card:active { transform:scale(.97); }
+.action-card .icon { font-size:30px; display:block; margin-bottom:8px; }
+.action-card h4 {
+  font-size:13px; font-weight:800;
+  color:#F1F5F9; line-height:1.4;
+}
+.action-card.coming {
+  opacity:.5;
+  cursor:not-allowed;
+}
+.badge-soon {
+  display:inline-block;
+  background:rgba(251,191,36,.2);
+  color:#FBBF24;
+  font-size:9px; font-weight:800;
+  padding:2px 6px; border-radius:6px;
+  margin-top:4px;
+}
+.section-title {
+  font-size:12px; font-weight:800;
+  color:#FBBF24; letter-spacing:1px;
+  padding:0 16px;
+  margin:8px 0 12px;
+  border-right:3px solid #FBBF24;
+  padding-right:8px;
+}
+.footer-bar {
+  text-align:center;
+  padding:20px;
+  font-size:11px;
+  color:#475569;
+  border-top:1px solid #1E293B;
+  margin-top:auto;
+}
+
+/* LOADING */
+#loading-screen {
+  justify-content:center; align-items:center;
+  background:#0F172A;
+}
+.loader {
+  width:60px; height:60px;
+  border:4px solid #1E293B;
+  border-top-color:#FBBF24;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin-bottom:16px;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+.loading-text { font-size:14px; color:#94A3B8; }
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-screen" class="screen active">
+  <div class="loader"></div>
+  <div class="loading-text">جاري التحميل...</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen" class="screen">
+  <div class="login-card">
+    <div class="crown">👑</div>
+    <h1>Kodo Owner Panel</h1>
+    <div class="sub">لوحة تحكم المالك — دخول خاص</div>
+
+    <div class="field">
+      <label>📧 الإيميل</label>
+      <input id="login-email" type="email" placeholder="owner@example.com" dir="ltr" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label>🔑 الباسورد</label>
+      <div class="pass-wrap">
+        <input id="login-pass" type="password" placeholder="••••••••" dir="ltr" autocomplete="off">
+        <button class="eye" type="button" onclick="togglePass()">👁️</button>
+      </div>
+    </div>
+
+    <button class="btn-login" id="btn-login">🔓 دخول</button>
+
+    <div class="msg" id="login-msg"></div>
+
+    <div class="footer-note">
+      🔒 الصفحة دي محمية بـ Firebase Authentication<br>
+      محدش يقدر يدخل غير المالك
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard-screen" class="screen">
+  <div class="topbar">
+    <div>
+      <h2>👑 لوحة المالك</h2>
+      <div class="user-info" id="user-email-display">-</div>
+    </div>
+    <button class="btn-logout" id="btn-logout">خروج 🚪</button>
+  </div>
+
+  <div class="welcome-box">
+    <span class="emoji">🎉</span>
+    <h3>أهلاً يا أحمد!</h3>
+    <p>لوحة التحكم الكاملة قيد الإنشاء</p>
+  </div>
+
+  <div class="section-title">📊 إحصائيات سريعة</div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="icon">👥</span>
+      <span class="num" id="stat-users">-</span>
+      <span class="lbl">المستخدمين</span>
+    </div>
+    <div class="stat-card">
+      <span class="icon">📬</span>
+      <span class="num" id="stat-messages">-</span>
+      <span class="lbl">الرسائل</span>
+    </div>
+    <div class="stat-card">
+      <span class="icon">⏳</span>
+      <span class="num" id="stat-pending">-</span>
+      <span class="lbl">بانتظار رد</span>
+    </div>
+    <div class="stat-card">
+      <span class="icon">🚫</span>
+      <span class="num" id="stat-banned">-</span>
+      <span class="lbl">محظورين</span>
+    </div>
+  </div>
+
+  <div class="section-title">🎯 الإجراءات السريعة</div>
+  <div class="actions-grid">
+    <div class="action-card" id="action-messages">
+      <span class="icon">📬</span>
+      <h4>الرسائل الواردة</h4>
+      <span class="badge-soon">قريباً</span>
+    </div>
+    <div class="action-card" id="action-broadcast">
+      <span class="icon">📢</span>
+      <h4>إرسال إشعار</h4>
+      <span class="badge-soon">قريباً</span>
+    </div>
+    <div class="action-card" id="action-users">
+      <span class="icon">👥</span>
+      <h4>المستخدمين</h4>
+      <span class="badge-soon">قريباً</span>
+    </div>
+    <div class="action-card" id="action-devices">
+      <span class="icon">📱</span>
+      <h4>الأجهزة الموثوقة</h4>
+      <span class="badge-soon">قريباً</span>
+    </div>
+    <div class="action-card" id="action-security">
+      <span class="icon">📜</span>
+      <h4>سجل الأمان</h4>
+      <span class="badge-soon">قريباً</span>
+    </div>
+    <div class="action-card" id="action-antitheft">
+      <span class="icon">🚨</span>
+      <h4>وضع السرقة</h4>
+      <span class="badge-soon">قريباً</span>
+    </div>
+    <div class="action-card" id="action-maintenance">
+      <span class="icon">🔧</span>
+      <h4>وضع الصيانة</h4>
+      <span class="badge-soon">قريباً</span>
+    </div>
+    <div class="action-card" id="action-stats">
+      <span class="icon">📊</span>
+      <h4>إحصائيات كاملة</h4>
+      <span class="badge-soon">قريباً</span>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    Kodo Owner Panel v1.0<br>
+    Made with ❤ by Ahmed Bassiouny
+  </div>
+</div>
+
+<script>
+/* ========== Firebase Config ========== */
+var FIREBASE_CONFIG = {
+  apiKey: "AIzaSyD7UJClDiecAJ8-K1VhKvghz31TYe66_PY",
+  authDomain: "kodo-app-83d8b.firebaseapp.com",
+  databaseURL: "https://kodo-app-83d8b-default-rtdb.firebaseio.com",
+  projectId: "kodo-app-83d8b",
+  storageBucket: "kodo-app-83d8b.firebasestorage.app",
+  messagingSenderId: "436786698930",
+  appId: "1:436786698930:web:4b477c04c3155aba7447ab",
+  measurementId: "G-XJM68BT4KM"
+};
+
+/* ========== Owner Email ========== */
+var OWNER_EMAIL = "aom80308@gmail.com";
+
+/* ========== Init ========== */
+var fbApp, fbAuth, fbDB;
+try {
+  fbApp = firebase.initializeApp(FIREBASE_CONFIG);
+  fbAuth = firebase.auth();
+  fbDB = firebase.database();
+} catch(e) {
+  console.error('Firebase init error:', e);
+}
+
+/* ========== Helpers ========== */
+function show(id) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+  var target = document.getElementById(id);
+  if (target) target.classList.add('active');
+}
+function msg(type, text) {
+  var el = document.getElementById('login-msg');
+  el.className = 'msg show ' + type;
+  el.innerHTML = text;
+}
+function hideMsg() {
+  document.getElementById('login-msg').classList.remove('show');
+}
+function togglePass() {
+  var inp = document.getElementById('login-pass');
+  var btn = document.querySelector('.pass-wrap .eye');
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    inp.type = 'password';
+    btn.textContent = '👁️';
+  }
+}
+
+/* ========== Auth State ========== */
+if (fbAuth) {
+  fbAuth.onAuthStateChanged(function(user) {
+    if (user) {
+      if (user.email === OWNER_EMAIL) {
+        goToDashboard(user);
+      } else {
+        msg('error', '❌ ده مش حساب المالك');
+        fbAuth.signOut();
+        show('login-screen');
+      }
+    } else {
+      show('login-screen');
+    }
+  });
+} else {
+  show('login-screen');
+  msg('error', '❌ Firebase مش اشتغل — جرب تعمل Refresh');
+}
+
+/* ========== Login ========== */
+document.getElementById('btn-login').addEventListener('click', function() {
+  var email = document.getElementById('login-email').value.trim();
+  var pass = document.getElementById('login-pass').value;
+  var btn = this;
+
+  if (!email || !pass) {
+    msg('error', '❌ اكتب الإيميل والباسورد');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري التحقق...';
+  msg('info', '⏳ بيتأكد من بياناتك...');
+
+  fbAuth.signInWithEmailAndPassword(email, pass)
+    .then(function(cred) {
+      if (cred.user.email !== OWNER_EMAIL) {
+        msg('error', '❌ ده مش حساب المالك');
+        fbAuth.signOut();
+        btn.disabled = false;
+        btn.textContent = '🔓 دخول';
+        return;
+      }
+      msg('success', '✅ تم الدخول بنجاح!');
+      // onAuthStateChanged هيتولى الباقي
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = '🔓 دخول';
+      var msgs = {
+        'auth/wrong-password': '❌ الباسورد غلط',
+        'auth/user-not-found': '❌ الإيميل غير مسجل',
+        'auth/invalid-email': '❌ الإيميل مش صحيح',
+        'auth/too-many-requests': '⏳ محاولات كتير — استنى شوية',
+        'auth/invalid-credential': '❌ الإيميل أو الباسورد غلط',
+        'auth/network-request-failed': '❌ مشكلة في الشبكة',
+        'auth/user-disabled': '🚫 الحساب معطل'
+      };
+      msg('error', msgs[err.code] || ('❌ خطأ: ' + err.message));
+    });
+});
+
+/* ========== Logout ========== */
+document.getElementById('btn-logout').addEventListener('click', function() {
+  if (confirm('متأكد إنك عايز تسجل خروج؟')) {
+    fbAuth.signOut().then(function() {
+      document.getElementById('login-email').value = '';
+      document.getElementById('login-pass').value = '';
+      hideMsg();
+      show('login-screen');
+    });
+  }
+});
+
+/* ========== Dashboard ========== */
+function goToDashboard(user) {
+  document.getElementById('user-email-display').textContent = user.email;
+  show('dashboard-screen');
+  loadStats();
+}
+
+function loadStats() {
+  // المستخدمين
+  fbDB.ref('users').once('value').then(function(snap) {
+    document.getElementById('stat-users').textContent = snap.numChildren() || 0;
+  }).catch(function() {
+    document.getElementById('stat-users').textContent = '0';
+  });
+
+  // الرسائل
+  fbDB.ref('support').once('value').then(function(snap) {
+    var total = 0;
+    var pending = 0;
+    snap.forEach(function(child) {
+      total++;
+      if (!child.val().reply) pending++;
+    });
+    document.getElementById('stat-messages').textContent = total;
+    document.getElementById('stat-pending').textContent = pending;
+  }).catch(function() {
+    document.getElementById('stat-messages').textContent = '0';
+    document.getElementById('stat-pending').textContent = '0';
+  });
+
+  // المحظورين
+  fbDB.ref('banned').once('value').then(function(snap) {
+    document.getElementById('stat-banned').textContent = snap.numChildren() || 0;
+  }).catch(function() {
+    document.getElementById('stat-banned').textContent = '0';
+  });
+}
+
+/* ========== Action Cards (placeholder) ========== */
+var actions = ['messages','broadcast','users','devices','security','antitheft','maintenance','stats'];
+actions.forEach(function(id) {
+  var el = document.getElementById('action-' + id);
+  if (el) {
+    el.addEventListener('click', function() {
+      alert('🎯 الميزة دي جاي قريباً!\n\nهنجهزها في الخطوة الجاية.');
+    });
+  }
+});
+
+/* ========== Enter key for login ========== */
+document.getElementById('login-pass').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    document.getElementById('btn-login').click();
+  }
+});
+document.getElementById('login-email').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    document.getElementById('login-pass').focus();
+  }
+});
+</script>
+</body>
+</html>
