@@ -370,7 +370,34 @@ body {
     Made with ❤ by Ahmed Bassiouny
   </div>
 </div>
-
+<!-- MESSAGES SCREEN -->
+<div id="messages-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-messages-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">📬 الرسائل</h2>
+    <button class="btn-icon" id="btn-messages-refresh" style="color:#1F2937;font-size:20px;">🔄</button>
+  </div>
+  <div id="messages-list" style="padding:16px;display:flex;flex-direction:column;gap:12px;"></div>
+</div>
+<style>
+.msg-card{background:#1E293B;border-radius:16px;padding:16px;border-right:4px solid #F59E0B;box-shadow:0 4px 12px rgba(0,0,0,.3);}
+.msg-card.replied{border-right-color:#22C55E;}
+.msg-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px;color:#94A3B8;}
+.msg-user{font-weight:700;color:#FBBF24;}
+.msg-body{font-size:14px;color:#F1F5F9;line-height:1.7;padding:10px;background:rgba(0,0,0,.25);border-radius:10px;margin-bottom:10px;word-wrap:break-word;}
+.msg-reply{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);padding:10px;border-radius:10px;font-size:13px;color:#86EFAC;margin-bottom:10px;}
+.msg-actions{display:flex;gap:8px;}
+.msg-actions button{flex:1;padding:10px;border:none;border-radius:10px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;}
+.btn-reply{background:#3B82F6;color:#fff;}
+.btn-ban{background:#EF4444;color:#fff;}
+.btn-del{background:#475569;color:#fff;}
+.reply-box{margin-top:10px;}
+.reply-box textarea{width:100%;min-height:80px;padding:12px;border-radius:10px;border:2px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:14px;resize:none;box-sizing:border-box;}
+.rb-actions{display:flex;gap:8px;margin-top:8px;}
+.rb-actions button{flex:1;padding:10px;border:none;border-radius:10px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;}
+.empty-msg{text-align:center;padding:60px 20px;color:#64748B;font-size:14px;}
+.empty-msg .em-icon{font-size:60px;display:block;margin-bottom:12px;}
+</style>
 <script>
 /* ========== Firebase Config ========== */
 var FIREBASE_CONFIG = {
@@ -607,7 +634,7 @@ function loadStats() {
 }
 
 /* ========== Action Cards (placeholder) ========== */
-var actions = ['messages','broadcast','users','devices','security','antitheft','maintenance','stats'];
+var actions = ['broadcast','users','devices','security','antitheft','maintenance','stats'];
 actions.forEach(function(id) {
   var el = document.getElementById('action-' + id);
   if (el) {
@@ -628,6 +655,123 @@ document.getElementById('login-email').addEventListener('keypress', function(e) 
     document.getElementById('login-pass').focus();
   }
 });
+
+/* ========== Messages Management ========== */
+document.getElementById('btn-messages-back').addEventListener('click', function() {
+  show('dashboard-screen');
+});
+document.getElementById('btn-messages-refresh').addEventListener('click', function() {
+  loadMessages();
+});
+document.getElementById('action-messages').addEventListener('click', function() {
+  show('messages-screen');
+  loadMessages();
+});
+
+function loadMessages() {
+  var list = document.getElementById('messages-list');
+  if (!list) return;
+  list.innerHTML = '<div class="empty-msg"><span class="em-icon">⏳</span>جاري التحميل...</div>';
+  fbDB.ref('support').once('value').then(function(snap) {
+    var msgs = [];
+    snap.forEach(function(child) {
+      var v = child.val();
+      v.id = child.key;
+      msgs.push(v);
+    });
+    msgs.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
+    renderMessages(msgs);
+  }).catch(function(err) {
+    list.innerHTML = '<div class="empty-msg"><span class="em-icon">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
+
+function renderMessages(msgs) {
+  var list = document.getElementById('messages-list');
+  if (!list) return;
+  if (msgs.length === 0) {
+    list.innerHTML = '<div class="empty-msg"><span class="em-icon">📭</span>مفيش رسائل</div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < msgs.length; i++) {
+    var m = msgs[i];
+    var date = m.time ? new Date(m.time).toLocaleString('ar-EG') : '?';
+    var cls = m.reply ? 'replied' : 'pending';
+    html += '<div class="msg-card ' + cls + '">';
+    html += '<div class="msg-head"><span class="msg-user">👤 ' + escapeHtml(m.userName || 'مستخدم') + '</span><span>' + date + '</span></div>';
+    html += '<div class="msg-body">' + escapeHtml(m.message || '') + '</div>';
+    if (m.reply) {
+      html += '<div class="msg-reply">✅ <b>ردك:</b><br>' + escapeHtml(m.reply) + '</div>';
+      html += '<div class="msg-actions"><button class="btn-del" onclick="deleteMessage(\'' + m.id + '\')">🗑️ حذف</button></div>';
+    } else {
+      html += '<div class="msg-actions"><button class="btn-reply" onclick="showReplyBox(\'' + m.id + '\', this)">💬 رد</button><button class="btn-ban" onclick="banUser(\'' + (m.userId || '') + '\')">🚫 حظر</button></div>';
+    }
+    html += '</div>';
+  }
+  list.innerHTML = html;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function showReplyBox(msgId, el) {
+  var card = el.closest('.msg-card');
+  if (!card) return;
+  var existing = card.querySelector('.reply-box');
+  if (existing) { existing.remove(); return; }
+  var box = document.createElement('div');
+  box.className = 'reply-box';
+  box.innerHTML = '<textarea id="rb-' + msgId + '" placeholder="اكتب ردك هنا..."></textarea><div class="rb-actions"><button class="btn-reply" onclick="sendReply(\'' + msgId + '\', this)">📤 إرسال</button><button class="btn-del" onclick="this.closest(\'.reply-box\').remove()">❌ إلغاء</button></div>';
+  card.appendChild(box);
+  setTimeout(function() { document.getElementById('rb-' + msgId).focus(); }, 100);
+}
+
+function sendReply(msgId, btn) {
+  var ta = document.getElementById('rb-' + msgId);
+  if (!ta) return;
+  var text = ta.value.trim();
+  if (!text) { alert('❌ اكتب رد'); return; }
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الإرسال...';
+  fbDB.ref('support/' + msgId).update({
+    reply: text,
+    replyTime: Date.now(),
+    status: 'replied'
+  }).then(function() {
+    alert('✅ تم إرسال الرد');
+    loadMessages();
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '📤 إرسال';
+  });
+}
+
+function deleteMessage(msgId) {
+  if (!confirm('متأكد إنك عايز تحذف الرسالة؟')) return;
+  fbDB.ref('support/' + msgId).remove().then(function() {
+    loadMessages();
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+  });
+}
+
+function banUser(userId) {
+  if (!userId) { alert('❌ معرّف المستخدم غير موجود'); return; }
+  var reason = prompt('سبب الحظر:', 'مخالفة الشروط');
+  if (!reason) return;
+  fbDB.ref('banned/' + userId).set({
+    reason: reason,
+    time: Date.now(),
+    bannedBy: 'owner'
+  }).then(function() {
+    alert('✅ تم الحظر');
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+  });
+}
 </script>
 </body>
 </html>
