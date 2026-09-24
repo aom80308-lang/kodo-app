@@ -3879,6 +3879,42 @@ if (window.matchMedia) {
     this._extraQuizzes = null;
   };
 })();
+/* ========== Ban Check Patch - فحص الحظر فوراً ========== */
+(function() {
+  var origInit = App.init;
+  App.init = function() {
+    var self = this;
+    self._isBanned = false;
+    
+    // فحص الحظر فوراً قبل أي حاجة
+    if (typeof fbDB !== 'undefined' && fbDB) {
+      var deviceId = this.getDeviceId();
+      fbDB.ref('banned/' + deviceId).once('value').then(function(snap) {
+        if (snap.exists()) {
+          var data = snap.val();
+          if (data.until && Date.now() > data.until) {
+            fbDB.ref('banned/' + deviceId).remove();
+            return;
+          }
+          self._isBanned = true;
+          var splash = document.getElementById('splash');
+          if (splash) splash.classList.remove('active');
+          var screens = document.querySelectorAll('.screen');
+          for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+          self.showBannedScreen(data);
+        }
+      }).catch(function() {});
+    }
+    
+    origInit.call(this);
+  };
+  
+  var origGo = App.go;
+  App.go = function(id) {
+    if (this._isBanned && id !== 'splash') return;
+    return origGo.call(this, id);
+  };
+})();
 </script>
 </body>
 </html>
