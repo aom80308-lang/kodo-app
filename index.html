@@ -1176,23 +1176,109 @@ var App = {
   },
 
   checkIfBanned: function() {
-    if (!fbDB) return;
-    var self = this;
-    var deviceId = this.getDeviceId();
-    fbDB.ref('banned/' + deviceId).on('value', function(snapshot) {
-      if (snapshot.exists()) {
-        var data = snapshot.val();
-        self.showBannedScreen(data.reason || 'مخالفة الشروط');
+  if (!fbDB) return;
+  var self = this;
+  var deviceId = this.getDeviceId();
+  fbDB.ref('banned/' + deviceId).on('value', function(snapshot) {
+    if (snapshot.exists()) {
+      var data = snapshot.val();
+      if (data.until && Date.now() > data.until) {
+        fbDB.ref('banned/' + deviceId).remove();
+        self.hideBannedScreen();
+        return;
       }
-    });
-  },
+      self.showBannedScreen(data);
+    } else {
+      self.hideBannedScreen();
+    }
+  });
+},
 
-  showBannedScreen: function(reason) {
-    var modal = document.getElementById('modal');
-    var mc = document.getElementById('modal-content');
-    mc.innerHTML = '<div style="text-align:center;padding:20px;"><div style="font-size:70px;margin-bottom:15px;">🚫</div><h3 style="color:var(--danger);margin-bottom:15px;">تم حظرك</h3><p>السبب: <b>' + reason + '</b></p><p style="font-size:13px;color:var(--text-light);margin-top:15px;">تواصل مع الدعم لو عندك اعتراض</p></div>';
-    modal.classList.add('active');
-  },
+showBannedScreen: function(data) {
+  var self = this;
+  var deviceId = this.getDeviceId();
+  var reason = data.reason || 'مخالفة الشروط';
+  var banDuration = 'دائم';
+  if (data.until && data.until > Date.now()) {
+    var mins = Math.ceil((data.until - Date.now()) / 60000);
+    if (mins > 1440) banDuration = Math.ceil(mins / 1440) + ' يوم';
+    else if (mins > 60) banDuration = Math.ceil(mins / 60) + ' ساعة';
+    else banDuration = mins + ' دقيقة';
+  }
+
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+
+  var banScreen = document.getElementById('ban-screen');
+  if (banScreen) banScreen.remove();
+  banScreen = document.createElement('div');
+  banScreen.id = 'ban-screen';
+  banScreen.style.cssText = 'position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#1E293B,#0F172A);color:#fff;overflow-y:auto;padding:20px;direction:rtl;';
+  document.body.appendChild(banScreen);
+
+  fbDB.ref('appeals/' + deviceId).once('value').then(function(snap) {
+    var appealHtml = '';
+    if (snap.exists()) {
+      var a = snap.val();
+      if (a.status === 'rejected') {
+        appealHtml = '<div style="background:#FEE2E2;color:#991B1B;padding:15px;border-radius:12px;margin-top:15px;"><b>❌ تم رفض الطعن</b></div>';
+      } else {
+        appealHtml = '<div style="background:#FEF3C7;color:#92400E;padding:15px;border-radius:12px;margin-top:15px;"><b>⏳ تم استلام طعنك</b><br>في انتظار المراجعة</div>';
+      }
+    } else {
+      appealHtml = '<div style="margin-top:20px;"><textarea id="appeal-text" placeholder="اكتب طعنك هنا..." style="width:100%;min-height:120px;padding:14px;border-radius:12px;border:2px solid #334155;background:#0F172A;color:#fff;font-family:inherit;font-size:14px;resize:none;box-sizing:border-box;"></textarea><button id="btn-submit-appeal" style="width:100%;padding:16px;margin-top:12px;border:none;border-radius:12px;background:#3B82F6;color:#fff;font-size:16px;font-weight:800;font-family:inherit;">📤 إرسال الطعن</button></div>';
+    }
+
+    banScreen.innerHTML = '<div style="max-width:480px;margin:0 auto;padding:30px 20px;text-align:center;">' +
+      '<div style="font-size:100px;margin-bottom:20px;">🚫</div>' +
+      '<h1 style="color:#EF4444;font-size:28px;margin-bottom:12px;font-weight:800;">تم حظرك</h1>' +
+      '<p style="color:#94A3B8;font-size:15px;margin-bottom:20px;">تم حظر حسابك من استخدام التطبيق</p>' +
+      '<div style="background:#1E293B;border:1px solid #334155;border-radius:16px;padding:20px;text-align:right;">' +
+      '<div style="margin-bottom:12px;"><span style="color:#94A3B8;font-size:12px;">السبب:</span><br><b style="color:#F87171;font-size:15px;">' + reason + '</b></div>' +
+      '<div style="margin-bottom:12px;"><span style="color:#94A3B8;font-size:12px;">المدة:</span><br><b style="color:#FBBF24;font-size:15px;">' + banDuration + '</b></div>' +
+      '<div><span style="color:#94A3B8;font-size:12px;">الجهاز:</span><br><b style="font-size:13px;direction:ltr;display:inline-block;">' + deviceId + '</b></div>' +
+      '</div>' + appealHtml +
+      '</div>';
+
+    var sb = document.getElementById('btn-submit-appeal');
+    if (sb) sb.onclick = function() { self.submitAppeal(); };
+  });
+},
+
+hideBannedScreen: function() {
+  var bs = document.getElementById('ban-screen');
+  if (bs) bs.remove();
+},
+
+submitAppeal: function() {
+  var self = this;
+  var t = document.getElementById('appeal-text');
+  if (!t) return;
+  var txt = t.value.trim();
+  if (txt.length < 10) { alert('❌ اكتب طعن مفصّل'); return; }
+  var deviceId = this.getDeviceId();
+  var btn = document.getElementById('btn-submit-appeal');
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الإرسال...';
+  fbDB.ref('banned/' + deviceId).once('value').then(function(snap) {
+    var bd = snap.val() || {};
+    return fbDB.ref('appeals/' + deviceId).set({
+      deviceId: deviceId,
+      userName: self.state.userName || 'مستخدم',
+      reason: bd.reason || 'مخالفة الشروط',
+      appeal: txt,
+      time: Date.now(),
+      status: 'pending'
+    });
+  }).then(function() {
+    alert('✅ تم إرسال طعنك');
+    self.showBannedScreen({ reason: '' });
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '📤 إرسال الطعن';
+  });
+},
 
   checkMaintenanceAndShow: function() {
     if (!fbDB) return;
