@@ -1100,7 +1100,7 @@ function loadBannedUsers() {
     });
     arr.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
     if (arr.length === 0) {
-      list.innerHTML = '<div class="empty-bans"><span class="em">🌜</span>' + (filter ? 'مفيش نتايج' : 'مفيش محظورين') + '</div>';
+      list.innerHTML = '<div class="empty-bans"><span class="em">🌙</span>' + (filter ? 'مفيش نتايج' : 'مفيش محظورين') + '</div>';
       return;
     }
     var html = '';
@@ -1137,7 +1137,7 @@ function loadAppeals() {
     });
     arr.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
     if (arr.length === 0) {
-      list.innerHTML = '<div class="empty-bans"><span class="em">🌜</span>' + (filter ? 'مفيش نتايج' : 'مفيش طعون') + '</div>';
+      list.innerHTML = '<div class="empty-bans"><span class="em">🌙</span>' + (filter ? 'مفيش نتايج' : 'مفيش طعون') + '</div>';
       return;
     }
     var html = '';
@@ -1182,7 +1182,7 @@ function loadBanLog() {
     });
     arr.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
     if (arr.length === 0) {
-      list.innerHTML = '<div class="empty-bans"><span class="em">🌜</span>مفيش سجل</div>';
+      list.innerHTML = '<div class="empty-bans"><span class="em">🌙</span>مفيش سجل</div>';
       return;
     }
     var html = '';
@@ -1195,7 +1195,7 @@ function loadBanLog() {
     }
     list.innerHTML = html;
   }).catch(function() {
-    list.innerHTML = '<div class="empty-bans"><span class="em">🌜</span>مفيش سجل</div>';
+    list.innerHTML = '<div class="empty-bans"><span class="em">🌙</span>مفيش سجل</div>';
   });
 }
 
