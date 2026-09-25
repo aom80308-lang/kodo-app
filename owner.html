@@ -348,12 +348,21 @@ body {
       <h4>سجل الأمان</h4>
       <span class="badge-soon">قريباً</span>
     </div>
-    <div class="action-card" id="action-antitheft">
-      <span class="icon">🚨</span>
-      <h4>وضع السرقة</h4>
-      <span class="badge-soon">قريباً</span>
-    </div>
-    <div class="action-card" id="action-maintenance">
+    <div class="action-card" id="action-ban">
+  <span class="icon">🚫</span>
+  <h4>الحظر والطعون</h4>
+</div>
+<div class="action-card" id="action-emergency">
+  <span class="icon">🆘</span>
+  <h4>مضاد السرقة</h4>
+  <span class="badge-soon">قريباً</span>
+</div>
+  <div class="action-card" id="action-rewards">
+  <span class="icon">🎁</span>
+  <h4>المكافآت</h4>
+  <span class="badge-soon">قريباً</span>
+</div>
+<div class="action-card" id="action-maintenance">
       <span class="icon">🔧</span>
       <h4>وضع الصيانة</h4>
       <span class="badge-soon">قريباً</span>
@@ -1006,7 +1015,7 @@ function manualUnban() {
   });
 }
 
-document.getElementById('action-antitheft').addEventListener('click', function() {
+document.getElementById(action-ban).addEventListener('click', function() {
   show('banned-screen');
   loadBannedList();
   loadAppealsList();
