@@ -1015,11 +1015,43 @@ function manualUnban() {
   });
 }
 
-document.getElementById(action-ban).addEventListener('click', function() {
-  show('banned-screen');
-  loadBannedList();
-  loadAppealsList();
-});
+/* ========== Action Buttons Handlers ========== */
+console.log('🔧 Loading action handlers...');
+
+var btnBan = document.getElementById('action-ban');
+if (btnBan) {
+  console.log('✅ action-ban found');
+  btnBan.addEventListener('click', function() {
+    console.log('👆 action-ban clicked');
+    try {
+      show('banned-screen');
+      loadBannedList();
+      loadAppealsList();
+    } catch(e) {
+      alert('❌ خطأ: ' + e.message);
+    }
+  });
+} else {
+  console.log('❌ action-ban NOT found');
+}
+
+var btnEmerg = document.getElementById('action-emergency');
+if (btnEmerg) {
+  console.log('✅ action-emergency found');
+  btnEmerg.addEventListener('click', function() {
+    alert('🆘 ميزة مضاد السرقة جاي قريباً!');
+  });
+}
+
+var btnRewards = document.getElementById('action-rewards');
+if (btnRewards) {
+  console.log('✅ action-rewards found');
+  btnRewards.addEventListener('click', function() {
+    alert('🎁 ميزة المكافآت جاي قريباً!');
+  });
+}
+
+console.log('🎯 All handlers loaded');
 </script>
 </body>
 </html>
