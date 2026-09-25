@@ -407,47 +407,183 @@ body {
 .empty-msg{text-align:center;padding:60px 20px;color:#64748B;font-size:14px;}
 .empty-msg .em-icon{font-size:60px;display:block;margin-bottom:12px;}
 </style>
-<!-- BANNED & APPEALS SCREEN -->
+<!-- ========== BAN HUB SCREEN ========== -->
 <div id="banned-screen" class="screen">
   <div class="topbar">
     <button class="btn-icon" id="btn-banned-back" style="color:#1F2937;font-size:24px;">←</button>
-    <h2 style="color:#1F2937;font-size:18px;">🚫 إدارة الحظر</h2>
+    <h2 style="color:#1F2937;font-size:18px;">🚫 الحظر والطعون</h2>
     <button class="btn-icon" id="btn-banned-refresh" style="color:#1F2937;font-size:20px;">🔄</button>
   </div>
 
-  <div style="padding:16px;">
+  <div class="ban-hub-body">
+    <div class="ban-stats-grid">
+      <div class="ban-stat-card">
+        <div class="bsc-icon">🚫</div>
+        <div class="bsc-num" id="hub-banned-count">0</div>
+        <div class="bsc-lbl">محظورين</div>
+      </div>
+      <div class="ban-stat-card">
+        <div class="bsc-icon">📩</div>
+        <div class="bsc-num" id="hub-appeals-count">0</div>
+        <div class="bsc-lbl">طعون</div>
+      </div>
+      <div class="ban-stat-card">
+        <div class="bsc-icon">⏳</div>
+        <div class="bsc-num" id="hub-pending-count">0</div>
+        <div class="bsc-lbl">معلقة</div>
+      </div>
+      <div class="ban-stat-card">
+        <div class="bsc-icon">✅</div>
+        <div class="bsc-num" id="hub-resolved-count">0</div>
+        <div class="bsc-lbl">مُفكّكة</div>
+      </div>
+    </div>
 
+    <div class="search-universal-box">
+      <div class="sub-title">🔍 بحث شامل</div>
+      <div class="sub-desc">ابحث في كل السجلات بـ Device ID</div>
+      <input id="hub-search-input" type="text" placeholder="DEV-XXXXXXXX" dir="ltr" autocomplete="off">
+      <button id="btn-hub-search" class="btn-search-dark">🔍 ابحث</button>
+    </div>
+
+    <div class="ban-hub-menu">
+      <div class="ban-menu-btn" id="btn-open-banned-list">
+        <span class="bmb-icon">📋</span>
+        <div class="bmb-text">
+          <h4>المحظورين</h4>
+          <p>قايمة كل المحظورين الحاليين</p>
+        </div>
+        <span class="bmb-arrow">←</span>
+      </div>
+
+      <div class="ban-menu-btn" id="btn-open-appeals-list">
+        <span class="bmb-icon">📩</span>
+        <div class="bmb-text">
+          <h4>الطعون</h4>
+          <p>قايمة كل الطعون الواردة</p>
+        </div>
+        <span class="bmb-arrow">←</span>
+      </div>
+
+      <div class="ban-menu-btn" id="btn-open-ban-log">
+        <span class="bmb-icon">📊</span>
+        <div class="bmb-text">
+          <h4>سجل الحظر</h4>
+          <p>كل عمليات الحظر وفك الحظر</p>
+        </div>
+        <span class="bmb-arrow">←</span>
+      </div>
+
+      <div class="ban-menu-btn" id="btn-open-manual-unban">
+        <span class="bmb-icon">🔓</span>
+        <div class="bmb-text">
+          <h4>فك حظر يدوي</h4>
+          <p>اكتب Device ID لفك الحظر</p>
+        </div>
+        <span class="bmb-arrow">←</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== BANNED USERS SCREEN ========== -->
+<div id="banned-list-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-banned-list-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">📋 المحظورين</h2>
+    <button class="btn-icon" id="btn-banned-list-refresh" style="color:#1F2937;font-size:20px;">🔄</button>
+  </div>
+  <div class="sub-body">
+    <div class="search-box-sub">
+      <input id="banned-search-input" type="text" placeholder="ابحث بالـ Device ID..." dir="ltr" autocomplete="off">
+      <button id="btn-banned-search" class="btn-search-sub">🔍</button>
+    </div>
+    <div id="banned-list-content"></div>
+  </div>
+</div>
+
+<!-- ========== APPEALS SCREEN ========== -->
+<div id="appeals-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-appeals-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">📩 الطعون</h2>
+    <button class="btn-icon" id="btn-appeals-refresh" style="color:#1F2937;font-size:20px;">🔄</button>
+  </div>
+  <div class="sub-body">
+    <div class="search-box-sub">
+      <input id="appeals-search-input" type="text" placeholder="ابحث بالـ Device ID..." dir="ltr" autocomplete="off">
+      <button id="btn-appeals-search" class="btn-search-sub">🔍</button>
+    </div>
+    <div id="appeals-list-content"></div>
+  </div>
+</div>
+
+<!-- ========== BAN LOG SCREEN ========== -->
+<div id="ban-log-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-ban-log-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">📊 سجل الحظر</h2>
+    <button class="btn-icon" id="btn-ban-log-refresh" style="color:#1F2937;font-size:20px;">🔄</button>
+  </div>
+  <div class="sub-body">
+    <div id="ban-log-content"></div>
+  </div>
+</div>
+
+<!-- ========== MANUAL UNBAN SCREEN ========== -->
+<div id="manual-unban-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-manual-unban-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">🔓 فك حظر يدوي</h2>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="sub-body">
     <div class="manual-unban-box">
-      <div class="mub-title">🔓 فك الحظر يدوياً</div>
-      <div class="mub-desc">اكتب Device ID لفك الحظر عن أي جهاز</div>
+      <div class="mub-title">🔓 اكتب Device ID</div>
+      <div class="mub-desc">فك الحظر عن أي جهاز فوراً</div>
       <input id="unban-input" type="text" placeholder="DEV-XXXXXXXX" dir="ltr" autocomplete="off">
       <button id="btn-unban-manual" class="btn-unban-green">✅ فك الحظر</button>
     </div>
-
-    <div class="section-title-dark">📩 الطعون المعلقة <span id="appeals-count" class="badge-count">0</span></div>
-    <div id="appeals-list"></div>
-
-    <div class="section-title-dark">🚫 المحظورين <span id="banned-count" class="badge-count">0</span></div>
-    <div id="banned-list"></div>
-
   </div>
 </div>
 
 <style>
-.manual-unban-box{background:#1E293B;border-radius:14px;padding:16px;margin-bottom:18px;border:1.5px solid rgba(34,197,94,.3);}
-.mub-title{font-size:14px;color:#86EFAC;font-weight:800;margin-bottom:4px;}
-.mub-desc{font-size:12px;color:#94A3B8;margin-bottom:12px;}
-.manual-unban-box input{width:100%;padding:12px;border-radius:10px;border:2px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:14px;box-sizing:border-box;margin-bottom:10px;text-align:center;}
-.manual-unban-box input:focus{outline:none;border-color:#22C55E;}
-.btn-unban-green{width:100%;padding:12px;border:none;border-radius:10px;background:#22C55E;color:#fff;font-size:14px;font-weight:800;font-family:inherit;cursor:pointer;}
-.btn-unban-green:active{opacity:.7;}
+/* Ban Hub */
+.ban-hub-body{padding:16px 14px 40px;}
+.ban-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+.ban-stat-card{background:linear-gradient(135deg,#1E293B,#0F172A);border:1.5px solid rgba(251,191,36,.25);border-radius:14px;padding:14px 10px;text-align:center;}
+.bsc-icon{font-size:26px;margin-bottom:6px;}
+.bsc-num{font-size:22px;font-weight:800;color:#FBBF24;margin-bottom:2px;}
+.bsc-lbl{font-size:11px;color:#94A3B8;font-weight:700;}
+.search-universal-box{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(139,92,246,.15));border:1.5px solid rgba(59,130,246,.4);border-radius:14px;padding:16px;margin-bottom:18px;}
+.sub-title{font-size:14px;font-weight:800;color:#93C5FD;margin-bottom:4px;}
+.sub-desc{font-size:11px;color:#94A3B8;margin-bottom:10px;}
+.search-universal-box input{width:100%;padding:12px;border-radius:10px;border:2px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:14px;box-sizing:border-box;text-align:center;margin-bottom:10px;}
+.search-universal-box input:focus{outline:none;border-color:#3B82F6;}
+.btn-search-dark{width:100%;padding:12px;border:none;border-radius:10px;background:#3B82F6;color:#fff;font-size:14px;font-weight:800;font-family:inherit;cursor:pointer;}
+.ban-hub-menu{display:flex;flex-direction:column;gap:10px;}
+.ban-menu-btn{background:rgba(30,41,59,.9);border:1.5px solid rgba(251,191,36,.25);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s;}
+.ban-menu-btn:active{transform:scale(.98);background:rgba(30,41,59,.6);}
+.bmb-icon{font-size:30px;flex-shrink:0;}
+.bmb-text{flex:1;text-align:right;}
+.bmb-text h4{font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:2px;}
+.bmb-text p{font-size:11px;color:#94A3B8;}
+.bmb-arrow{color:#FBBF24;font-size:22px;font-weight:800;}
 
-.section-title-dark{font-size:13px;color:#FBBF24;font-weight:800;margin:18px 0 10px;padding-right:8px;border-right:3px solid #FBBF24;display:flex;align-items:center;gap:8px;}
-.badge-count{background:#EF4444;color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:800;}
+/* Sub Pages */
+.sub-body{padding:16px 14px 40px;}
+.search-box-sub{display:flex;gap:8px;margin-bottom:16px;}
+.search-box-sub input{flex:1;padding:12px;border-radius:10px;border:2px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:14px;box-sizing:border-box;text-align:center;}
+.search-box-sub input:focus{outline:none;border-color:#3B82F6;}
+.btn-search-sub{padding:12px 16px;border:none;border-radius:10px;background:#3B82F6;color:#fff;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;}
 
-.ban-card{background:#1E293B;border-radius:14px;padding:14px;margin-bottom:12px;border-right:4px solid #EF4444;}
+/* Ban & Appeal Cards */
+.ban-card{background:#1E293B;border-radius:14px;padding:14px;margin-bottom:12px;border-right:4px solid #EF4444;cursor:pointer;transition:transform .1s;}
+.ban-card:active{transform:scale(.98);}
 .ban-card.appeal{border-right-color:#F59E0B;}
-.ban-card.appeal-rejected{border-right-color:#64748B;opacity:.7;}
+.ban-card.appeal-rejected{border-right-color:#64748B;opacity:.75;}
+.ban-card.appeal-approved{border-right-color:#22C55E;opacity:.85;}
+.ban-card.log-card{border-right-color:#8B5CF6;cursor:default;}
 .ban-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px;color:#94A3B8;}
 .ban-user{font-weight:800;color:#F87171;font-size:13px;direction:ltr;}
 .ban-row{font-size:12.5px;color:#CBD5E1;margin-bottom:6px;line-height:1.6;word-break:break-word;}
@@ -458,8 +594,17 @@ body {
 .btn-unban{background:#22C55E;color:#fff;}
 .btn-reject{background:#EF4444;color:#fff;}
 .btn-delete-ban{background:#475569;color:#fff;}
-.empty-bans{text-align:center;padding:30px 20px;color:#64748B;font-size:13px;}
-.empty-bans .em{font-size:40px;display:block;margin-bottom:8px;}
+.btn-view-details{background:#3B82F6;color:#fff;}
+.empty-bans{text-align:center;padding:40px 20px;color:#64748B;font-size:13px;}
+.empty-bans .em{font-size:50px;display:block;margin-bottom:12px;}
+
+/* Manual Unban */
+.manual-unban-box{background:#1E293B;border-radius:14px;padding:20px;border:1.5px solid rgba(34,197,94,.3);}
+.mub-title{font-size:15px;color:#86EFAC;font-weight:800;margin-bottom:6px;}
+.mub-desc{font-size:12px;color:#94A3B8;margin-bottom:14px;}
+.manual-unban-box input{width:100%;padding:14px;border-radius:10px;border:2px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:15px;box-sizing:border-box;margin-bottom:12px;text-align:center;}
+.manual-unban-box input:focus{outline:none;border-color:#22C55E;}
+.btn-unban-green{width:100%;padding:14px;border:none;border-radius:10px;background:#22C55E;color:#fff;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;}
 </style>
 <script>
 /* ========== Firebase Config ========== */
@@ -1015,43 +1160,315 @@ function manualUnban() {
   });
 }
 
-/* ========== Action Buttons Handlers ========== */
-console.log('🔧 Loading action handlers...');
+/* ========== BAN SYSTEM - NEW ========== */
+console.log('🔧 Loading ban system...');
 
-var btnBan = document.getElementById('action-ban');
-if (btnBan) {
-  console.log('✅ action-ban found');
-  btnBan.addEventListener('click', function() {
-    console.log('👆 action-ban clicked');
-    try {
-      show('banned-screen');
-      loadBannedList();
-      loadAppealsList();
-    } catch(e) {
-     alert('❌ خطأ: ' + e.message);
+/* ----- Hub Handlers ----- */
+document.getElementById('btn-banned-back').addEventListener('click', function() {
+  show('dashboard-screen');
+});
+
+document.getElementById('btn-banned-refresh').addEventListener('click', function() {
+  loadHubStats();
+});
+
+document.getElementById('btn-open-banned-list').addEventListener('click', function() {
+  show('banned-list-screen');
+  loadBannedUsers();
+});
+
+document.getElementById('btn-open-appeals-list').addEventListener('click', function() {
+  show('appeals-screen');
+  loadAppeals();
+});
+
+document.getElementById('btn-open-ban-log').addEventListener('click', function() {
+  show('ban-log-screen');
+  loadBanLog();
+});
+
+document.getElementById('btn-open-manual-unban').addEventListener('click', function() {
+  show('manual-unban-screen');
+});
+
+/* ----- Sub Pages Back ----- */
+document.getElementById('btn-banned-list-back').addEventListener('click', function() {
+  show('banned-screen');
+});
+document.getElementById('btn-banned-list-refresh').addEventListener('click', function() {
+  loadBannedUsers();
+});
+document.getElementById('btn-appeals-back').addEventListener('click', function() {
+  show('banned-screen');
+});
+document.getElementById('btn-appeals-refresh').addEventListener('click', function() {
+  loadAppeals();
+});
+document.getElementById('btn-ban-log-back').addEventListener('click', function() {
+  show('banned-screen');
+});
+document.getElementById('btn-ban-log-refresh').addEventListener('click', function() {
+  loadBanLog();
+});
+document.getElementById('btn-manual-unban-back').addEventListener('click', function() {
+  show('banned-screen');
+});
+
+/* ----- Search Handlers ----- */
+document.getElementById('btn-hub-search').addEventListener('click', function() {
+  var id = document.getElementById('hub-search-input').value.trim().toUpperCase();
+  if (!id) { alert('❌ اكتب Device ID'); return; }
+  doUniversalSearch(id);
+});
+
+document.getElementById('btn-banned-search').addEventListener('click', function() {
+  loadBannedUsers();
+});
+document.getElementById('banned-search-input').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') loadBannedUsers();
+});
+
+document.getElementById('btn-appeals-search').addEventListener('click', function() {
+  loadAppeals();
+});
+document.getElementById('appeals-search-input').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') loadAppeals();
+});
+
+/* ----- Manual Unban ----- */
+document.getElementById('btn-unban-manual').addEventListener('click', manualUnban);
+
+/* ----- Load Hub Stats ----- */
+function loadHubStats() {
+  fbDB.ref('banned').once('value').then(function(snap) {
+    var c = document.getElementById('hub-banned-count');
+    if (c) c.textContent = snap.numChildren() || 0;
+  }).catch(function() {});
+
+  fbDB.ref('appeals').once('value').then(function(snap) {
+    var total = 0, pending = 0, resolved = 0;
+    snap.forEach(function(child) {
+      var v = child.val();
+      total++;
+      if (v.status === 'pending' || !v.status) pending++;
+      else if (v.status === 'approved' || v.status === 'rejected') resolved++;
+    });
+    var c1 = document.getElementById('hub-appeals-count');
+    var c2 = document.getElementById('hub-pending-count');
+    var c3 = document.getElementById('hub-resolved-count');
+    if (c1) c1.textContent = total;
+    if (c2) c2.textContent = pending;
+    if (c3) c3.textContent = resolved;
+  }).catch(function() {});
+}
+
+/* ----- Load Banned Users ----- */
+function loadBannedUsers() {
+  var list = document.getElementById('banned-list-content');
+  if (!list) return;
+  list.innerHTML = '<div class="empty-bans"><span class="em">⏳</span>جاري التحميل...</div>';
+
+  var filter = (document.getElementById('banned-search-input').value || '').trim().toUpperCase();
+
+  fbDB.ref('banned').once('value').then(function(snap) {
+    var arr = [];
+    snap.forEach(function(child) {
+      var v = child.val();
+      v.id = child.key;
+      if (!filter || v.id.indexOf(filter) !== -1) arr.push(v);
+    });
+    arr.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
+    if (arr.length === 0) {
+      list.innerHTML = '<div class="empty-bans"><span class="em">✨</span>' + (filter ? 'مفيش نتايج' : 'مفيش محظورين') + '</div>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < arr.length; i++) {
+      var b = arr[i];
+      var t = b.time ? new Date(b.time).toLocaleString('ar-EG') : '?';
+      var until = b.until ? new Date(b.until).toLocaleString('ar-EG') : 'دائم';
+      html += '<div class="ban-card" onclick="viewBanDetails(\'' + b.id + '\')">';
+      html += '<div class="ban-head"><span class="ban-user">' + escapeHtml(b.id) + '</span><span>' + t + '</span></div>';
+      html += '<div class="ban-row"><b>السبب:</b> ' + escapeHtml(b.reason || 'غير محدد') + '</div>';
+      html += '<div class="ban-row"><b>المدة:</b> ' + until + '</div>';
+      html += '</div>';
+    }
+    list.innerHTML = html;
+  }).catch(function(err) {
+    list.innerHTML = '<div class="empty-bans"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
+
+/* ----- Load Appeals ----- */
+function loadAppeals() {
+  var list = document.getElementById('appeals-list-content');
+  if (!list) return;
+  list.innerHTML = '<div class="empty-bans"><span class="em">⏳</span>جاري التحميل...</div>';
+
+  var filter = (document.getElementById('appeals-search-input').value || '').trim().toUpperCase();
+
+  fbDB.ref('appeals').once('value').then(function(snap) {
+    var arr = [];
+    snap.forEach(function(child) {
+      var v = child.val();
+      v.id = child.key;
+      if (!filter || v.id.indexOf(filter) !== -1) arr.push(v);
+    });
+    arr.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
+    if (arr.length === 0) {
+      list.innerHTML = '<div class="empty-bans"><span class="em">✨</span>' + (filter ? 'مفيش نتايج' : 'مفيش طعون') + '</div>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < arr.length; i++) {
+      var a = arr[i];
+      var t = a.time ? new Date(a.time).toLocaleString('ar-EG') : '?';
+      var statusCls = a.status === 'rejected' ? 'appeal-rejected' : (a.status === 'approved' ? 'appeal-approved' : 'appeal');
+      var statusTxt = a.status === 'rejected' ? '❌ مرفوض' : (a.status === 'approved' ? '✅ مقبول' : '⏳ قيد المراجعة');
+      html += '<div class="ban-card ' + statusCls + '">';
+      html += '<div class="ban-head"><span class="ban-user">' + escapeHtml(a.userName || 'مستخدم') + '</span><span>' + t + '</span></div>';
+      html += '<div class="ban-row"><b>ID:</b> <code>' + escapeHtml(a.deviceId || '') + '</code></div>';
+      html += '<div class="ban-row"><b>سبب الحظر:</b> ' + escapeHtml(a.reason || '') + '</div>';
+      html += '<div class="ban-row"><b>📝 الطعن:</b><br>' + escapeHtml(a.appeal || '') + '</div>';
+      html += '<div class="ban-row"><b>الحالة:</b> ' + statusTxt + '</div>';
+      if (a.status !== 'rejected' && a.status !== 'approved') {
+        html += '<div class="ban-actions">';
+        html += '<button class="btn-unban" onclick="event.stopPropagation();approveAppeal(\'' + a.deviceId + '\', this)">✅ فك الحظر</button>';
+        html += '<button class="btn-reject" onclick="event.stopPropagation();rejectAppeal(\'' + a.deviceId + '\', this)">❌ رفض</button>';
+        html += '</div>';
+      }
+      html += '</div>';
+    }
+    list.innerHTML = html;
+  }).catch(function(err) {
+    list.innerHTML = '<div class="empty-bans"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
+
+/* ----- Load Ban Log ----- */
+function loadBanLog() {
+  var list = document.getElementById('ban-log-content');
+  if (!list) return;
+  list.innerHTML = '<div class="empty-bans"><span class="em">⏳</span>جاري التحميل...</div>';
+
+  fbDB.ref('activity').orderByChild('action').limitToLast(50).once('value').then(function(snap) {
+    var arr = [];
+    snap.forEach(function(child) {
+      var v = child.val();
+      if (v.action === 'ban_user' || v.action === 'unban_user' || v.action === 'ban') {
+        arr.push(v);
+      }
+    });
+    arr.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
+    if (arr.length === 0) {
+      list.innerHTML = '<div class="empty-bans"><span class="em">✨</span>مفيش سجل</div>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < arr.length; i++) {
+      var l = arr[i];
+      var t = l.time ? new Date(l.time).toLocaleString('ar-EG') : '?';
+      html += '<div class="ban-card log-card">';
+      html += '<div class="ban-head"><span class="ban-user">' + escapeHtml(l.details || l.action) + '</span><span>' + t + '</span></div>';
+      html += '</div>';
+    }
+    list.innerHTML = html;
+  }).catch(function() {
+    list.innerHTML = '<div class="empty-bans"><span class="em">✨</span>مفيش سجل</div>';
+  });
+}
+
+/* ----- Universal Search ----- */
+function doUniversalSearch(id) {
+  alert('🔍 بحث شامل عن: ' + id + '\n\n(هنتوسعه في المرحلة الجاية)');
+}
+
+/* ----- View Details ----- */
+function viewBanDetails(id) {
+  fbDB.ref('banned/' + id).once('value').then(function(snap) {
+    var b = snap.val();
+    if (!b) return;
+    var t = b.time ? new Date(b.time).toLocaleString('ar-EG') : '?';
+    var until = b.until ? new Date(b.until).toLocaleString('ar-EG') : 'دائم';
+    var msg = '🚫 ' + id + '\n\n';
+    msg += 'السبب: ' + (b.reason || 'غير محدد') + '\n';
+    msg += 'المدة: ' + until + '\n';
+    msg += 'التاريخ: ' + t + '\n';
+    if (confirm(msg + '\n\nعايز تفك الحظر؟')) {
+      unbanUser(id, null);
     }
   });
-} else {
-  console.log('❌ action-ban NOT found');
 }
 
-var btnEmerg = document.getElementById('action-emergency');
-if (btnEmerg) {
-  console.log('✅ action-emergency found');
-  btnEmerg.addEventListener('click', function() {
-    alert('🆘 ميزة مضاد السرقة جاي قريباً!');
+/* ----- Unban User (updated) ----- */
+function unbanUser(deviceId, btn) {
+  if (!deviceId) return;
+  if (!confirm('متأكد إنك عايز تفك الحظر عن: ' + deviceId + '؟')) return;
+  if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
+  fbDB.ref('banned/' + deviceId).remove().then(function() {
+    fbDB.ref('appeals/' + deviceId).remove();
+    alert('✅ تم فك الحظر');
+    loadBannedUsers();
+    loadAppeals();
+    loadHubStats();
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    if (btn) { btn.disabled = false; btn.textContent = '🔓'; }
   });
 }
 
-var btnRewards = document.getElementById('action-rewards');
-if (btnRewards) {
-  console.log('✅ action-rewards found');
-  btnRewards.addEventListener('click', function() {
-    alert('🎁 ميزة المكافآت جاي قريباً!');
+/* ----- Approve Appeal (updated) ----- */
+function approveAppeal(deviceId, btn) {
+  if (!confirm('قبول الطعن وفك الحظر عن: ' + deviceId + '؟')) return;
+  if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
+  fbDB.ref('banned/' + deviceId).remove().then(function() {
+    return fbDB.ref('appeals/' + deviceId).update({ status: 'approved', resolvedAt: Date.now() });
+  }).then(function() {
+    alert('✅ تم قبول الطعن وفك الحظر');
+    loadAppeals();
+    loadHubStats();
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    if (btn) { btn.disabled = false; btn.textContent = '✅ فك الحظر'; }
   });
 }
 
-console.log('🎯 All handlers loaded');
+/* ----- Reject Appeal (updated) ----- */
+function rejectAppeal(deviceId, btn) {
+  if (!confirm('رفض الطعن؟ المستخدم هيفضل محظور.')) return;
+  if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
+  fbDB.ref('appeals/' + deviceId).update({ status: 'rejected', resolvedAt: Date.now() }).then(function() {
+    alert('❌ تم رفض الطعن');
+    loadAppeals();
+    loadHubStats();
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    if (btn) { btn.disabled = false; btn.textContent = '❌ رفض'; }
+  });
+}
+
+/* ----- Manual Unban (updated) ----- */
+function manualUnban() {
+  var inp = document.getElementById('unban-input');
+  if (!inp) return;
+  var id = inp.value.trim().toUpperCase();
+  if (!id) { alert('❌ اكتب Device ID'); return; }
+  if (!confirm('فك الحظر عن: ' + id + '؟')) return;
+  fbDB.ref('banned/' + id).remove().then(function() {
+    fbDB.ref('appeals/' + id).remove();
+    inp.value = '';
+    alert('✅ تم فك الحظر');
+    loadHubStats();
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+  });
+}
+
+/* ----- Action Button ----- */
+document.getElementById('action-ban').addEventListener('click', function() {
+  show('banned-screen');
+  loadHubStats();
+});
 </script>
 </body>
 </html>
