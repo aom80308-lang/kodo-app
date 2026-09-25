@@ -384,7 +384,10 @@ body {
   <div class="topbar">
     <button class="btn-icon" id="btn-messages-back" style="color:#1F2937;font-size:24px;">←</button>
     <h2 style="color:#1F2937;font-size:18px;">📬 الرسائل</h2>
-    <button class="btn-icon" id="btn-messages-refresh" style="color:#1F2937;font-size:20px;">🔄</button>
+    <div style="display:flex;gap:4px;">
+      <button class="btn-icon" id="btn-messages-refresh" style="color:#1F2937;font-size:20px;">🔄</button>
+      <button class="btn-icon" id="btn-messages-delete-all" style="color:#EF4444;font-size:20px;">🗑️</button>
+    </div>
   </div>
   <div id="messages-list" style="padding:16px;display:flex;flex-direction:column;gap:12px;"></div>
 </div>
@@ -874,6 +877,35 @@ document.getElementById('btn-messages-refresh').addEventListener('click', functi
 document.getElementById('action-messages').addEventListener('click', function() {
   show('messages-screen');
   loadMessages();
+});
+
+document.getElementById('btn-messages-delete-all').addEventListener('click', function() {
+  if (!confirm('⚠️ متأكد إنك عايز تحذف كل الرسائل؟\n\nالعملية دي مش هترجع تاني!')) return;
+  if (!confirm('🔴 تأكيد نهائي: حذف كل الرسائل؟')) return;
+  
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = '⏳';
+  
+  fbDB.ref('support').once('value').then(function(snap) {
+    if (snap.numChildren() === 0) {
+      alert('📭 مفيش رسائل لحذفها');
+      btn.disabled = false;
+      btn.textContent = '🗑️';
+      return;
+    }
+    return fbDB.ref('support').remove();
+  }).then(function() {
+    alert('✅ تم حذف كل الرسائل');
+    btn.disabled = false;
+    btn.textContent = '🗑️';
+    loadMessages();
+    loadStats();
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '🗑️';
+  });
 });
 
 function loadMessages() {
