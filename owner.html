@@ -535,6 +535,89 @@ body {
 
 <!-- ========== MANUAL UNBAN SCREEN ========== -->
 <div id="manual-unban-screen" class="screen">
+    <div class="topbar">
+    <button class="btn-icon" id="btn-manual-unban-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">🔓 فك حظر يدوي</h2>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="sub-body">
+    <div class="manual-unban-box">
+      <div class="mub-title">🔓 اكتب Device ID</div>
+      <div class="mub-desc">فك الحظر عن أي جهاز فوراً</div>
+      <input id="unban-input" type="text" placeholder="DEV-XXXXXXXX" dir="ltr" autocomplete="off">
+      <button id="btn-unban-manual" class="btn-unban-green">✅ فك الحظر</button>
+    </div>
+  </div>
+</div>
+  <!-- ========== USERS SCREEN ========== -->
+<div id="users-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-users-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">👥 المستخدمين</h2>
+    <button class="btn-icon" id="btn-users-refresh" style="color:#1F2937;font-size:20px;">🔄</button>
+  </div>
+  <div class="sub-body">
+    <div class="search-box-sub">
+      <input id="users-search-input" type="text" placeholder="ابحث بالـ ID أو الاسم..." autocomplete="off">
+      <button id="btn-users-search" class="btn-search-sub">🔍</button>
+    </div>
+    <div class="users-stats-mini">
+      <div class="usm-item">
+        <div class="usm-num" id="users-total">0</div>
+        <div class="usm-lbl">إجمالي</div>
+      </div>
+      <div class="usm-item">
+        <div class="usm-num" id="users-active">0</div>
+        <div class="usm-lbl">نشطين (7 أيام)</div>
+      </div>
+      <div class="usm-item">
+        <div class="usm-num" id="users-new">0</div>
+        <div class="usm-lbl">جداد (7 أيام)</div>
+      </div>
+    </div>
+    <div id="users-list-content"></div>
+  </div>
+</div>
+
+<!-- ========== USER DETAILS SCREEN ========== -->
+<div id="user-details-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-user-details-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">👤 تفاصيل المستخدم</h2>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="sub-body" id="user-details-content"></div>
+</div>
+
+<!-- ========== REWARDS SCREEN ========== -->
+<div id="rewards-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-rewards-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">🎁 المكافآت</h2>
+    <button class="btn-icon" id="btn-rewards-history" style="color:#1F2937;font-size:20px;">📜</button>
+  </div>
+  <div class="sub-body">
+    <div class="rewards-search-box">
+      <div class="rsb-title">🔍 ابحث عن المستخدم</div>
+      <div class="rsb-desc">اكتب Device ID لإرسال مكافأة</div>
+      <input id="rewards-user-input" type="text" placeholder="DEV-XXXXXXXX" dir="ltr" autocomplete="off">
+      <button id="btn-rewards-search" class="btn-search-dark">🔍 ابحث</button>
+    </div>
+    <div id="rewards-user-info"></div>
+  </div>
+</div>
+
+<!-- ========== REWARDS HISTORY SCREEN ========== -->
+<div id="rewards-history-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-rewards-history-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">📜 سجل المكافآت</h2>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="sub-body">
+    <div id="rewards-history-content"></div>
+  </div>
+</div>
   <div class="topbar">
     <button class="btn-icon" id="btn-manual-unban-back" style="color:#1F2937;font-size:24px;">←</button>
     <h2 style="color:#1F2937;font-size:18px;">🔓 فك حظر يدوي</h2>
@@ -549,7 +632,87 @@ body {
     </div>
   </div>
 </div>
+<style>
+/* Users Screen */
+.users-stats-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+.usm-item{background:linear-gradient(135deg,#1E293B,#0F172A);border:1.5px solid rgba(251,191,36,.25);border-radius:12px;padding:12px 8px;text-align:center;}
+.usm-num{font-size:20px;font-weight:800;color:#FBBF24;margin-bottom:4px;}
+.usm-lbl{font-size:10px;color:#94A3B8;font-weight:700;}
 
+.user-card{background:#1E293B;border-radius:14px;padding:14px;margin-bottom:12px;border-right:4px solid #3B82F6;cursor:pointer;transition:transform .1s;}
+.user-card:active{transform:scale(.98);}
+.user-card.active-user{border-right-color:#22C55E;}
+.user-card.inactive-user{border-right-color:#64748B;opacity:.7;}
+.user-card.owner-user{border-right-color:#FBBF24;background:linear-gradient(135deg,rgba(251,191,36,.15),#1E293B);}
+.user-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.user-name{font-weight:800;color:#F1F5F9;font-size:14px;}
+.user-id{font-size:11px;color:#FBBF24;direction:ltr;font-family:monospace;}
+.user-row{font-size:12px;color:#CBD5E1;margin-bottom:4px;line-height:1.5;}
+.user-row b{color:#94A3B8;font-weight:700;}
+.user-badge{display:inline-block;font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;margin-right:4px;}
+.ub-owner{background:rgba(251,191,36,.2);color:#FBBF24;}
+.ub-banned{background:rgba(239,68,68,.2);color:#F87171;}
+.ub-active{background:rgba(34,197,94,.2);color:#86EFAC;}
+
+/* User Details */
+.details-section{background:#1E293B;border-radius:14px;padding:14px;margin-bottom:12px;border-right:4px solid #FBBF24;}
+.details-title{font-size:14px;font-weight:800;color:#FBBF24;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #334155;}
+.details-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12.5px;border-bottom:1px solid rgba(51,65,85,.3);}
+.details-row:last-child{border-bottom:none;}
+.details-label{color:#94A3B8;font-weight:700;}
+.details-value{color:#F1F5F9;font-weight:700;direction:ltr;font-family:monospace;font-size:12px;}
+.details-value.ar{direction:rtl;font-family:inherit;}
+.details-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.details-actions button{flex:1;min-width:100px;padding:12px;border:none;border-radius:10px;font-size:13px;font-weight:800;font-family:inherit;cursor:pointer;}
+.btn-details-gift{background:linear-gradient(135deg,#8B5CF6,#7C3AED);color:#fff;}
+.btn-details-ban{background:#EF4444;color:#fff;}
+.btn-details-unban{background:#22C55E;color:#fff;}
+.btn-details-msg{background:#3B82F6;color:#fff;}
+.btn-details-copy{background:#475569;color:#fff;}
+
+/* Rewards */
+.rewards-search-box{background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(59,130,246,.15));border:1.5px solid rgba(139,92,246,.4);border-radius:14px;padding:16px;margin-bottom:16px;}
+.rsb-title{font-size:14px;font-weight:800;color:#C4B5FD;margin-bottom:4px;}
+.rsb-desc{font-size:11px;color:#94A3B8;margin-bottom:10px;}
+.rewards-search-box input{width:100%;padding:12px;border-radius:10px;border:2px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:14px;box-sizing:border-box;text-align:center;margin-bottom:10px;}
+.rewards-search-box input:focus{outline:none;border-color:#8B5CF6;}
+
+.rewards-user-card{background:linear-gradient(135deg,rgba(139,92,246,.15),#1E293B);border:1.5px solid rgba(139,92,246,.35);border-radius:14px;padding:16px;margin-bottom:16px;}
+.ruc-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(139,92,246,.3);}
+.ruc-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.ruc-info{flex:1;}
+.ruc-name{font-size:15px;font-weight:800;color:#F1F5F9;margin-bottom:2px;}
+.ruc-id{font-size:11px;color:#C4B5FD;direction:ltr;font-family:monospace;}
+
+.rewards-form{background:#1E293B;border-radius:14px;padding:16px;margin-bottom:16px;}
+.rf-title{font-size:14px;font-weight:800;color:#FBBF24;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #334155;}
+.rf-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.rf-icon{font-size:24px;width:34px;text-align:center;flex-shrink:0;}
+.rf-label{flex:1;font-size:13px;color:#CBD5E1;font-weight:700;}
+.rf-input{width:90px;padding:10px;border-radius:8px;border:1.5px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:14px;text-align:center;font-weight:800;}
+.rf-input:focus{outline:none;border-color:#FBBF24;}
+
+.rf-quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.rf-quick-btn{padding:6px 10px;border-radius:8px;border:1.5px solid rgba(251,191,36,.4);background:rgba(251,191,36,.1);color:#FBBF24;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer;}
+.rf-quick-btn:active{background:rgba(251,191,36,.25);}
+
+.rf-reason{width:100%;padding:10px;border-radius:8px;border:1.5px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:13px;box-sizing:border-box;margin-top:10px;resize:none;min-height:60px;}
+.rf-reason:focus{outline:none;border-color:#FBBF24;}
+
+.btn-send-reward{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#8B5CF6,#7C3AED);color:#fff;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;margin-top:12px;box-shadow:0 4px 0 #5B21B6;transition:transform .1s;}
+.btn-send-reward:active{transform:translateY(3px);box-shadow:0 1px 0 #5B21B6;}
+.btn-send-reward:disabled{opacity:.6;}
+
+/* Rewards History */
+.reward-log-card{background:#1E293B;border-radius:12px;padding:12px;margin-bottom:10px;border-right:3px solid #8B5CF6;}
+.rlc-head{display:flex;justify-content:space-between;font-size:11px;color:#94A3B8;margin-bottom:8px;}
+.rlc-user{font-weight:800;color:#C4B5FD;direction:ltr;font-family:monospace;font-size:11px;}
+.rlc-body{font-size:12px;color:#CBD5E1;line-height:1.6;}
+.rlc-body b{color:#FBBF24;}
+
+.empty-users{text-align:center;padding:50px 20px;color:#64748B;font-size:13px;}
+.empty-users .em{font-size:50px;display:block;margin-bottom:12px;}
+</style>
 <style>
 /* Ban Hub */
 .ban-hub-body{padding:16px 14px 40px;}
@@ -1321,6 +1484,410 @@ function manualUnban() {
 document.getElementById('action-ban').addEventListener('click', function() {
   show('banned-screen');
   loadHubStats();
+});
+
+/* ========== USERS MANAGEMENT ========== */
+console.log('🔧 Loading users system...');
+
+/* ----- Back/Refresh ----- */
+document.getElementById('btn-users-back').addEventListener('click', function() {
+  show('dashboard-screen');
+});
+document.getElementById('btn-users-refresh').addEventListener('click', function() {
+  loadUsers();
+});
+document.getElementById('btn-users-search').addEventListener('click', function() {
+  loadUsers();
+});
+document.getElementById('users-search-input').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') loadUsers();
+});
+
+/* ----- Load Users ----- */
+function loadUsers() {
+  var list = document.getElementById('users-list-content');
+  if (!list) return;
+  list.innerHTML = '<div class="empty-users"><span class="em">⏳</span>جاري التحميل...</div>';
+
+  var filter = (document.getElementById('users-search-input').value || '').trim().toUpperCase();
+
+  fbDB.ref('users').once('value').then(function(snap) {
+    var arr = [];
+    var now = Date.now();
+    var week = 7 * 24 * 60 * 60 * 1000;
+    var totalCount = 0, activeCount = 0, newCount = 0;
+
+    snap.forEach(function(child) {
+      var v = child.val();
+      v.id = child.key;
+      totalCount++;
+      
+      var lastSeen = v.lastSeen || 0;
+      if (now - lastSeen < week) activeCount++;
+      
+      var created = v.createdAt || v.lastSeen || 0;
+      if (now - created < week) newCount++;
+      
+      if (!filter || 
+          (v.id && v.id.toUpperCase().indexOf(filter) !== -1) || 
+          (v.userName && v.userName.toUpperCase().indexOf(filter) !== -1)) {
+        arr.push(v);
+      }
+    });
+
+    var tEl = document.getElementById('users-total');
+    var aEl = document.getElementById('users-active');
+    var nEl = document.getElementById('users-new');
+    if (tEl) tEl.textContent = totalCount;
+    if (aEl) aEl.textContent = activeCount;
+    if (nEl) nEl.textContent = newCount;
+
+    arr.sort(function(a, b) { return (b.lastSeen || 0) - (a.lastSeen || 0); });
+
+    if (arr.length === 0) {
+      list.innerHTML = '<div class="empty-users"><span class="em">🌙</span>' + (filter ? 'مفيش نتايج' : 'مفيش مستخدمين') + '</div>';
+      return;
+    }
+
+    var html = '';
+    for (var i = 0; i < arr.length; i++) {
+      var u = arr[i];
+      var lastSeen = u.lastSeen ? new Date(u.lastSeen).toLocaleString('ar-EG') : '?';
+      var daysAgo = u.lastSeen ? Math.floor((now - u.lastSeen) / 86400000) : 999;
+      var cardCls = 'user-card';
+      if (u.email === 'aom80308@gmail.com') cardCls += ' owner-user';
+      else if (daysAgo < 7) cardCls += ' active-user';
+      else if (daysAgo > 30) cardCls += ' inactive-user';
+
+      html += '<div class="' + cardCls + '" onclick="viewUserDetails(\'' + u.id + '\')">';
+      html += '<div class="user-head">';
+      html += '<div class="user-name">👤 ' + escapeHtml(u.userName || 'مستخدم') + '</div>';
+      html += '<div class="user-id">' + escapeHtml(u.id.substring(0, 15)) + '</div>';
+      html += '</div>';
+      html += '<div class="user-row"><b>⭐ XP:</b> ' + (u.xp || 0) + ' • <b>💎:</b> ' + (u.gems || 0) + ' • <b>❤️:</b> ' + (u.hearts || 5) + '</div>';
+      html += '<div class="user-row"><b>🕐 آخر ظهور:</b> ' + lastSeen + '</div>';
+      html += '</div>';
+    }
+    list.innerHTML = html;
+  }).catch(function(err) {
+    list.innerHTML = '<div class="empty-users"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
+
+/* ----- Action Button ----- */
+document.getElementById('action-users').addEventListener('click', function() {
+  show('users-screen');
+  loadUsers();
+});
+
+/* ========== USER DETAILS ========== */
+console.log('🔧 Loading user details...');
+
+document.getElementById('btn-user-details-back').addEventListener('click', function() {
+  show('users-screen');
+});
+
+function viewUserDetails(deviceId) {
+  if (!deviceId) return;
+  show('user-details-screen');
+  var content = document.getElementById('user-details-content');
+  if (!content) return;
+  content.innerHTML = '<div class="empty-users"><span class="em">⏳</span>جاري التحميل...</div>';
+
+  Promise.all([
+    fbDB.ref('users/' + deviceId).once('value'),
+    fbDB.ref('banned/' + deviceId).once('value'),
+    fbDB.ref('appeals/' + deviceId).once('value')
+  ]).then(function(results) {
+    var u = results[0].val() || {};
+    var banned = results[1].val() || null;
+    var appeal = results[2].val() || null;
+
+    var lastSeen = u.lastSeen ? new Date(u.lastSeen).toLocaleString('ar-EG') : '?';
+    var created = u.createdAt ? new Date(u.createdAt).toLocaleString('ar-EG') : (u.lastSeen ? new Date(u.lastSeen).toLocaleString('ar-EG') : '?');
+
+    var html = '';
+
+    html += '<div class="details-section">';
+    html += '<div class="details-title">👤 الهوية</div>';
+    html += '<div class="details-row"><span class="details-label">الاسم:</span><span class="details-value ar">' + escapeHtml(u.userName || 'مستخدم') + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">Device ID:</span><span class="details-value">' + escapeHtml(deviceId) + '</span></div>';
+    if (u.ip) html += '<div class="details-row"><span class="details-label">IP:</span><span class="details-value">' + escapeHtml(u.ip) + '</span></div>';
+    if (u.platform) html += '<div class="details-row"><span class="details-label">الجهاز:</span><span class="details-value ar">' + escapeHtml(u.platform) + '</span></div>';
+    if (u.language) html += '<div class="details-row"><span class="details-label">اللغة:</span><span class="details-value">' + escapeHtml(u.language) + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">آخر ظهور:</span><span class="details-value ar">' + lastSeen + '</span></div>';
+    html += '</div>';
+
+    html += '<div class="details-section">';
+    html += '<div class="details-title">📊 الإحصائيات</div>';
+    html += '<div class="details-row"><span class="details-label">⭐ XP:</span><span class="details-value">' + (u.xp || 0) + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">📈 المستوى:</span><span class="details-value">' + (u.level || Math.floor((u.xp || 0) / 100) + 1) + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">💎 الجواهر:</span><span class="details-value">' + (u.gems || 0) + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">❤️ القلوب:</span><span class="details-value">' + (u.hearts || 5) + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">🔥 السلسلة:</span><span class="details-value">' + (u.streak || 0) + ' يوم</span></div>';
+    html += '</div>';
+
+    if (banned) {
+      var until = banned.until ? new Date(banned.until).toLocaleString('ar-EG') : 'دائم';
+      html += '<div class="details-section" style="border-right-color:#EF4444;">';
+      html += '<div class="details-title" style="color:#F87171;">🚫 محظور</div>';
+      html += '<div class="details-row"><span class="details-label">السبب:</span><span class="details-value ar">' + escapeHtml(banned.reason || 'غير محدد') + '</span></div>';
+      html += '<div class="details-row"><span class="details-label">المدة:</span><span class="details-value ar">' + until + '</span></div>';
+      if (banned.bannedBy) html += '<div class="details-row"><span class="details-label">بواسطة:</span><span class="details-value">' + escapeHtml(banned.bannedBy) + '</span></div>';
+      html += '</div>';
+    }
+
+    if (appeal) {
+      html += '<div class="details-section" style="border-right-color:#F59E0B;">';
+      html += '<div class="details-title" style="color:#FBBF24;">📩 طعن</div>';
+      html += '<div class="details-row"><span class="details-label">النص:</span></div>';
+      html += '<div style="padding:8px;background:#0F172A;border-radius:8px;font-size:12.5px;color:#CBD5E1;line-height:1.6;">' + escapeHtml(appeal.appeal || '') + '</div>';
+      var statusTxt = appeal.status === 'rejected' ? '❌ مرفوض' : (appeal.status === 'approved' ? '✅ مقبول' : '⏳ معلق');
+      html += '<div class="details-row" style="margin-top:8px;"><span class="details-label">الحالة:</span><span class="details-value ar">' + statusTxt + '</span></div>';
+      html += '</div>';
+    }
+
+    html += '<div class="details-section">';
+    html += '<div class="details-title">🎯 الإجراءات</div>';
+    html += '<div class="details-actions">';
+    html += '<button class="btn-details-gift" onclick="openRewardsFor(\'' + deviceId + '\', \'' + escapeHtml(u.userName || '') + '\')">🎁 مكافأة</button>';
+    if (banned) {
+      html += '<button class="btn-details-unban" onclick="unbanUser(\'' + deviceId + '\', null);setTimeout(function(){viewUserDetails(\'' + deviceId + '\')},1000)">🔓 فك الحظر</button>';
+    } else {
+      html += '<button class="btn-details-ban" onclick="banUser(\'' + deviceId + '\')">🚫 حظر</button>';
+    }
+    html += '<button class="btn-details-copy" onclick="copyToClipboard(\'' + deviceId + '\')">📋 نسخ ID</button>';
+    html += '</div></div>';
+
+    content.innerHTML = html;
+  }).catch(function(err) {
+    content.innerHTML = '<div class="empty-users"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
+
+function copyToClipboard(text) {
+  try {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      alert('✅ تم نسخ: ' + text);
+    } else {
+      var t = document.createElement('textarea');
+      t.value = text;
+      document.body.appendChild(t);
+      t.select();
+      document.execCommand('copy');
+      document.body.removeChild(t);
+      alert('✅ تم نسخ: ' + text);
+    }
+  } catch(e) { alert('❌ ' + e.message); }
+}
+
+/* ========== REWARDS ========== */
+console.log('🔧 Loading rewards system...');
+
+document.getElementById('btn-rewards-back').addEventListener('click', function() {
+  show('dashboard-screen');
+});
+document.getElementById('btn-rewards-history').addEventListener('click', function() {
+  show('rewards-history-screen');
+  loadRewardsHistory();
+});
+document.getElementById('btn-rewards-history-back').addEventListener('click', function() {
+  show('rewards-screen');
+});
+document.getElementById('btn-rewards-search').addEventListener('click', function() {
+  var id = document.getElementById('rewards-user-input').value.trim().toUpperCase();
+  if (!id) { alert('❌ اكتب Device ID'); return; }
+  loadRewardsUser(id);
+});
+document.getElementById('rewards-user-input').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') document.getElementById('btn-rewards-search').click();
+});
+
+function openRewardsFor(deviceId, userName) {
+  show('rewards-screen');
+  document.getElementById('rewards-user-input').value = deviceId;
+  loadRewardsUser(deviceId);
+}
+
+function loadRewardsUser(deviceId) {
+  var info = document.getElementById('rewards-user-info');
+  if (!info) return;
+  info.innerHTML = '<div class="empty-users"><span class="em">⏳</span>جاري التحميل...</div>';
+
+  fbDB.ref('users/' + deviceId).once('value').then(function(snap) {
+    var u = snap.val();
+    if (!u) {
+      info.innerHTML = '<div class="empty-users"><span class="em">❌</span>المستخدم غير موجود</div>';
+      return;
+    }
+
+    var html = '';
+    html += '<div class="rewards-user-card">';
+    html += '<div class="ruc-header">';
+    html += '<div class="ruc-avatar">👤</div>';
+    html += '<div class="ruc-info">';
+    html += '<div class="ruc-name">' + escapeHtml(u.userName || 'مستخدم') + '</div>';
+    html += '<div class="ruc-id">' + escapeHtml(deviceId) + '</div>';
+    html += '</div></div>';
+    html += '<div style="display:flex;justify-content:space-around;text-align:center;font-size:11px;color:#CBD5E1;">';
+    html += '<div><div style="color:#FBBF24;font-weight:800;font-size:16px;">' + (u.xp || 0) + '</div>XP</div>';
+    html += '<div><div style="color:#A78BFA;font-weight:800;font-size:16px;">' + (u.gems || 0) + '</div>💎</div>';
+    html += '<div><div style="color:#F87171;font-weight:800;font-size:16px;">' + (u.hearts || 5) + '</div>❤️</div>';
+    html += '<div><div style="color:#FB923C;font-weight:800;font-size:16px;">' + (u.streak || 0) + '</div>🔥</div>';
+    html += '</div></div>';
+
+    html += '<div class="rewards-form">';
+    html += '<div class="rf-title">💎 إرسال مكافأة</div>';
+
+    html += '<div class="rf-row"><span class="rf-icon">💎</span><span class="rf-label">جواهر</span><input type="number" id="rw-gems" class="rf-input" placeholder="0" min="0"></div>';
+    html += '<div class="rf-quick">';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-gems\').value=50">50</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-gems\').value=100">100</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-gems\').value=500">500</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-gems\').value=1000">1000</button>';
+    html += '</div>';
+
+    html += '<div class="rf-row" style="margin-top:14px;"><span class="rf-icon">⭐</span><span class="rf-label">XP</span><input type="number" id="rw-xp" class="rf-input" placeholder="0" min="0"></div>';
+    html += '<div class="rf-quick">';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-xp\').value=100">100</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-xp\').value=500">500</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-xp\').value=1000">1000</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-xp\').value=5000">5000</button>';
+    html += '</div>';
+
+    html += '<div class="rf-row" style="margin-top:14px;"><span class="rf-icon">❤️</span><span class="rf-label">قلوب</span><input type="number" id="rw-hearts" class="rf-input" placeholder="0" min="0" max="99"></div>';
+    html += '<div class="rf-quick">';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-hearts\').value=1">1</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-hearts\').value=5">5</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-hearts\').value=10">10</button>';
+    html += '</div>';
+
+    html += '<div class="rf-row" style="margin-top:14px;"><span class="rf-icon">🔥</span><span class="rf-label">سلسلة (أيام)</span><input type="number" id="rw-streak" class="rf-input" placeholder="0" min="0"></div>';
+    html += '<div class="rf-quick">';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-streak\').value=7">7</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-streak\').value=30">30</button>';
+    html += '<button class="rf-quick-btn" onclick="document.getElementById(\'rw-streak\').value=100">100</button>';
+    html += '</div>';
+
+    html += '<textarea id="rw-reason" class="rf-reason" placeholder="📝 سبب المكافأة (اختياري)"></textarea>';
+    html += '<button id="btn-send-reward" class="btn-send-reward" onclick="sendReward(\'' + deviceId + '\')">📤 إرسال المكافأة</button>';
+    html += '</div>';
+
+    info.innerHTML = html;
+  }).catch(function(err) {
+    info.innerHTML = '<div class="empty-users"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
+
+function sendReward(deviceId) {
+  if (!deviceId) return;
+  var gems = parseInt(document.getElementById('rw-gems').value) || 0;
+  var xp = parseInt(document.getElementById('rw-xp').value) || 0;
+  var hearts = parseInt(document.getElementById('rw-hearts').value) || 0;
+  var streak = parseInt(document.getElementById('rw-streak').value) || 0;
+  var reason = document.getElementById('rw-reason').value.trim() || 'مكافأة من المالك';
+
+  if (gems === 0 && xp === 0 && hearts === 0 && streak === 0) {
+    alert('❌ حدد قيمة واحدة على الأقل');
+    return;
+  }
+
+  var btn = document.getElementById('btn-send-reward');
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الإرسال...';
+
+  fbDB.ref('users/' + deviceId).once('value').then(function(snap) {
+    var u = snap.val() || {};
+    var newGems = (u.gems || 0) + gems;
+    var newXp = (u.xp || 0) + xp;
+    var newHearts = Math.min(99, (u.hearts || 5) + hearts);
+    var newStreak = (u.streak || 0) + streak;
+    var newLevel = Math.floor(newXp / 100) + 1;
+
+    var updates = {
+      gems: newGems,
+      xp: newXp,
+      hearts: newHearts,
+      streak: newStreak,
+      level: newLevel,
+      lastSeen: u.lastSeen || Date.now()
+    };
+
+    return fbDB.ref('users/' + deviceId).update(updates).then(function() {
+      var logId = 'rw_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+      return fbDB.ref('rewards_log/' + logId).set({
+        deviceId: deviceId,
+        userName: u.userName || 'مستخدم',
+        gems: gems,
+        xp: xp,
+        hearts: hearts,
+        streak: streak,
+        reason: reason,
+        by: 'owner',
+        time: Date.now()
+      });
+    });
+  }).then(function() {
+    sendTelegram('reward_sent', '', 'مكافأة: 💎' + gems + ' ⭐' + xp + ' ❤️' + hearts + ' 🔥' + streak + ' | سبب: ' + reason, getDeviceInfo());
+    alert('✅ تم إرسال المكافأة بنجاح!');
+    btn.disabled = false;
+    btn.textContent = '📤 إرسال المكافأة';
+    document.getElementById('rw-gems').value = '';
+    document.getElementById('rw-xp').value = '';
+    document.getElementById('rw-hearts').value = '';
+    document.getElementById('rw-streak').value = '';
+    document.getElementById('rw-reason').value = '';
+    loadRewardsUser(deviceId);
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '📤 إرسال المكافأة';
+  });
+}
+
+/* ----- Load Rewards History ----- */
+function loadRewardsHistory() {
+  var list = document.getElementById('rewards-history-content');
+  if (!list) return;
+  list.innerHTML = '<div class="empty-users"><span class="em">⏳</span>جاري التحميل...</div>';
+
+  fbDB.ref('rewards_log').orderByChild('time').limitToLast(50).once('value').then(function(snap) {
+    var arr = [];
+    snap.forEach(function(child) {
+      arr.push(child.val());
+    });
+    arr.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
+    if (arr.length === 0) {
+      list.innerHTML = '<div class="empty-users"><span class="em">🌙</span>مفيش سجل مكافآت</div>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < arr.length; i++) {
+      var r = arr[i];
+      var t = r.time ? new Date(r.time).toLocaleString('ar-EG') : '?';
+      html += '<div class="reward-log-card">';
+      html += '<div class="rlc-head"><span class="rlc-user">' + escapeHtml(r.deviceId || '') + '</span><span>' + t + '</span></div>';
+      html += '<div class="rlc-body">';
+      html += '<b>👤</b> ' + escapeHtml(r.userName || 'مستخدم') + ' — ';
+      if (r.gems) html += '<b>💎 ' + r.gems + '</b> ';
+      if (r.xp) html += '<b>⭐ ' + r.xp + '</b> ';
+      if (r.hearts) html += '<b>❤️ ' + r.hearts + '</b> ';
+      if (r.streak) html += '<b>🔥 ' + r.streak + '</b> ';
+      html += '<br><small style="color:#94A3B8;">📝 ' + escapeHtml(r.reason || '') + '</small>';
+      html += '</div></div>';
+    }
+    list.innerHTML = html;
+  }).catch(function(err) {
+    list.innerHTML = '<div class="empty-users"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
+
+/* ----- Action Button ----- */
+document.getElementById('action-rewards').addEventListener('click', function() {
+  show('rewards-screen');
+  document.getElementById('rewards-user-info').innerHTML = '';
+  document.getElementById('rewards-user-input').value = '';
 });
 </script>
 </body>
