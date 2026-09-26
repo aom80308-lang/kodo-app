@@ -561,6 +561,9 @@ body {
       <input id="users-search-input" type="text" placeholder="ابحث بالـ ID أو الاسم..." autocomplete="off">
       <button id="btn-users-search" class="btn-search-sub">🔍</button>
     </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+  <button id="btn-ban-all-users" style="flex:1;padding:12px;border:none;border-radius:10px;background:#EF4444;color:#fff;font-size:13px;font-weight:800;font-family:inherit;cursor:pointer;">🚫 حظر كل المستخدمين</button>
+</div>
     <div class="users-stats-mini">
       <div class="usm-item">
         <div class="usm-num" id="users-total">0</div>
@@ -1008,7 +1011,7 @@ function loadStats() {
 }
 
 /* ========== Action Cards (placeholder) ========== */
-var actions = ['broadcast','users','devices','security','maintenance','stats'];
+var actions = ['broadcast','devices','security','maintenance','stats'];
 actions.forEach(function(id) {
   var el = document.getElementById('action-' + id);
   if (el) {
@@ -1511,7 +1514,10 @@ function loadUsers() {
 
   var filter = (document.getElementById('users-search-input').value || '').trim().toUpperCase();
 
-  fbDB.ref('users').once('value').then(function(snap) {
+  fbDB.ref('banned').once('value').then(function(bannedSnap) {
+  var bannedIds = {};
+  bannedSnap.forEach(function(c) { bannedIds[c.key] = true; });
+  return fbDB.ref('users').once('value').then(function(snap) {
     var arr = [];
     var now = Date.now();
     var week = 7 * 24 * 60 * 60 * 1000;
@@ -1521,7 +1527,7 @@ function loadUsers() {
       var v = child.val();
       v.id = child.key;
       totalCount++;
-      
+      if (bannedIds[v.id]) return;
       var lastSeen = v.lastSeen || 0;
       if (now - lastSeen < week) activeCount++;
       
@@ -1568,7 +1574,8 @@ function loadUsers() {
       html += '<div class="user-row"><b>🕐 آخر ظهور:</b> ' + lastSeen + '</div>';
       html += '</div>';
     }
-    list.innerHTML = html;
+       list.innerHTML = html;
+    });
   }).catch(function(err) {
     list.innerHTML = '<div class="empty-users"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
   });
@@ -1577,9 +1584,9 @@ function loadUsers() {
 /* ----- Action Button ----- */
 document.getElementById('action-users').addEventListener('click', function() {
   show('users-screen');
+  document.getElementById('users-search-input').value = '';
   loadUsers();
 });
-
 /* ========== USER DETAILS ========== */
 console.log('🔧 Loading user details...');
 
@@ -1888,6 +1895,62 @@ document.getElementById('action-rewards').addEventListener('click', function() {
   show('rewards-screen');
   document.getElementById('rewards-user-info').innerHTML = '';
   document.getElementById('rewards-user-input').value = '';
+});
+
+/* ----- Ban All Users ----- */
+document.getElementById('btn-ban-all-users').addEventListener('click', function() {
+  if (!confirm('⚠️ متأكد إنك عايز تحظر كل المستخدمين المعروضين؟')) return;
+  if (!confirm('🔴 تأكيد نهائي: حظر الكل؟')) return;
+  
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الحظر...';
+  
+  var filter = (document.getElementById('users-search-input').value || '').trim().toUpperCase();
+  
+  fbDB.ref('banned').once('value').then(function(bSnap) {
+    var bannedIds = {};
+    bSnap.forEach(function(c) { bannedIds[c.key] = true; });
+    
+    return fbDB.ref('users').once('value').then(function(snap) {
+      var promises = [];
+      var count = 0;
+      snap.forEach(function(child) {
+        var v = child.val();
+        var id = child.key;
+        if (bannedIds[id]) return;
+        if (filter && (!v.userName || v.userName.toUpperCase().indexOf(filter) === -1) && id.toUpperCase().indexOf(filter) === -1) return;
+        
+        promises.push(fbDB.ref('banned/' + id).set({
+          reason: 'حظر جماعي من المالك',
+          time: Date.now(),
+          bannedBy: 'owner-mass'
+        }));
+        count++;
+      });
+      
+      if (count === 0) {
+        alert('⚠️ مفيش مستخدمين للحظر');
+        btn.disabled = false;
+        btn.textContent = '🚫 حظر كل المستخدمين';
+        return Promise.reject('empty');
+      }
+      
+      return Promise.all(promises).then(function() { return count; });
+    });
+  }).then(function(count) {
+    alert('✅ تم حظر ' + count + ' مستخدم');
+    btn.disabled = false;
+    btn.textContent = '🚫 حظر كل المستخدمين';
+    loadUsers();
+    loadStats();
+  }).catch(function(err) {
+    if (err !== 'empty') {
+      alert('❌ خطأ: ' + err.message);
+      btn.disabled = false;
+      btn.textContent = '🚫 حظر كل المستخدمين';
+    }
+  });
 });
 </script>
 </body>
