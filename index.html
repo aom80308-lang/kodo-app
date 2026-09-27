@@ -1119,6 +1119,7 @@ var App = {
     this.setupHeartSecret(); this.checkActiveEffects(); this.updateStatsUI();
     this.updateAvatar(); this.updateUserName(); this.bindAllEvents();
     this.ensureMyRefCode(); this.checkStreak();
+    this.listenToFirebase();
     if (this.state.ownerMode) {
       var navOwner = document.getElementById('nav-owner');
       if (navOwner) navOwner.style.display = 'flex';
@@ -1208,6 +1209,25 @@ var App = {
   });
 },
 
+listenToFirebase: function() {
+  if (!fbDB) return;
+  var self = this;
+  var deviceId = this.getDeviceId();
+  fbDB.ref('users/' + deviceId).on('value', function(snap) {
+    var data = snap.val();
+    if (!data) return;
+    var changed = false;
+    if (data.xp != null && data.xp !== self.state.xp) { self.state.xp = data.xp; changed = true; }
+    if (data.gems != null && data.gems !== self.state.gems) { self.state.gems = data.gems; changed = true; }
+    if (data.hearts != null && data.hearts !== self.state.hearts) { self.state.hearts = data.hearts; changed = true; }
+    if (data.streak != null && data.streak !== self.state.streak) { self.state.streak = data.streak; changed = true; }
+    if (changed) {
+      self.saveState();
+      self.updateStatsUI();
+      if (self.toast) self.toast('🎁 تم تحديث بياناتك!');
+    }
+  });
+},
   checkIfBanned: function() {
   if (!fbDB) return;
   var self = this;
