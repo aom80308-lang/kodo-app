@@ -598,6 +598,7 @@ body {
     <button class="btn-icon" id="btn-rewards-back" style="color:#1F2937;font-size:24px;">←</button>
     <h2 style="color:#1F2937;font-size:18px;">🎁 المكافآت</h2>
     <button class="btn-icon" id="btn-rewards-history" style="color:#1F2937;font-size:20px;">📜</button>
+    <button class="btn-icon" id="btn-rewards-all" style="color:#1F2937;font-size:20px;">🎉</button>
   </div>
   <div class="sub-body">
     <div class="rewards-search-box">
@@ -612,7 +613,7 @@ body {
 
 <!-- ========== REWARDS HISTORY SCREEN ========== -->
 <div id="rewards-history-screen" class="screen">
-  <div class="topbar">
+    <div class="topbar">
     <button class="btn-icon" id="btn-rewards-history-back" style="color:#1F2937;font-size:24px;">←</button>
     <h2 style="color:#1F2937;font-size:18px;">📜 سجل المكافآت</h2>
     <div style="width:40px;"></div>
@@ -621,20 +622,101 @@ body {
     <div id="rewards-history-content"></div>
   </div>
 </div>
+
+  <!-- ========== REWARDS ALL SCREEN ========== -->
+<div id="rewards-all-screen" class="screen">
   <div class="topbar">
-    <button class="btn-icon" id="btn-manual-unban-back" style="color:#1F2937;font-size:24px;">←</button>
-    <h2 style="color:#1F2937;font-size:18px;">🔓 فك حظر يدوي</h2>
+    <button class="btn-icon" id="btn-rewards-all-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">🎉 مكافأة للكل</h2>
     <div style="width:40px;"></div>
   </div>
   <div class="sub-body">
-    <div class="manual-unban-box">
-      <div class="mub-title">🔓 اكتب Device ID</div>
-      <div class="mub-desc">فك الحظر عن أي جهاز فوراً</div>
-      <input id="unban-input" type="text" placeholder="DEV-XXXXXXXX" dir="ltr" autocomplete="off">
-      <button id="btn-unban-manual" class="btn-unban-green">✅ فك الحظر</button>
+    <div class="rewards-all-warning">
+      <div style="font-size:40px;margin-bottom:8px;">⚠️</div>
+      <div style="font-weight:800;color:#FBBF24;font-size:15px;margin-bottom:6px;">تحذير مهم</div>
+      <div style="font-size:12.5px;color:#CBD5E1;line-height:1.7;">
+        المكافأة دي هتُرسل <b style="color:#F87171;">لكل المستخدمين</b> دفعة واحدة.<br>
+        تأكد من القيم قبل الإرسال!
+      </div>
+    </div>
+
+    <div class="rewards-form">
+      <div class="rf-title">💎 القيم المُرسلة للجميع</div>
+
+      <div class="rf-row"><span class="rf-icon">💎</span><span class="rf-label">جواهر</span><input type="number" id="all-rw-gems" class="rf-input" placeholder="0" min="0"></div>
+      <div class="rf-quick">
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-gems').value=50">50</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-gems').value=100">100</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-gems').value=500">500</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-gems').value=1000">1000</button>
+      </div>
+
+      <div class="rf-row" style="margin-top:14px;"><span class="rf-icon">⭐</span><span class="rf-label">XP</span><input type="number" id="all-rw-xp" class="rf-input" placeholder="0" min="0"></div>
+      <div class="rf-quick">
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-xp').value=100">100</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-xp').value=500">500</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-xp').value=1000">1000</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-xp').value=5000">5000</button>
+      </div>
+
+      <div class="rf-row" style="margin-top:14px;"><span class="rf-icon">❤️</span><span class="rf-label">قلوب</span><input type="number" id="all-rw-hearts" class="rf-input" placeholder="0" min="0" max="99"></div>
+      <div class="rf-quick">
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-hearts').value=1">1</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-hearts').value=5">5</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-hearts').value=10">10</button>
+      </div>
+
+      <div class="rf-row" style="margin-top:14px;"><span class="rf-icon">🔥</span><span class="rf-label">سلسلة (أيام)</span><input type="number" id="all-rw-streak" class="rf-input" placeholder="0" min="0"></div>
+      <div class="rf-quick">
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-streak').value=7">7</button>
+        <button class="rf-quick-btn" onclick="document.getElementById('all-rw-streak').value=30">30</button>
+      </div>
+
+      <textarea id="all-rw-reason" class="rf-reason" placeholder="📝 سبب المكافأة (مثلاً: مكافأة العيد)"></textarea>
+      <button id="btn-send-reward-all" class="btn-send-reward" onclick="sendRewardToAll()">🎉 إرسال للكل</button>
     </div>
   </div>
 </div>
+
+<!-- ========== USER EDIT SCREEN ========== -->
+<div id="user-edit-screen" class="screen">
+    <div class="topbar">
+    <button class="btn-icon" id="btn-user-edit-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">🎛️ تحكم كامل</h2>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="sub-body" id="user-edit-content"></div>
+</div>
+  
+<style>
+/* Rewards All Warning */
+.rewards-all-warning{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(245,158,11,.15));border:1.5px solid rgba(239,68,68,.4);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center;}
+
+/* User Edit */
+.edit-user-header{background:linear-gradient(135deg,rgba(59,130,246,.15),#1E293B);border:1.5px solid rgba(59,130,246,.35);border-radius:14px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:14px;}
+.euh-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#2563EB);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.euh-info{flex:1;}
+.euh-name{font-size:16px;font-weight:800;color:#F1F5F9;margin-bottom:4px;}
+.euh-id{font-size:11px;color:#93C5FD;direction:ltr;font-family:monospace;}
+.edit-section{background:#1E293B;border-radius:14px;padding:16px;margin-bottom:14px;border-right:4px solid #FBBF24;}
+.edit-section-title{font-size:14px;font-weight:800;color:#FBBF24;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #334155;}
+.edit-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.edit-icon{font-size:24px;width:34px;text-align:center;flex-shrink:0;}
+.edit-label{flex:1;font-size:13px;color:#CBD5E1;font-weight:700;}
+.edit-current{font-size:12px;color:#94A3B8;font-weight:700;direction:ltr;}
+.edit-input{width:90px;padding:10px;border-radius:8px;border:1.5px solid #334155;background:#0F172A;color:#F1F5F9;font-family:inherit;font-size:14px;text-align:center;font-weight:800;}
+.edit-input:focus{outline:none;border-color:#FBBF24;}
+.edit-actions-row{display:flex;gap:8px;margin-top:8px;}
+.edit-action-btn{flex:1;padding:10px;border:none;border-radius:10px;font-size:12px;font-weight:800;font-family:inherit;cursor:pointer;}
+.eab-zero{background:#475569;color:#fff;}
+.eab-max{background:#22C55E;color:#fff;}
+.eab-apply{background:#3B82F6;color:#fff;}
+.btn-apply-all{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;margin-top:10px;box-shadow:0 4px 0 #15803D;}
+.btn-apply-all:active{transform:translateY(3px);box-shadow:0 1px 0 #15803D;}
+.btn-apply-all:disabled{opacity:.6;}
+.btn-zero-all{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;margin-top:10px;box-shadow:0 4px 0 #991B1B;}
+.btn-zero-all:active{transform:translateY(3px);box-shadow:0 1px 0 #991B1B;}
+</style>
 <style>
 /* Users Screen */
 .users-stats-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
@@ -1664,6 +1746,7 @@ function viewUserDetails(deviceId) {
       html += '<button class="btn-details-ban" onclick="banUser(\'' + deviceId + '\')">🚫 حظر</button>';
     }
     html += '<button class="btn-details-copy" onclick="copyToClipboard(\'' + deviceId + '\')">📋 نسخ ID</button>';
+    html += '<button class="btn-details-gift" onclick="openUserEdit(\'' + deviceId + '\')">🎛️ تحكم كامل</button>';
     html += '</div></div>';
 
     content.innerHTML = html;
@@ -1951,6 +2034,192 @@ document.getElementById('btn-ban-all-users').addEventListener('click', function(
       btn.textContent = '🚫 حظر كل المستخدمين';
     }
   });
+});
+
+/* ========== REWARDS ALL + USER EDIT ========== */
+console.log('🔧 Loading rewards-all and user-edit...');
+
+/* ----- Rewards All Screen ----- */
+document.getElementById('btn-rewards-all-back').addEventListener('click', function() {
+  show('rewards-screen');
+});
+
+/* ----- Send Reward To All ----- */
+function sendRewardToAll() {
+  var gems = parseInt(document.getElementById('all-rw-gems').value) || 0;
+  var xp = parseInt(document.getElementById('all-rw-xp').value) || 0;
+  var hearts = parseInt(document.getElementById('all-rw-hearts').value) || 0;
+  var streak = parseInt(document.getElementById('all-rw-streak').value) || 0;
+  var reason = document.getElementById('all-rw-reason').value.trim() || 'مكافأة جماعية من المالك';
+
+  if (gems === 0 && xp === 0 && hearts === 0 && streak === 0) {
+    alert('❌ حدد قيمة واحدة على الأقل');
+    return;
+  }
+
+  if (!confirm('⚠️ متأكد إنك عايز ترسل المكافأة لكل المستخدمين؟')) return;
+  if (!confirm('🔴 تأكيد نهائي: إرسال للكل؟')) return;
+
+  var btn = document.getElementById('btn-send-reward-all');
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الإرسال...';
+
+  fbDB.ref('users').once('value').then(function(snap) {
+    var promises = [];
+    var count = 0;
+    snap.forEach(function(child) {
+      var u = child.val();
+      var id = child.key;
+      var newGems = (u.gems || 0) + gems;
+      var newXp = (u.xp || 0) + xp;
+      var newHearts = Math.min(99, (u.hearts || 5) + hearts);
+      var newStreak = (u.streak || 0) + streak;
+      var newLevel = Math.floor(newXp / 100) + 1;
+
+      promises.push(fbDB.ref('users/' + id).update({
+        gems: newGems, xp: newXp, hearts: newHearts, streak: newStreak, level: newLevel
+      }));
+      count++;
+    });
+    return Promise.all(promises).then(function() { return count; });
+  }).then(function(count) {
+    var logId = 'rw_all_' + Date.now();
+    fbDB.ref('rewards_log/' + logId).set({
+      deviceId: 'ALL',
+      userName: 'جميع المستخدمين',
+      gems: gems, xp: xp, hearts: hearts, streak: streak,
+      reason: reason, by: 'owner-all', time: Date.now()
+    });
+    sendTelegram('mass_reward', '', 'مكافأة جماعية: 💎' + gems + ' ⭐' + xp + ' ❤️' + hearts + ' 🔥' + streak + ' | لـ ' + count + ' مستخدم', getDeviceInfo());
+    alert('✅ تم إرسال المكافأة لـ ' + count + ' مستخدم');
+    btn.disabled = false;
+    btn.textContent = '🎉 إرسال للكل';
+    document.getElementById('all-rw-gems').value = '';
+    document.getElementById('all-rw-xp').value = '';
+    document.getElementById('all-rw-hearts').value = '';
+    document.getElementById('all-rw-streak').value = '';
+    document.getElementById('all-rw-reason').value = '';
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '🎉 إرسال للكل';
+  });
+}
+
+/* ----- Open User Edit ----- */
+function openUserEdit(deviceId) {
+  if (!deviceId) return;
+  show('user-edit-screen');
+  var content = document.getElementById('user-edit-content');
+  if (!content) return;
+  content.innerHTML = '<div class="empty-users"><span class="em">⏳</span>جاري التحميل...</div>';
+
+  fbDB.ref('users/' + deviceId).once('value').then(function(snap) {
+    var u = snap.val() || {};
+    var html = '';
+
+    html += '<div class="edit-user-header">';
+    html += '<div class="euh-avatar">👤</div>';
+    html += '<div class="euh-info">';
+    html += '<div class="euh-name">' + escapeHtml(u.userName || 'مستخدم') + '</div>';
+    html += '<div class="euh-id">' + escapeHtml(deviceId) + '</div>';
+    html += '</div></div>';
+
+    html += '<div class="edit-section">';
+    html += '<div class="edit-section-title">🎛️ تعديل القيم الحالية</div>';
+
+    var fields = [
+      { id: 'gems', icon: '💎', label: 'جواهر', val: u.gems || 0 },
+      { id: 'xp', icon: '⭐', label: 'XP', val: u.xp || 0 },
+      { id: 'hearts', icon: '❤️', label: 'قلوب', val: u.hearts || 5 },
+      { id: 'streak', icon: '🔥', label: 'سلسلة', val: u.streak || 0 }
+    ];
+
+    for (var i = 0; i < fields.length; i++) {
+      var f = fields[i];
+      html += '<div class="edit-row">';
+      html += '<span class="edit-icon">' + f.icon + '</span>';
+      html += '<span class="edit-label">' + f.label + '</span>';
+      html += '<span class="edit-current" id="cur-' + f.id + '">(' + f.val + ')</span>';
+      html += '<input type="number" id="edit-' + f.id + '" class="edit-input" value="' + f.val + '" min="0">';
+      html += '</div>';
+      html += '<div class="edit-actions-row">';
+      html += '<button class="edit-action-btn eab-zero" onclick="setFieldValue(\'' + f.id + '\', 0)">تصفير</button>';
+      html += '<button class="edit-action-btn eab-max" onclick="setFieldValue(\'' + f.id + '\', ' + (f.id === 'hearts' ? 99 : 999999) + ')">أقصى</button>';
+      html += '</div>';
+    }
+
+    html += '<button class="btn-apply-all" onclick="applyUserEdits(\'' + deviceId + '\', this)">✅ تطبيق التعديلات</button>';
+    html += '</div>';
+
+    html += '<div class="edit-section" style="border-right-color:#EF4444;">';
+    html += '<div class="edit-section-title" style="color:#F87171;">🚨 إجراءات خطيرة</div>';
+    html += '<button class="btn-zero-all" onclick="zeroAllUserData(\'' + deviceId + '\', this)">⚠️ تصفير كل البيانات</button>';
+    html += '</div>';
+
+    content.innerHTML = html;
+  }).catch(function(err) {
+    content.innerHTML = '<div class="empty-users"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
+
+document.getElementById('btn-user-edit-back').addEventListener('click', function() {
+  show('user-details-screen');
+});
+
+function setFieldValue(fieldId, value) {
+  var inp = document.getElementById('edit-' + fieldId);
+  if (inp) inp.value = value;
+}
+
+function applyUserEdits(deviceId, btn) {
+  if (!confirm('متأكد إنك عايز تحفظ التعديلات؟')) return;
+  var gems = parseInt(document.getElementById('edit-gems').value) || 0;
+  var xp = parseInt(document.getElementById('edit-xp').value) || 0;
+  var hearts = parseInt(document.getElementById('edit-hearts').value) || 0;
+  var streak = parseInt(document.getElementById('edit-streak').value) || 0;
+
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الحفظ...';
+
+  fbDB.ref('users/' + deviceId).update({
+    gems: gems, xp: xp, hearts: hearts, streak: streak,
+    level: Math.floor(xp / 100) + 1
+  }).then(function() {
+    alert('✅ تم حفظ التعديلات');
+    btn.disabled = false;
+    btn.textContent = '✅ تطبيق التعديلات';
+    openUserEdit(deviceId);
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '✅ تطبيق التعديلات';
+  });
+}
+
+function zeroAllUserData(deviceId, btn) {
+  if (!confirm('⚠️ هيتم تصفير كل بيانات المستخدم!')) return;
+  if (!confirm('🔴 تأكيد نهائي؟')) return;
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري التصفير...';
+
+  fbDB.ref('users/' + deviceId).update({
+    gems: 0, xp: 0, hearts: 5, streak: 0, level: 1
+  }).then(function() {
+    alert('✅ تم تصفير كل البيانات');
+    btn.disabled = false;
+    btn.textContent = '⚠️ تصفير كل البيانات';
+    openUserEdit(deviceId);
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '⚠️ تصفير كل البيانات';
+  });
+}
+
+/* ----- Rewards All Button ----- */
+document.getElementById('btn-rewards-all').addEventListener('click', function() {
+  show('rewards-all-screen');
 });
 </script>
 </body>
