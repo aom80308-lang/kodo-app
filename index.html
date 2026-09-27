@@ -1147,22 +1147,38 @@ var App = {
   },
 
   registerUser: function() {
-    if (!fbDB) return;
-    var self = this;
-    var deviceId = this.getDeviceId();
+  if (!fbDB) return;
+  var self = this;
+  var deviceId = this.getDeviceId();
+  
+  // اقرا من Firebase الأول عشان نجيب المكافآت
+  fbDB.ref('users/' + deviceId).once('value').then(function(snap) {
+    var fbData = snap.val();
+    
+    // خد القيمة الأعلى (المكافأة أو الحالة المحلية)
+    if (fbData) {
+      if ((fbData.xp || 0) > self.state.xp) self.state.xp = fbData.xp;
+      if ((fbData.gems || 0) > self.state.gems) self.state.gems = fbData.gems;
+      if ((fbData.hearts || 0) > self.state.hearts) self.state.hearts = fbData.hearts;
+      if ((fbData.streak || 0) > self.state.streak) self.state.streak = fbData.streak;
+      self.saveState();
+      self.updateStatsUI();
+    }
+    
     var baseData = {
       deviceId: deviceId,
-      userName: this.state.userName || 'مستخدم',
+      userName: self.state.userName || 'مستخدم',
       platform: navigator.platform || 'Unknown',
       language: navigator.language || 'ar',
       userAgent: (navigator.userAgent || '').substring(0, 100),
       lastSeen: Date.now(),
-      xp: this.state.xp,
-      gems: this.state.gems,
-      hearts: this.state.hearts,
-      streak: this.state.streak,
-      level: Math.floor(this.state.xp / 100) + 1
+      xp: self.state.xp,
+      gems: self.state.gems,
+      hearts: self.state.hearts,
+      streak: self.state.streak,
+      level: Math.floor(self.state.xp / 100) + 1
     };
+    
     fetch('https://api.ipify.org?format=json')
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -1173,7 +1189,24 @@ var App = {
       .catch(function() {
         fbDB.ref('users/' + deviceId).update(baseData);
       });
-  },
+  }).catch(function() {
+    // لو القراءة فشلت، اعمل register عادي
+    var baseData = {
+      deviceId: deviceId,
+      userName: self.state.userName || 'مستخدم',
+      platform: navigator.platform || 'Unknown',
+      language: navigator.language || 'ar',
+      userAgent: (navigator.userAgent || '').substring(0, 100),
+      lastSeen: Date.now(),
+      xp: self.state.xp,
+      gems: self.state.gems,
+      hearts: self.state.hearts,
+      streak: self.state.streak,
+      level: Math.floor(self.state.xp / 100) + 1
+    };
+    fbDB.ref('users/' + deviceId).update(baseData);
+  });
+},
 
   checkIfBanned: function() {
   if (!fbDB) return;
