@@ -680,6 +680,16 @@ body {
     </div>
   </div>
 </div>
+  
+<!-- ========== UNIVERSAL SEARCH SCREEN ========== -->
+<div id="universal-search-screen" class="screen">
+  <div class="topbar">
+    <button class="btn-icon" id="btn-universal-search-back" style="color:#1F2937;font-size:24px;">←</button>
+    <h2 style="color:#1F2937;font-size:18px;">🔍 البحث الشامل</h2>
+    <div style="width:40px;"></div>
+  </div>
+  <div class="sub-body" id="universal-search-content"></div>
+</div>
 
 <!-- ========== USER EDIT SCREEN ========== -->
 <div id="user-edit-screen" class="screen">
@@ -1483,10 +1493,265 @@ function loadBanLog() {
 }
 
 /* ----- Universal Search ----- */
+  /* ----- Universal Search - SUPER COMPREHENSIVE ----- */
 function doUniversalSearch(id) {
-  alert('🔍 بحث شامل عن: ' + id + '\n\n(هنتوسعه في المرحلة الجاية)');
-}
+  if (!id) return;
+  show('universal-search-screen');
+  var content = document.getElementById('universal-search-content');
+  if (!content) return;
+  content.innerHTML = '<div class="empty-users"><span class="em">⏳</span>جاري البحث الشامل...</div>';
 
+  Promise.all([
+    fbDB.ref('users/' + id).once('value'),
+    fbDB.ref('banned/' + id).once('value'),
+    fbDB.ref('appeals/' + id).once('value'),
+    fbDB.ref('rewards_log').orderByChild('deviceId').equalTo(id).once('value'),
+    fbDB.ref('support').orderByChild('userId').equalTo(id).once('value'),
+    fbDB.ref('login_attempts').orderByChild('email').equalTo(id).once('value'),
+    fbDB.ref('tokens/' + id).once('value')
+  ]).then(function(results) {
+    var u = results[0].val() || {};
+    var banned = results[1].val();
+    var appeal = results[2].val();
+    var rewards = [];
+    var messages = [];
+    var logins = [];
+    var token = results[6].val();
+
+    results[3].forEach(function(c) { rewards.push(c.val()); });
+    results[4].forEach(function(c) {
+      var v = c.val();
+      v.id = c.key;
+      messages.push(v);
+    });
+    results[5].forEach(function(c) { logins.push(c.val()); });
+
+    rewards.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
+    messages.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
+    logins.sort(function(a, b) { return (b.time || 0) - (a.time || 0); });
+
+    if (!u.deviceId && !banned && !appeal && rewards.length === 0 && messages.length === 0) {
+      content.innerHTML = '<div class="empty-users"><span class="em">❌</span>المستخدم غير موجود</div>';
+      return;
+    }
+
+    var now = Date.now();
+    var createdDays = u.createdAt ? Math.floor((now - u.createdAt) / 86400000) : (u.lastSeen ? Math.floor((now - u.lastSeen) / 86400000) : '?');
+    var lastSeenStr = u.lastSeen ? new Date(u.lastSeen).toLocaleString('ar-EG') : '?';
+    var lastSeenAgo = u.lastSeen ? Math.floor((now - u.lastSeen) / 60000) : 999999;
+    var lastSeenAgoStr = lastSeenAgo < 1 ? 'دلوقتي' : (lastSeenAgo < 60 ? lastSeenAgo + ' دقيقة' : (lastSeenAgo < 1440 ? Math.floor(lastSeenAgo/60) + ' ساعة' : Math.floor(lastSeenAgo/1440) + ' يوم'));
+
+    // حساب مجموع الإحصائيات
+    var totalGemsReceived = 0, totalXpReceived = 0, totalHeartsReceived = 0, totalStreakReceived = 0;
+    for (var r = 0; r < rewards.length; r++) {
+      totalGemsReceived += rewards[r].gems || 0;
+      totalXpReceived += rewards[r].xp || 0;
+      totalHeartsReceived += rewards[r].hearts || 0;
+      totalStreakReceived += rewards[r].streak || 0;
+    }
+
+    var repliedCount = 0;
+    for (var m = 0; m < messages.length; m++) if (messages[m].reply) repliedCount++;
+    var pendingCount = messages.length - repliedCount;
+
+    var failedLogins = 0, successLogins = 0;
+    for (var l = 0; l < logins.length; l++) {
+      if (logins[l].success) successLogins++;
+      else failedLogins++;
+    }
+
+    // Trust Score
+    var trustScore = 100;
+    if (banned) trustScore -= 50;
+    if (failedLogins > 3) trustScore -= 10;
+    if (failedLogins > 10) trustScore -= 20;
+    if (appeal && appeal.status === 'rejected') trustScore -= 15;
+    if (rewards.length > 20) trustScore -= 5;
+    if (rewards.length > 50) trustScore -= 10;
+    if (trustScore < 0) trustScore = 0;
+    var trustColor = trustScore >= 70 ? '#22C55E' : (trustScore >= 40 ? '#FBBF24' : '#EF4444');
+
+    var html = '';
+
+    // =========================================
+    // 1. الهوية الأساسية
+    // =========================================
+    html += '<div class="details-section">';
+    html += '<div class="details-title">👤 الهوية الأساسية</div>';
+    html += '<div class="details-row"><span class="details-label">الاسم:</span><span class="details-value ar">' + escapeHtml(u.userName || 'مستخدم') + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">Device ID:</span><span class="details-value">' + escapeHtml(id) + '</span></div>';
+    if (u.email) html += '<div class="details-row"><span class="details-label">الإيميل:</span><span class="details-value">' + escapeHtml(u.email) + '</span></div>';
+    if (u.ip) html += '<div class="details-row"><span class="details-label">آخر IP:</span><span class="details-value">' + escapeHtml(u.ip) + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">عمر الحساب:</span><span class="details-value ar">' + createdDays + ' يوم</span></div>';
+    html += '<div class="details-row"><span class="details-label">آخر ظهور:</span><span class="details-value ar">' + lastSeenAgoStr + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">التاريخ الكامل:</span><span class="details-value ar">' + lastSeenStr + '</span></div>';
+    html += '</div>';
+
+    // =========================================
+    // 2. مؤشر الثقة (Trust Score)
+    // =========================================
+    html += '<div class="details-section" style="border-right-color:' + trustColor + ';">';
+    html += '<div class="details-title" style="color:' + trustColor + ';">🛡️ مؤشر الثقة (Trust Score)</div>';
+    html += '<div style="text-align:center;padding:12px 0;">';
+    html += '<div style="font-size:42px;font-weight:800;color:' + trustColor + ';">' + trustScore + '/100</div>';
+    html += '<div style="font-size:12px;color:#94A3B8;margin-top:4px;">' + (trustScore >= 70 ? '✅ مستخدم موثوق' : (trustScore >= 40 ? '⚠️ يحتاج مراقبة' : '🚨 مشتبه فيه')) + '</div>';
+    html += '</div></div>';
+
+    // =========================================
+    // 3. الإحصائيات الحالية
+    // =========================================
+    html += '<div class="details-section">';
+    html += '<div class="details-title">📊 الإحصائيات الحالية</div>';
+    html += '<div class="details-row"><span class="details-label">⭐ XP:</span><span class="details-value">' + (u.xp || 0).toLocaleString() + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">📈 المستوى:</span><span class="details-value">' + (u.level || Math.floor((u.xp || 0) / 100) + 1) + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">💎 الجواهر:</span><span class="details-value">' + (u.gems || 0).toLocaleString() + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">❤️ القلوب:</span><span class="details-value">' + (u.hearts || 5) + '</span></div>';
+    html += '<div class="details-row"><span class="details-label">🔥 السلسلة:</span><span class="details-value">' + (u.streak || 0) + ' يوم</span></div>';
+    html += '<div class="details-row"><span class="details-label">🏆 الشارات:</span><span class="details-value">' + (u.achievements ? u.achievements.length : 0) + '</span></div>';
+    html += '</div>';
+
+    // =========================================
+    // 4. الجهاز والنظام
+    // =========================================
+    html += '<div class="details-section">';
+    html += '<div class="details-title">📱 الجهاز والنظام</div>';
+    if (u.platform) html += '<div class="details-row"><span class="details-label">المنصة:</span><span class="details-value ar">' + escapeHtml(u.platform) + '</span></div>';
+    if (u.language) html += '<div class="details-row"><span class="details-label">اللغة:</span><span class="details-value">' + escapeHtml(u.language) + '</span></div>';
+    if (u.userAgent) html += '<div class="details-row"><span class="details-label">المتصفح:</span><span class="details-value" style="font-size:10px;">' + escapeHtml(u.userAgent.substring(0, 60)) + '</span></div>';
+    if (token) html += '<div class="details-row"><span class="details-label">إشعارات مفعّلة:</span><span class="details-value ar">✅ نعم</span></div>';
+    else html += '<div class="details-row"><span class="details-label">إشعارات مفعّلة:</span><span class="details-value ar">❌ لا</span></div>';
+    html += '</div>';
+
+    // =========================================
+    // 5. الحظر
+    // =========================================
+    if (banned) {
+      var until = banned.until ? new Date(banned.until).toLocaleString('ar-EG') : 'دائم';
+      html += '<div class="details-section" style="border-right-color:#EF4444;">';
+      html += '<div class="details-title" style="color:#F87171;">🚫 الحظر</div>';
+      html += '<div class="details-row"><span class="details-label">الحالة:</span><span class="details-value ar">محظور</span></div>';
+      html += '<div class="details-row"><span class="details-label">السبب:</span><span class="details-value ar">' + escapeHtml(banned.reason || 'غير محدد') + '</span></div>';
+      html += '<div class="details-row"><span class="details-label">المدة:</span><span class="details-value ar">' + until + '</span></div>';
+      if (banned.bannedBy) html += '<div class="details-row"><span class="details-label">بواسطة:</span><span class="details-value">' + escapeHtml(banned.bannedBy) + '</span></div>';
+      if (banned.time) html += '<div class="details-row"><span class="details-label">تاريخ الحظر:</span><span class="details-value ar">' + new Date(banned.time).toLocaleString('ar-EG') + '</span></div>';
+      html += '</div>';
+    }
+
+    // =========================================
+    // 6. الطعون
+    // =========================================
+    if (appeal) {
+      var statusTxt = appeal.status === 'rejected' ? '❌ مرفوض' : (appeal.status === 'approved' ? '✅ مقبول' : '⏳ معلق');
+      html += '<div class="details-section" style="border-right-color:#F59E0B;">';
+      html += '<div class="details-title" style="color:#FBBF24;">📩 الطعن</div>';
+      html += '<div class="details-row"><span class="details-label">الحالة:</span><span class="details-value ar">' + statusTxt + '</span></div>';
+      html += '<div style="padding:10px;background:#0F172A;border-radius:8px;font-size:12.5px;color:#CBD5E1;line-height:1.7;margin:8px 0;">' + escapeHtml(appeal.appeal || '') + '</div>';
+      if (appeal.reason) html += '<div class="details-row"><span class="details-label">سبب الحظر:</span><span class="details-value ar">' + escapeHtml(appeal.reason) + '</span></div>';
+      if (appeal.time) html += '<div class="details-row"><span class="details-label">تاريخ الطعن:</span><span class="details-value ar">' + new Date(appeal.time).toLocaleString('ar-EG') + '</span></div>';
+      html += '</div>';
+    }
+
+    // =========================================
+    // 7. المكافآت - تفصيلي
+    // =========================================
+    html += '<div class="details-section" style="border-right-color:#8B5CF6;">';
+    html += '<div class="details-title" style="color:#C4B5FD;">🎁 سجل المكافآت (' + rewards.length + ')</div>';
+    if (rewards.length > 0) {
+      html += '<div style="background:#0F172A;padding:10px;border-radius:8px;margin-bottom:10px;font-size:11.5px;color:#C4B5FD;">';
+      html += '<b>📊 المجموع الكلي:</b><br>';
+      if (totalGemsReceived > 0) html += '💎 ' + totalGemsReceived.toLocaleString() + ' جواهر ';
+      if (totalXpReceived > 0) html += '⭐ ' + totalXpReceived.toLocaleString() + ' XP ';
+      if (totalHeartsReceived > 0) html += '❤️ ' + totalHeartsReceived + ' قلوب ';
+      if (totalStreakReceived > 0) html += '🔥 ' + totalStreakReceived + ' سلسلة';
+      html += '</div>';
+      for (var i = 0; i < Math.min(rewards.length, 10); i++) {
+        var rw = rewards[i];
+        var rwDate = rw.time ? new Date(rw.time).toLocaleString('ar-EG') : '?';
+        html += '<div style="font-size:11.5px;color:#CBD5E1;padding:8px 0;border-bottom:1px solid rgba(51,65,85,.3);">';
+        if (rw.gems) html += '<b style="color:#C4B5FD;">💎' + rw.gems + '</b> ';
+        if (rw.xp) html += '<b style="color:#FBBF24;">⭐' + rw.xp + '</b> ';
+        if (rw.hearts) html += '<b style="color:#F87171;">❤️' + rw.hearts + '</b> ';
+        if (rw.streak) html += '<b style="color:#FB923C;">🔥' + rw.streak + '</b> ';
+        html += '<br><span style="color:#94A3B8;font-size:10px;">📝 ' + escapeHtml(rw.reason || '') + ' — ' + rwDate + '</span>';
+        html += '</div>';
+      }
+      if (rewards.length > 10) html += '<div style="text-align:center;color:#C4B5FD;font-size:11px;padding:8px;">+ ' + (rewards.length - 10) + ' مكافآت أخرى</div>';
+    } else {
+      html += '<div style="text-align:center;color:#64748B;font-size:12px;padding:12px;">📭 مفيش مكافآت</div>';
+    }
+    html += '</div>';
+
+    // =========================================
+    // 8. رسائل الدعم - تفصيلي
+    // =========================================
+    html += '<div class="details-section" style="border-right-color:#3B82F6;">';
+    html += '<div class="details-title" style="color:#93C5FD;">💬 رسائل الدعم (' + messages.length + ')</div>';
+    if (messages.length > 0) {
+      html += '<div style="background:#0F172A;padding:10px;border-radius:8px;margin-bottom:10px;font-size:11.5px;color:#93C5FD;">';
+      html += '✅ تم الرد: ' + repliedCount + ' | ⏳ بانتظار: ' + pendingCount;
+      html += '</div>';
+      for (var j = 0; j < Math.min(messages.length, 5); j++) {
+        var msg = messages[j];
+        var msgDate = msg.time ? new Date(msg.time).toLocaleString('ar-EG') : '?';
+        html += '<div style="padding:8px;background:#0F172A;border-radius:8px;margin-bottom:8px;font-size:11.5px;">';
+        html += '<div style="color:#94A3B8;font-size:10px;margin-bottom:4px;">' + msgDate + '</div>';
+        html += '<div style="color:#CBD5E1;margin-bottom:6px;">' + escapeHtml((msg.message || '').substring(0, 100)) + '</div>';
+        if (msg.reply) {
+          html += '<div style="background:rgba(34,197,94,.15);padding:6px;border-radius:6px;color:#86EFAC;font-size:10.5px;">✅ ' + escapeHtml(msg.reply.substring(0, 80)) + '</div>';
+        } else {
+          html += '<div style="background:rgba(251,191,36,.15);padding:6px;border-radius:6px;color:#FBBF24;font-size:10.5px;">⏳ بانتظار الرد</div>';
+        }
+        html += '</div>';
+      }
+    } else {
+      html += '<div style="text-align:center;color:#64748B;font-size:12px;padding:12px;">📭 مفيش رسائل</div>';
+    }
+    html += '</div>';
+
+    // =========================================
+    // 9. محاولات الدخول
+    // =========================================
+    html += '<div class="details-section" style="border-right-color:#F59E0B;">';
+    html += '<div class="details-title" style="color:#FBBF24;">🔐 محاولات الدخول (' + logins.length + ')</div>';
+    if (logins.length > 0) {
+      html += '<div style="background:#0F172A;padding:10px;border-radius:8px;margin-bottom:10px;font-size:11.5px;color:#FBBF24;">';
+      html += '✅ نجحت: ' + successLogins + ' | ❌ فشلت: ' + failedLogins;
+      html += '</div>';
+      for (var k = 0; k < Math.min(logins.length, 8); k++) {
+        var lg = logins[k];
+        var lgDate = lg.time ? new Date(lg.time).toLocaleString('ar-EG') : '?';
+        html += '<div style="font-size:11px;color:#CBD5E1;padding:6px 0;border-bottom:1px solid rgba(51,65,85,.3);">';
+        html += lg.success ? '<span style="color:#86EFAC;">✅</span> ' : '<span style="color:#F87171;">❌</span> ';
+        html += '<span style="color:#94A3B8;font-size:10px;">' + lgDate + '</span>';
+        if (lg.device) html += '<br><span style="color:#94A3B8;font-size:10px;">' + escapeHtml(lg.device.substring(0, 50)) + '</span>';
+        html += '</div>';
+      }
+    } else {
+      html += '<div style="text-align:center;color:#64748B;font-size:12px;padding:12px;">📭 مفيش سجل</div>';
+    }
+    html += '</div>';
+
+    // =========================================
+    // 10. الإجراءات السريعة
+    // =========================================
+    html += '<div class="details-section">';
+    html += '<div class="details-title">🎯 الإجراءات السريعة</div>';
+    html += '<div class="details-actions">';
+    html += '<button class="btn-details-gift" onclick="openRewardsFor(\'' + id + '\', \'' + escapeHtml(u.userName || '') + '\')">🎁 مكافأة</button>';
+    html += '<button class="btn-details-gift" onclick="openUserEdit(\'' + id + '\')">🎛️ تحكم كامل</button>';
+    if (banned) {
+      html += '<button class="btn-details-unban" onclick="unbanUser(\'' + id + '\', null)">🔓 فك الحظر</button>';
+    } else {
+      html += '<button class="btn-details-ban" onclick="banUser(\'' + id + '\')">🚫 حظر</button>';
+    }
+    html += '<button class="btn-details-copy" onclick="copyToClipboard(\'' + id + '\')">📋 نسخ ID</button>';
+    html += '</div></div>';
+
+    content.innerHTML = html;
+  }).catch(function(err) {
+    content.innerHTML = '<div class="empty-users"><span class="em">❌</span>خطأ: ' + err.message + '</div>';
+  });
+}
 /* ----- View Details ----- */
 function viewBanDetails(id) {
   fbDB.ref('banned/' + id).once('value').then(function(snap) {
@@ -2264,6 +2529,11 @@ document.getElementById('btn-zero-all-users').addEventListener('click', function
     btn.disabled = false;
     btn.textContent = '⚠️ تصفير كل البيانات للجميع';
   });
+});
+
+/* ----- Universal Search Screen ----- */
+document.getElementById('btn-universal-search-back').addEventListener('click', function() {
+  show('banned-screen');
 });
 </script>
 </body>
