@@ -1228,6 +1228,80 @@ listenToFirebase: function() {
     }
   });
 },
+
+// ===== Anti-Cheat System =====
+_cheatLog: [],
+_lastAction: 0,
+_lastActionType: '',
+_activityCount: 0,
+_activityStartTime: Date.now(),
+
+reportCheat: function(type, details) {
+  if (!fbDB) return;
+  var deviceId = this.getDeviceId();
+  var entry = {
+    deviceId: deviceId,
+    type: type,
+    details: details || '',
+    time: Date.now(),
+    userName: this.state.userName || 'مستخدم'
+  };
+  
+  this._cheatLog.push(entry);
+  if (this._cheatLog.length > 50) this._cheatLog.shift();
+  
+  var id = 'cheat_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+  fbDB.ref('anti_cheat/' + id).set(entry).catch(function() {});
+  
+  if (typeof sendTelegram === 'function') {
+    sendTelegram('cheat_detected', this.state.userName || 'مستخدم', type + ': ' + (details || ''), getDeviceInfo());
+  }
+  
+  console.warn('🚨 CHEAT DETECTED:', type, details);
+},
+
+validateValue: function(field, newVal, oldVal, maxDelta, minVal) {
+  var self = this;
+  minVal = minVal || 0;
+  
+  if (newVal < minVal) {
+    self.reportCheat('negative_value', field + ' = ' + newVal);
+    return oldVal;
+  }
+  
+  if (newVal > 9999999) {
+    self.reportCheat('huge_value', field + ' = ' + newVal);
+    return Math.min(oldVal, 9999999);
+  }
+  
+  var delta = newVal - oldVal;
+  if (delta > maxDelta) {
+    self.reportCheat('unusual_increase', field + ' +' + delta + ' (max: ' + maxDelta + ')');
+    return oldVal + maxDelta;
+  }
+  
+  return newVal;
+},
+
+trackActivity: function(actionType) {
+  var now = Date.now();
+  this._activityCount++;
+  
+  if (now - this._activityStartTime > 30000) {
+    if (this._activityCount > 50) {
+      this.reportCheat('bot_activity', 'actions: ' + this._activityCount + ' in 30s');
+    }
+    this._activityCount = 0;
+    this._activityStartTime = now;
+  }
+  
+  if (actionType === this._lastActionType && (now - this._lastAction) < 200) {
+    this.reportCheat('too_fast', actionType + ' repeated in ' + (now - this._lastAction) + 'ms');
+  }
+  
+  this._lastAction = now;
+  this._lastActionType = actionType;
+},
   checkIfBanned: function() {
   if (!fbDB) return;
   var self = this;
