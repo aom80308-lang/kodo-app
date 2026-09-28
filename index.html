@@ -4042,6 +4042,104 @@ if (window.matchMedia) {
     return origGo.call(this, id);
   };
 })();
+
+// ===== Anti-Cheat Patch (Part 2) =====
+(function() {
+  if (typeof App === 'undefined') return;
+  
+  // 1. اعتراض saveState للتحقق من القيم
+  var origSaveState = App.saveState;
+  App.saveState = function() {
+    var self = this;
+    var s = self.state;
+    
+    // حدود معقولة
+    var MAX_XP = 9999999;
+    var MAX_GEMS = 9999999;
+    var MAX_HEARTS = 99;
+    var MAX_STREAK = 9999;
+    
+    // التحقق من XP
+    if (s.xp < 0 || s.xp > MAX_XP) {
+      self.reportCheat('invalid_xp', 'xp = ' + s.xp);
+      s.xp = Math.max(0, Math.min(s.xp, MAX_XP));
+    }
+    
+    // التحقق من الجواهر
+    if (s.gems < 0 || s.gems > MAX_GEMS) {
+      self.reportCheat('invalid_gems', 'gems = ' + s.gems);
+      s.gems = Math.max(0, Math.min(s.gems, MAX_GEMS));
+    }
+    
+    // التحقق من القلوب
+    if (s.hearts < 0 || s.hearts > MAX_HEARTS) {
+      self.reportCheat('invalid_hearts', 'hearts = ' + s.hearts);
+      s.hearts = Math.max(0, Math.min(s.hearts, MAX_HEARTS));
+    }
+    
+    // التحقق من السلسلة
+    if (s.streak < 0 || s.streak > MAX_STREAK) {
+      self.reportCheat('invalid_streak', 'streak = ' + s.streak);
+      s.streak = Math.max(0, Math.min(s.streak, MAX_STREAK));
+    }
+    
+    return origSaveState.call(self);
+  };
+  
+  // 2. تتبع العمليات الرئيسية
+  var origFinishQuiz = App.finishQuiz;
+  App.finishQuiz = function() {
+    this.trackActivity('finish_quiz');
+    return origFinishQuiz.call(this);
+  };
+  
+  var origClaimDaily = App.claimDailyReward;
+  App.claimDailyReward = function() {
+    this.trackActivity('daily_reward');
+    return origClaimDaily.call(this);
+  };
+  
+  var origSpinWheel = App.spinWheel;
+  App.spinWheel = function(idx, prize) {
+    this.trackActivity('spin_wheel');
+    return origSpinWheel.call(this, idx, prize);
+  };
+  
+  var origBuyItem = App.buyItem;
+  App.buyItem = function(id, price) {
+    this.trackActivity('buy_item');
+    // التحقق من السعر
+    if (price < 0 || price > 100000) {
+      this.reportCheat('invalid_price', 'item: ' + id + ', price: ' + price);
+      return;
+    }
+    return origBuyItem.call(this, id, price);
+  };
+  
+  var origRunCode = App.runCode;
+  App.runCode = function(lesson) {
+    this.trackActivity('run_code');
+    return origRunCode.call(this, lesson);
+  };
+  
+  // 3. فحص البيانات عند التحميل
+  var origLoadState = App.loadState;
+  App.loadState = function() {
+    origLoadState.call(this);
+    var s = this.state;
+    
+    // فحص أولي للقيم
+    if (s.xp > 9999999 || s.gems > 9999999 || s.hearts > 99) {
+      this.reportCheat('loaded_cheat', 'xp:' + s.xp + ', gems:' + s.gems + ', hearts:' + s.hearts);
+      // تصحيح القيم
+      if (s.xp > 9999999) s.xp = 9999999;
+      if (s.gems > 9999999) s.gems = 9999999;
+      if (s.hearts > 99) s.hearts = 99;
+    }
+  };
+  
+  console.log('🛡️ Anti-Cheat Part 2 loaded');
+})();
 </script>
 </body>
 </html>
