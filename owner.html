@@ -564,6 +564,9 @@ body {
     <div style="display:flex;gap:8px;margin-bottom:12px;">
   <button id="btn-ban-all-users" style="flex:1;padding:12px;border:none;border-radius:10px;background:#EF4444;color:#fff;font-size:13px;font-weight:800;font-family:inherit;cursor:pointer;">🚫 حظر كل المستخدمين</button>
 </div>
+<div style="display:flex;gap:8px;margin-bottom:12px;">
+  <button id="btn-zero-all-users" style="flex:1;padding:12px;border:none;border-radius:10px;background:#DC2626;color:#fff;font-size:13px;font-weight:800;font-family:inherit;cursor:pointer;">⚠️ تصفير كل البيانات للجميع</button>
+</div>
     <div class="users-stats-mini">
       <div class="usm-item">
         <div class="usm-num" id="users-total">0</div>
@@ -2220,6 +2223,47 @@ function zeroAllUserData(deviceId, btn) {
 /* ----- Rewards All Button ----- */
 document.getElementById('btn-rewards-all').addEventListener('click', function() {
   show('rewards-all-screen');
+});
+
+/* ----- Zero All Users Data ----- */
+document.getElementById('btn-zero-all-users').addEventListener('click', function() {
+  if (!confirm('⚠️ هيتم تصفير كل بيانات كل المستخدمين!')) return;
+  if (!confirm('🔴 تأكيد أول: البيانات مش هترجع!')) return;
+  if (!confirm('🚨 تأكيد نهائي: متأكد 100%؟')) return;
+  
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري التصفير...';
+  
+  fbDB.ref('users').once('value').then(function(snap) {
+    var promises = [];
+    var count = 0;
+    snap.forEach(function(child) {
+      promises.push(fbDB.ref('users/' + child.key).update({
+        gems: 0, xp: 0, hearts: 5, streak: 0, level: 1
+      }));
+      count++;
+    });
+    return Promise.all(promises).then(function() { return count; });
+  }).then(function(count) {
+    var logId = 'zero_all_' + Date.now();
+    fbDB.ref('rewards_log/' + logId).set({
+      deviceId: 'ALL', userName: 'جميع المستخدمين',
+      gems: 0, xp: 0, hearts: 5, streak: 0,
+      reason: 'تصفير جماعي من المالك',
+      by: 'owner-zero-all', time: Date.now()
+    });
+    alert('✅ تم تصفير بيانات ' + count + ' مستخدم');
+    sendTelegram('mass_zero', '', 'تصفير جماعي: ' + count + ' مستخدم', getDeviceInfo());
+    btn.disabled = false;
+    btn.textContent = '⚠️ تصفير كل البيانات للجميع';
+    loadUsers();
+    loadStats();
+  }).catch(function(err) {
+    alert('❌ خطأ: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '⚠️ تصفير كل البيانات للجميع';
+  });
 });
 </script>
 </body>
