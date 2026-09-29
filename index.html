@@ -4141,34 +4141,5 @@ if (window.matchMedia) {
   console.log('🛡️ Anti-Cheat Part 2 loaded');
 })();
 </script>
-<!-- ========== Telegram + Device Info (Anti-Cheat) ========== -->
-<script>
-function getDeviceInfo() {
-  return {
-    ua: (navigator.userAgent || 'Unknown').substring(0, 120),
-    platform: navigator.platform || 'Unknown',
-    lang: navigator.language || 'ar',
-    screen: window.screen.width + 'x' + window.screen.height,
-    time: Date.now()
-  };
-}
-
-function sendTelegram(type, email, reason, device) {
-  var workerUrl = 'https://kodo-telegram.aom80308.workers.dev';
-  try {
-    fetch(workerUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type: String(type || 'unknown'),
-        email: String(email || '').substring(0, 100),
-        reason: String(reason || '').substring(0, 500),
-        device: device || {}
-      })
-    }).catch(function() {});
-  } catch (e) {}
-}
-</script>
-<!-- ========== END ========== -->
 </body>
 </html>
