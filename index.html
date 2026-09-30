@@ -3273,7 +3273,7 @@ submitAppeal: function() {
     this.state.stats.shopPurchases++;
     var msg = '';
     switch(id) {
-      case 'heart': this.state.hearts = Math.min(99; this.state.hearts + 1); msg = '❤️ +1 قلب'; break;
+      case 'heart': this.state.hearts = Math.min(99, this.state.hearts + 1); msg = '❤️ +1 قلب'; break;
       case 'hearts5': this.state.hearts = 5; msg = '💖 تجديد'; break;
       case 'freeze': this.state.streakShield = true; this.state.streakShieldUntil = Date.now() + 86400000; msg = '🧊 محمية ليوم'; break;
       case 'xp2x': this.state._xpMultiplier = 2; this.state._xpMultiplierUntil = Date.now() + 3600000; this.startMultiplierTimer(); msg = '⚡ XP × 2 ساعة'; break;
