@@ -3294,6 +3294,7 @@ submitAppeal: function() {
       case 'level_up': this.state.xp += 100; msg = '📈 +100 XP'; break;
     }
     this.saveState(); this.updateStatsUI(); this.renderShop();
+    if (fbDB) { try { fbDB.ref('users/' + this.getDeviceId()).update({ gems: this.state.gems, hearts: this.state.hearts, xp: this.state.xp, streak: this.state.streak, level: Math.floor(this.state.xp / 100) + 1 }); } catch(e) {} }
     this.toast(msg); this.confetti(); this.playSound('complete');
     this.checkAchievements();
   },
