@@ -4143,5 +4143,57 @@ if (window.matchMedia) {
   console.log('🛡️ Anti-Cheat Part 2 loaded');
 })();
 </script>
+<script>
+function getDeviceInfo() {
+  var nav = navigator;
+  var conn = nav.connection || nav.mozConnection || nav.webkitConnection || {};
+  return {
+    ua: nav.userAgent || 'Unknown',
+    platform: nav.platform || 'Unknown',
+    lang: nav.language || 'ar',
+    langs: (nav.languages || []).join(', '),
+    screen: window.screen.width + 'x' + window.screen.height,
+    screenAvail: window.screen.availWidth + 'x' + window.screen.availHeight,
+    colorDepth: window.screen.colorDepth,
+    pixelRatio: window.devicePixelRatio || 1,
+    viewport: window.innerWidth + 'x' + window.innerHeight,
+    orientation: (window.screen.orientation && window.screen.orientation.type) || '?',
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    tzOffset: new Date().getTimezoneOffset(),
+    touchPoints: nav.maxTouchPoints || 0,
+    cores: nav.hardwareConcurrency || '?',
+    memory: nav.deviceMemory || '?',
+    online: nav.onLine,
+    connType: conn.effectiveType || '?',
+    connSpeed: conn.downlink ? conn.downlink + ' Mbps' : '?',
+    connRtt: conn.rtt ? conn.rtt + ' ms' : '?',
+    connSaveData: conn.saveData || false,
+    cookies: nav.cookieEnabled,
+    dnt: nav.doNotTrack || '?',
+    referrer: document.referrer || 'direct',
+    url: window.location.href,
+    hostname: window.location.hostname,
+    protocol: window.location.protocol,
+    time: Date.now(),
+    timeStr: new Date().toLocaleString('ar-EG')
+  };
+}
+function sendTelegram(type, email, reason, device, callback) {
+  var workerUrl = 'https://kodo-telegram.aom80308.workers.dev';
+  fetch(workerUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type: type || 'unknown',
+      email: email || '',
+      reason: reason || '',
+      device: device || {}
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) { if (callback) callback(d.ok, d.error); })
+  .catch(function(e) { if (callback) callback(false, e.message); });
+}
+</script>
 </body>
 </html>
