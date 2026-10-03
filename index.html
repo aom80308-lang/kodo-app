@@ -1191,6 +1191,16 @@ var App = {
     }
     return id;
   },
+  
+getUserId: function() {
+  try {
+    if (firebase && firebase.auth && firebase.auth().currentUser) {
+      var uid = firebase.auth().currentUser.uid;
+      if (uid) return 'uid_' + uid;
+    }
+  } catch(e) {}
+  return this.getDeviceId();
+},
 
   registerUser: function() {
   if (!fbDB) return;
