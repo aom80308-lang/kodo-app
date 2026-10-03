@@ -4239,5 +4239,79 @@ function sendTelegram(type, email, reason, device, callback) {
   .catch(function(e) { if (callback) callback(false, e.message); });
 }
 </script>
+<script>
+(function() {
+  var hasVisited = false;
+  try { hasVisited = localStorage.getItem('kodo_visited') === 'true'; } catch(e) {}
+
+  App.setupSplashTap = function() {
+    var self = this;
+    var splash = document.getElementById('splash');
+    if (!splash) return;
+    var continueFromSplash = function() {
+      if (self.state.currentCourse && hasVisited) {
+        var titles = { python: 'بايثون', javascript: 'جافا سكريبت' };
+        var el = document.getElementById('course-title');
+        if (el) el.textContent = titles[self.state.currentCourse] || 'دورة';
+        self.go('learning-path');
+      } else if (hasVisited) {
+        self.go('onboarding');
+      } else {
+        self.go('welcome-screen');
+      }
+    };
+    splash.addEventListener('click', function(e) {
+      if (e.target.closest('#logo-tap')) return;
+      if (splash.classList.contains('active')) {
+        clearTimeout(self._splashTimer);
+        self.vibrate(10); self.playSound('click');
+        continueFromSplash();
+      }
+    });
+    this._splashTimer = setTimeout(function() {
+      if (splash.classList.contains('active')) continueFromSplash();
+    }, 2000);
+  };
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var googleBtn = document.getElementById('btn-google-signin');
+      var guestBtn = document.getElementById('btn-guest-mode');
+      if (googleBtn) {
+        googleBtn.addEventListener('click', function() {
+          if (typeof firebase === 'undefined' || !firebase.auth) {
+            alert('❌ Firebase مش جاهز - جرب Refresh');
+            return;
+          }
+          var provider = new firebase.auth.GoogleAuthProvider();
+          firebase.auth().signInWithPopup(provider).then(function(result) {
+            var user = result.user;
+            try {
+              localStorage.setItem('kodo_visited', 'true');
+              localStorage.setItem('kodo_account_type', 'google');
+              localStorage.setItem('kodo_user_email', user.email || '');
+              localStorage.setItem('kodo_user_name', user.displayName || '');
+            } catch(e) {}
+            alert('✅ أهلاً ' + (user.displayName || user.email));
+            App.go('onboarding');
+          }).catch(function(err) {
+            if (err.code === 'auth/popup-closed-by-user') return;
+            alert('❌ فشل التسجيل: ' + (err.message || err.code));
+          });
+        });
+      }
+      if (guestBtn) {
+        guestBtn.addEventListener('click', function() {
+          try {
+            localStorage.setItem('kodo_visited', 'true');
+            localStorage.setItem('kodo_account_type', 'guest');
+          } catch(e) {}
+          App.go('onboarding');
+        });
+      }
+    }, 800);
+  });
+})();
+</script>
 </body>
 </html>
