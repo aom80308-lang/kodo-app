@@ -1184,13 +1184,19 @@ var App = {
 
   /* ========== Firebase ========== */
   getDeviceId: function() {
-    var id = localStorage.getItem('kodo_device_id');
-    if (!id) {
-      id = 'DEV-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-      try { localStorage.setItem('kodo_device_id', id); } catch(e) {}
+  try {
+    if (firebase && firebase.auth && firebase.auth().currentUser) {
+      var uid = firebase.auth().currentUser.uid;
+      if (uid) return 'uid_' + uid;
     }
-    return id;
-  },
+  } catch(e) {}
+  var id = localStorage.getItem('kodo_device_id');
+  if (!id) {
+    id = 'DEV-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    try { localStorage.setItem('kodo_device_id', id); } catch(e) {}
+  }
+  return id;
+},
   
 getUserId: function() {
   try {
