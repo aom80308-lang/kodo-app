@@ -311,6 +311,49 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
   <div class="dev-signature">Made with ❤ by Ahmed Bassiouny &bull; © 2026 Kodo</div>
 </div>
 
+<!-- ========== WELCOME SCREEN ========== -->
+<div id="welcome-screen" class="screen">
+  <div class="welcome-content">
+    <div class="wc-icon">🤖</div>
+    <h2>أهلاً بيك في Kodo!</h2>
+    <p class="wc-sub">اختار طريقة البدء</p>
+    <button id="btn-google-signin" class="wc-btn wc-btn-google">
+      <span class="wc-btn-icon">🔐</span>
+      <div class="wc-btn-text">
+        <strong>سجّل بحساب Google</strong>
+        <small>✅ تقدمك محفوظ للأبد<br>✅ لو غيّرت جهاز، تقدمك يرجع</small>
+      </div>
+    </button>
+    <button id="btn-guest-mode" class="wc-btn wc-btn-guest">
+      <span class="wc-btn-icon">👤</span>
+      <div class="wc-btn-text">
+        <strong>ادخل كضيف</strong>
+        <small>⚠️ تقدمك على الجهاز بس<br>⚠️ لو مسحت التطبيق، تقدمك يضيع</small>
+      </div>
+    </button>
+    <div class="wc-warning">
+      🚨 <strong>تحذير مهم:</strong><br>
+      أي محاولة تعديل القيم (جواهر/XP/قلوب) → <b>حظر دائم</b> على الجهاز.
+    </div>
+  </div>
+</div>
+<style>
+#welcome-screen { background: linear-gradient(135deg, #3B82F6, #8B5CF6); padding: 24px; align-items: center; justify-content: center; }
+.welcome-content { max-width: 420px; width: 100%; text-align: center; }
+.wc-icon { font-size: 80px; display: block; margin-bottom: 16px; animation: bounce 2s infinite; }
+#welcome-screen h2 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.wc-sub { font-size: 15px; color: rgba(255,255,255,.85); margin-bottom: 30px; }
+.wc-btn { width: 100%; background: #fff; border: none; border-radius: 18px; padding: 18px; display: flex; align-items: center; gap: 14px; text-align: right; font-family: inherit; cursor: pointer; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.15); transition: transform .15s; }
+.wc-btn:active { transform: scale(.97); }
+.wc-btn-google { border: 3px solid #FBBF24; }
+.wc-btn-guest { border: 3px solid #94A3B8; }
+.wc-btn-icon { font-size: 40px; flex-shrink: 0; }
+.wc-btn-text { flex: 1; }
+.wc-btn-text strong { display: block; font-size: 16px; font-weight: 800; color: #1F2937; margin-bottom: 6px; }
+.wc-btn-text small { display: block; font-size: 12px; color: #6B7280; line-height: 1.6; }
+.wc-warning { background: rgba(239,68,68,.2); border: 2px solid rgba(239,68,68,.5); border-radius: 14px; padding: 14px; font-size: 12.5px; color: #fff; line-height: 1.8; margin-top: 20px; text-align: right; }
+.wc-warning b { color: #FBBF24; }
+</style>
 <div id="onboarding" class="screen">
   <div class="ob-content" id="ob-content"></div>
   <div class="ob-dots" id="ob-dots"></div>
