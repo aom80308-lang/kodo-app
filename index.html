@@ -4389,6 +4389,67 @@ function sendTelegram(type, email, reason, device, callback) {
     }, 800);
   });
 })();
+
+/* ========== Profile Screen - Account Status & Google ========== */
+(function() {
+  function updateProfileUI() {
+    var user = null;
+    try { user = firebase.auth().currentUser; } catch(e) {}
+    var cta = document.getElementById('profile-account-cta');
+    var ok = document.getElementById('profile-account-ok');
+    var emailDisplay = document.getElementById('profile-email-display');
+    if (!cta || !ok) return;
+    if (user && user.email) {
+      cta.style.display = 'none';
+      ok.style.display = 'flex';
+      var photo = document.getElementById('profile-acc-photo');
+      var emailEl = document.getElementById('profile-acc-email');
+      if (photo) photo.src = user.photoURL || '';
+      if (emailEl) emailEl.textContent = user.email;
+      if (emailDisplay) { emailDisplay.textContent = user.email; emailDisplay.style.display = 'block'; }
+      var nameEl = document.getElementById('profile-name');
+      if (nameEl && user.displayName) nameEl.textContent = user.displayName;
+    } else {
+      cta.style.display = 'block';
+      ok.style.display = 'none';
+      if (emailDisplay) emailDisplay.style.display = 'none';
+    }
+  }
+
+  function updateExtraStats() {
+    if (!App || !App.state) return;
+    var hearts = document.getElementById('p-hearts-new');
+    var ach = document.getElementById('p-ach-new');
+    if (hearts) hearts.textContent = App.state.hearts || 5;
+    if (ach) ach.textContent = (App.state.achievements || []).length;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var googleBtn = document.getElementById('btn-profile-google');
+    if (googleBtn) {
+      googleBtn.addEventListener('click', function() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          try {
+            localStorage.setItem('kodo_visited', 'true');
+            localStorage.setItem('kodo_account_type', 'google');
+          } catch(e) {}
+          App.toast('✅ أهلاً ' + (result.user.displayName || result.user.email));
+          setTimeout(updateProfileUI, 500);
+        }).catch(function(err) {
+          if (err.code === 'auth/popup-closed-by-user') return;
+          alert('❌ فشل التسجيل: ' + (err.message || err.code));
+        });
+      });
+    }
+    if (firebase && firebase.auth) {
+      firebase.auth().onAuthStateChanged(function() {
+        setTimeout(function() { updateProfileUI(); updateExtraStats(); }, 300);
+      });
+    }
+    setInterval(function() { updateExtraStats(); }, 2000);
+  });
+})();
 </script>
 </body>
 </html>
