@@ -1173,6 +1173,7 @@ var App = {
     setTimeout(function() {
       try { self.initSupportChat(); } catch(e) {}
       try { self.registerUser(); } catch(e) {}
+      try { self.setupAuthListener(); } catch(e) {}
       try { self.checkIfBanned(); } catch(e) {}
       try { self.checkMaintenanceAndShow(); } catch(e) {}
       try { self.checkWelcomeMessage(); } catch(e) {}
@@ -1206,6 +1207,38 @@ getUserId: function() {
     }
   } catch(e) {}
   return this.getDeviceId();
+},
+  
+setupAuthListener: function() {
+  var self = this;
+  if (!firebase || !firebase.auth) return;
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      var newKey = 'uid_' + user.uid;
+      var oldKey = localStorage.getItem('kodo_device_id');
+      if (oldKey && oldKey !== newKey) {
+        fbDB.ref('users/' + oldKey).once('value').then(function(snap) {
+          if (snap.exists()) {
+            var oldData = snap.val();
+            return fbDB.ref('users/' + newKey).update({
+              xp: oldData.xp || self.state.xp,
+              gems: oldData.gems || self.state.gems,
+              hearts: oldData.hearts || self.state.hearts,
+              streak: oldData.streak || self.state.streak,
+              level: oldData.level || 1,
+              createdAt: oldData.createdAt || oldData.lastSeen || Date.now()
+            }).then(function() {
+              return fbDB.ref('users/' + oldKey).remove();
+            });
+          }
+        }).catch(function() {});
+      }
+      setTimeout(function() {
+        try { self.registerUser(); } catch(e) {}
+        try { self.listenToFirebase(); } catch(e) {}
+      }, 1000);
+    }
+  });
 },
 
   registerUser: function() {
