@@ -415,27 +415,50 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
 </div>
 
 <div id="profile-screen" class="screen">
-  <div class="topbar"><div class="topbar-actions"><button class="btn-icon" id="btn-profile-back">←</button></div><h3>حسابي</h3><button class="btn-icon" id="btn-profile-settings">⚙️</button></div>
+  <div class="topbar">
+    <div class="topbar-actions"><button class="btn-icon" id="btn-profile-back">←</button></div>
+    <h3>حسابي</h3>
+    <button class="btn-icon" id="btn-profile-settings">⚙️</button>
+  </div>
   <div class="profile-header">
     <div class="profile-avatar" id="profile-avatar-el">🤖</div>
-    <h2 id="profile-name">مبرمج مبتدئ</h2><p id="profile-level">المستوى 1 &bull; 0 XP</p>
+    <h2 id="profile-name">مبرمج مبتدئ</h2>
+    <p id="profile-level">المستوى 1 &bull; 0 XP</p>
+    <p id="profile-email-display"></p>
   </div>
-  <div class="profile-stats">
-    <div class="profile-stat"><div class="icon">⭐</div><div class="info"><div class="num" id="p-xp">0</div><div class="lbl">XP</div></div></div>
-    <div class="profile-stat"><div class="icon">🔥</div><div class="info"><div class="num" id="p-streak">0</div><div class="lbl">سلسلة</div></div></div>
-    <div class="profile-stat"><div class="icon">💎</div><div class="info"><div class="num" id="p-gems">0</div><div class="lbl">جواهر</div></div></div>
-    <div class="profile-stat"><div class="icon">📚</div><div class="info"><div class="num" id="p-lessons">0</div><div class="lbl">دروس</div></div></div>
+  <div class="profile-account-cta" id="profile-account-cta">
+    <span class="pacta-icon">🔐</span>
+    <h3>حسابك غير محفوظ</h3>
+    <p>سجّل بحساب Google عشان تحفظ تقدمك ولو غيّرت جهاز يرجع تقدمك.</p>
+    <button id="btn-profile-google">🔐 سجّل بحساب Google</button>
   </div>
-  <div class="settings-section">
-    <div class="setting-item" id="item-daily"><div class="label"><span class="icon">🎁</span>المكافأة اليومية</div><div class="arrow">←</div></div>
-    <div class="setting-item" id="item-wheel"><div class="label"><span class="icon">🎡</span>عجلة الحظ</div><div class="arrow">←</div></div>
-    <div class="setting-item" id="item-shop"><div class="label"><span class="icon">🛍️</span>المتجر</div><div class="arrow">←</div></div>
-    <div class="setting-item" id="item-ach"><div class="label"><span class="icon">🏆</span>الإنجازات</div><div class="arrow">←</div></div>
-    <div class="setting-item" id="item-chal"><div class="label"><span class="icon">🎯</span>التحديات</div><div class="arrow">←</div></div>
-    <div class="setting-item" id="item-lb"><div class="label"><span class="icon">🥇</span>المتصدرين</div><div class="arrow">←</div></div>
-    <div class="setting-item" id="item-stats"><div class="label"><span class="icon">📊</span>الإحصائيات</div><div class="arrow">←</div></div>
-    <div class="setting-item" id="item-invite"><div class="label"><span class="icon">🎁</span>دعوة صديق</div><div class="arrow">←</div></div>
-    <div class="setting-item" id="item-referral"><div class="label"><span class="icon">📋</span>كود الدعوة</div><div class="arrow">←</div></div>
+  <div class="profile-account-ok" id="profile-account-ok" style="display:none;">
+    <img id="profile-acc-photo" src="" alt="">
+    <div class="paok-info">
+      <div class="paok-status">✅ حسابك محفوظ</div>
+      <div class="paok-email" id="profile-acc-email"></div>
+    </div>
+  </div>
+  <div class="profile-section-title">📊 إحصائياتي</div>
+  <div class="profile-stats-grid">
+    <div class="profile-stat-box"><span class="psb-icon">⭐</span><span class="psb-num" id="p-xp">0</span><span class="psb-lbl">XP</span></div>
+    <div class="profile-stat-box"><span class="psb-icon">💎</span><span class="psb-num" id="p-gems">0</span><span class="psb-lbl">جواهر</span></div>
+    <div class="profile-stat-box"><span class="psb-icon">❤️</span><span class="psb-num" id="p-hearts-new">5</span><span class="psb-lbl">قلوب</span></div>
+    <div class="profile-stat-box"><span class="psb-icon">🔥</span><span class="psb-num" id="p-streak">0</span><span class="psb-lbl">سلسلة</span></div>
+    <div class="profile-stat-box"><span class="psb-icon">📚</span><span class="psb-num" id="p-lessons">0</span><span class="psb-lbl">دروس</span></div>
+    <div class="profile-stat-box"><span class="psb-icon">🏆</span><span class="psb-num" id="p-ach-new">0</span><span class="psb-lbl">شارات</span></div>
+  </div>
+  <div class="profile-section-title">🎯 الإجراءات</div>
+  <div class="profile-actions-grid">
+    <div class="profile-action-box" id="item-daily"><span class="pab-icon">🎁</span><span class="pab-lbl">المكافأة</span></div>
+    <div class="profile-action-box" id="item-wheel"><span class="pab-icon">🎡</span><span class="pab-lbl">العجلة</span></div>
+    <div class="profile-action-box" id="item-shop"><span class="pab-icon">🛍️</span><span class="pab-lbl">المتجر</span></div>
+    <div class="profile-action-box" id="item-ach"><span class="pab-icon">🏆</span><span class="pab-lbl">الإنجازات</span></div>
+    <div class="profile-action-box" id="item-chal"><span class="pab-icon">🎯</span><span class="pab-lbl">التحديات</span></div>
+    <div class="profile-action-box" id="item-lb"><span class="pab-icon">🥇</span><span class="pab-lbl">المتصدرين</span></div>
+    <div class="profile-action-box" id="item-stats"><span class="pab-icon">📊</span><span class="pab-lbl">الإحصائيات</span></div>
+    <div class="profile-action-box" id="item-invite"><span class="pab-icon">🎁</span><span class="pab-lbl">دعوة صديق</span></div>
+    <div class="profile-action-box" id="item-referral"><span class="pab-icon">📋</span><span class="pab-lbl">كود الدعوة</span></div>
   </div>
 </div>
 
