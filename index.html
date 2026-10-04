@@ -4432,6 +4432,10 @@ function sendTelegram(type, email, reason, device, callback) {
       if (emailDisplay) { emailDisplay.textContent = user.email; emailDisplay.style.display = 'block'; }
       var nameEl = document.getElementById('profile-name');
       if (nameEl && user.displayName) nameEl.textContent = user.displayName;
+      var avatarEl = document.getElementById('profile-avatar-el');
+if (avatarEl && user.photoURL) {
+  avatarEl.innerHTML = '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+}
     } else {
       cta.style.display = 'block';
       ok.style.display = 'none';
