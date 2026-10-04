@@ -1227,19 +1227,24 @@ getUserId: function() {
       self.updateStatsUI();
     }
     
-    var baseData = {
-      deviceId: deviceId,
-      userName: self.state.userName || 'مستخدم',
-      platform: navigator.platform || 'Unknown',
-      language: navigator.language || 'ar',
-      userAgent: (navigator.userAgent || '').substring(0, 100),
-      lastSeen: Date.now(),
-      xp: self.state.xp,
-      gems: self.state.gems,
-      hearts: self.state.hearts,
-      streak: self.state.streak,
-      level: Math.floor(self.state.xp / 100) + 1
-    };
+    var user = null;
+try { user = firebase.auth().currentUser; } catch(e) {}
+var baseData = {
+  deviceId: deviceId,
+  userName: (user && user.displayName) ? user.displayName : (self.state.userName || 'مستخدم'),
+  email: (user && user.email) ? user.email : '',
+  photo: (user && user.photoURL) ? user.photoURL : '',
+  accountType: user ? 'google' : 'guest',
+  platform: navigator.platform || 'Unknown',
+  language: navigator.language || 'ar',
+  userAgent: (navigator.userAgent || '').substring(0, 100),
+  lastSeen: Date.now(),
+  xp: self.state.xp,
+  gems: self.state.gems,
+  hearts: self.state.hearts,
+  streak: self.state.streak,
+  level: Math.floor(self.state.xp / 100) + 1
+};
     
     fetch('https://api.ipify.org?format=json')
       .then(function(r) { return r.json(); })
