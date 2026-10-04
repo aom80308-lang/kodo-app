@@ -271,6 +271,7 @@ body {
     </div>
 
     <button class="btn-login" id="btn-login">🔓 دخول</button>
+    <button class="btn-login" id="btn-google-login" style="background:linear-gradient(135deg,#4285F4,#34A853);box-shadow:0 4px 0 #2C5F9E;margin-top:10px;">🔐 دخول بحساب Google</button>
 
     <div class="msg" id="login-msg"></div>
 
@@ -2534,6 +2535,40 @@ document.getElementById('btn-zero-all-users').addEventListener('click', function
 /* ----- Universal Search Screen ----- */
 document.getElementById('btn-universal-search-back').addEventListener('click', function() {
   show('banned-screen');
+});
+
+/* ========== Google Sign-In for Owner ========== */
+document.getElementById('btn-google-login').addEventListener('click', function() {
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الدخول...';
+  msg('info', '⏳ بيتأكد من حسابك...');
+  var provider = new firebase.auth.GoogleAuthProvider();
+  fbAuth.signInWithPopup(provider)
+    .then(function(result) {
+      var user = result.user;
+      if (user.email !== OWNER_EMAIL) {
+        msg('error', '❌ ده مش حساب المالك');
+        logLoginAttempt(false, user.email);
+        sendTelegram('wrong_owner', user.email, 'مش حساب المالك', getDeviceInfo());
+        fbAuth.signOut();
+        btn.disabled = false;
+        btn.textContent = '🔐 دخول بحساب Google';
+        return;
+      }
+      msg('success', '✅ تم الدخول بنجاح!');
+      logLoginAttempt(true, user.email);
+      sendTelegram('login_success', user.email, 'Google Sign-In', getDeviceInfo());
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = '🔐 دخول بحساب Google';
+      if (err.code === 'auth/popup-closed-by-user') return;
+      var reason = err.message || err.code;
+      msg('error', '❌ ' + reason);
+      logLoginAttempt(false, 'google');
+      sendTelegram('login_failed', 'google', reason, getDeviceInfo());
+    });
 });
 </script>
 </body>
