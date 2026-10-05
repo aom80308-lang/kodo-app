@@ -1012,6 +1012,7 @@ document.getElementById('btn-login').addEventListener('click', function() {
   var email = document.getElementById('login-email').value.trim();
   var pass = document.getElementById('login-pass').value;
   var btn = this;
+  alert('EMAIL: [' + email + ']\nPASS: [' + pass + ']\nLENGTH: ' + pass.length);
 
   if (!email || !pass) {
     msg('error', '❌ اكتب الإيميل والباسورد');
