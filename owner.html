@@ -989,21 +989,7 @@ loadOwnerConfig(function() {
 });
 
 /* ========== Auth State ========== */
-if (fbAuth) {
-  fbAuth.onAuthStateChanged(function(user) {
-    if (user) {
-      if (user.email === OWNER_EMAIL) {
-        goToDashboard(user);
-      } else {
-        msg('error', '❌ ده مش حساب المالك');
-        fbAuth.signOut();
-        show('login-screen');
-      }
-    } else {
-      show('login-screen');
-    }
-  });
-} else {
+if (!fbAuth) {
   show('login-screen');
   msg('error', '❌ Firebase مش اشتغل — جرب تعمل Refresh');
 }
@@ -1013,7 +999,6 @@ document.getElementById('btn-login').addEventListener('click', function() {
   var email = document.getElementById('login-email').value.trim();
   var pass = document.getElementById('login-pass').value;
   var btn = this;
-  alert('EMAIL: [' + email + ']\nPASS: [' + pass + ']\nLENGTH: ' + pass.length);
 
   if (!email || !pass) {
     msg('error', '❌ اكتب الإيميل والباسورد');
@@ -2626,6 +2611,77 @@ document.getElementById('btn-google-login').addEventListener('click', function()
   crown.addEventListener('mouseup', onEnd);
   crown.addEventListener('mouseleave', onEnd);
 })();
+
+/* ========== Owner Secret Code ========== */
+var OWNER_SECRET_CODE = 'AHMED2004KODO';
+
+/* ========== Sign Up Button ========== */
+document.getElementById('btn-signup').addEventListener('click', function() {
+  var email = prompt('الإيميل:', 'aom80308@gmail.com');
+  if (!email) return;
+  email = email.trim();
+  var pass = prompt('الباسورد (8 حروف على الأقل):');
+  if (!pass || pass.length < 8) { alert('❌ الباسورد قصير - لازم 8 حروف على الأقل'); return; }
+  var code = prompt('🔐 الكود السري:');
+  if (code !== OWNER_SECRET_CODE) { alert('❌ الكود السري غلط'); return; }
+  fbAuth.createUserWithEmailAndPassword(email, pass)
+    .then(function(cred) {
+      alert('✅ تم إنشاء الحساب بنجاح!\n\nدلوقتي تقدر تسجل دخول.');
+      var sb = document.getElementById('btn-signup');
+      if (sb) sb.style.display = 'none';
+    })
+    .catch(function(err) {
+      var m = {
+        'auth/email-already-in-use': 'الإيميل موجود بالفعل - سجل دخول',
+        'auth/invalid-email': 'الإيميل مش صحيح',
+        'auth/weak-password': 'الباسورد ضعيف'
+      };
+      alert('❌ ' + (m[err.code] || err.message));
+    });
+});
+
+/* ========== 2FA: Secret code at login ========== */
+function askSecretAndGo(user) {
+  if (sessionStorage.getItem('kodo_owner_2fa') === 'ok') {
+    goToDashboard(user);
+    return;
+  }
+  var code = prompt('🔐 اكتب الكود السري للدخول:');
+  if (code === OWNER_SECRET_CODE) {
+    sessionStorage.setItem('kodo_owner_2fa', 'ok');
+    goToDashboard(user);
+  } else {
+    alert('❌ الكود السري غلط');
+    fbAuth.signOut();
+    show('login-screen');
+  }
+}
+
+/* Override onAuthStateChanged */
+if (fbAuth) {
+  fbAuth.onAuthStateChanged(function(user) {
+    if (user) {
+      if (user.email === OWNER_EMAIL) {
+        askSecretAndGo(user);
+      } else {
+        msg('error', '❌ ده مش حساب المالك');
+        fbAuth.signOut();
+        show('login-screen');
+      }
+    } else {
+      sessionStorage.removeItem('kodo_owner_2fa');
+      show('login-screen');
+    }
+  });
+}
+
+/* Clear 2FA flag on logout */
+var _origLogout = document.getElementById('btn-logout');
+if (_origLogout) {
+  _origLogout.addEventListener('click', function() {
+    sessionStorage.removeItem('kodo_owner_2fa');
+  });
+}
 </script>
 </body>
 </html>
