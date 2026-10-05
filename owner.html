@@ -2572,6 +2572,67 @@ document.getElementById('btn-google-login').addEventListener('click', function()
       sendTelegram('login_failed', 'google', reason, getDeviceInfo());
     });
 });
+
+/* ========== Secret: Long press 3s + 5 taps on crown ========== */
+(function() {
+  var crown = document.querySelector('.crown');
+  if (!crown) return;
+  var pressTimer = null;
+  var pressStart = 0;
+  var readyForTaps = false;
+  var tapCount = 0;
+  var resetTimer = null;
+
+  function resetAll() {
+    readyForTaps = false;
+    tapCount = 0;
+    if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
+  }
+
+  function startPress(e) {
+    e.preventDefault();
+    pressStart = Date.now();
+    pressTimer = setTimeout(function() {
+      readyForTaps = true;
+      tapCount = 0;
+      // Reset after 10 seconds if not completed
+      resetTimer = setTimeout(function() {
+        resetAll();
+      }, 10000);
+    }, 3000);
+  }
+
+  function cancelPress(e) {
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      pressTimer = null;
+    }
+  }
+
+  function handleTap(e) {
+    if (!readyForTaps) return;
+    e.preventDefault();
+    tapCount++;
+    if (tapCount >= 5) {
+      // Show signup button
+      var signupBtn = document.getElementById('btn-signup');
+      if (signupBtn) signupBtn.style.display = 'block';
+      resetAll();
+      // Hide after 60 seconds
+      setTimeout(function() {
+        if (signupBtn) signupBtn.style.display = 'none';
+      }, 60000);
+    }
+  }
+
+  crown.addEventListener('touchstart', startPress, { passive: false });
+  crown.addEventListener('touchend', cancelPress);
+  crown.addEventListener('touchcancel', cancelPress);
+  crown.addEventListener('mousedown', startPress);
+  crown.addEventListener('mouseup', cancelPress);
+  crown.addEventListener('mouseleave', cancelPress);
+  crown.addEventListener('click', handleTap);
+})();
 </script>
 </body>
 </html>
