@@ -1049,7 +1049,7 @@ document.getElementById('btn-login').addEventListener('click', function() {
         'auth/network-request-failed': 'مشكلة في الشبكة',
         'auth/user-disabled': 'الحساب معطل'
       };
-      var reason = msgs[err.code] || ('خطأ: ' + err.message);
+   var reason = '[' + err.code + '] ' + (err.message || '');
       msg('error', '❌ ' + reason);
       logLoginAttempt(false, email);
       sendTelegram('login_failed', email, reason, getDeviceInfo());
