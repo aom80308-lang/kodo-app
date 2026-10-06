@@ -436,7 +436,8 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
     <span class="pacta-icon">🔐</span>
     <h3>حسابك غير محفوظ</h3>
     <p>سجّل بحساب Google عشان تحفظ تقدمك ولو غيّرت جهاز يرجع تقدمك.</p>
-    <button id="btn-profile-google">🔐 سجّل بحساب Google</button>
+    <button id="btn-profile-google">🔐 تسجيل دخول</button>
+<button id="btn-profile-google-signup" style="background:linear-gradient(135deg,#10B981,#059669);box-shadow:0 4px 0 #047857;margin-top:10px;">🆕 إنشاء حساب جديد</button>
   </div>
   <div class="profile-account-ok" id="profile-account-ok" style="display:none;">
     <img id="profile-acc-photo" src="" alt="">
@@ -3452,23 +3453,29 @@ if (avatarEl && user.photoURL) {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    var googleBtn = document.getElementById('btn-profile-google');
-    if (googleBtn) {
-      googleBtn.addEventListener('click', function() {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(function(result) {
-          try {
-            localStorage.setItem('kodo_visited', 'true');
-            localStorage.setItem('kodo_account_type', 'google');
-          } catch(e) {}
-          App.toast('✅ أهلاً ' + (result.user.displayName || result.user.email));
-          setTimeout(updateProfileUI, 500);
-        }).catch(function(err) {
-          if (err.code === 'auth/popup-closed-by-user') return;
-          alert('❌ فشل التسجيل: ' + (err.message || err.code));
-        });
-      });
-    }
+   function handleProfileGoogleAuth(isSignup) {
+  try { localStorage.setItem('kodo_auth_mode', isSignup ? 'signup' : 'signin'); } catch(e) {}
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    try {
+      localStorage.setItem('kodo_visited', 'true');
+      localStorage.setItem('kodo_account_type', 'google');
+    } catch(e) {}
+    App.toast('✅ أهلاً ' + (result.user.displayName || result.user.email));
+    setTimeout(updateProfileUI, 500);
+  }).catch(function(err) {
+    if (err.code === 'auth/popup-closed-by-user') return;
+    alert('❌ فشل التسجيل: ' + (err.message || err.code));
+  });
+}
+var googleBtn = document.getElementById('btn-profile-google');
+if (googleBtn) {
+  googleBtn.addEventListener('click', function() { handleProfileGoogleAuth(false); });
+}
+var googleSignupBtn = document.getElementById('btn-profile-google-signup');
+if (googleSignupBtn) {
+  googleSignupBtn.addEventListener('click', function() { handleProfileGoogleAuth(true); });
+}
     if (firebase && firebase.auth) {
       firebase.auth().onAuthStateChanged(function() {
         setTimeout(function() { updateProfileUI(); updateExtraStats(); }, 300);
