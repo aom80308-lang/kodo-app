@@ -1106,22 +1106,40 @@ setupAuthListener: function() {
     if (user) {
       var newKey = 'uid_' + user.uid;
       var oldKey = localStorage.getItem('kodo_device_id');
-      if (oldKey && oldKey !== newKey) {
-        fbDB.ref('users/' + oldKey).once('value').then(function(snap) {
-          if (snap.exists()) {
-            var oldData = snap.val();
-            return fbDB.ref('users/' + newKey).update({
-              xp: oldData.xp || self.state.xp,
-              gems: oldData.gems || self.state.gems,
-              hearts: oldData.hearts || self.state.hearts,
-              streak: oldData.streak || self.state.streak,
-              level: oldData.level || 1,
-              createdAt: oldData.createdAt || oldData.lastSeen || Date.now()
-            }).then(function() {
-              return fbDB.ref('users/' + oldKey).remove();
-            });
-          }
+      var authMode = 'signin';
+      try { authMode = localStorage.getItem('kodo_auth_mode') || 'signin'; } catch(e) {}
+      if (oldKey && oldKey !== newKey && authMode === 'signup') {
+        Promise.all([
+          fbDB.ref('users/' + oldKey).once('value'),
+          fbDB.ref('users/' + newKey).once('value')
+        ]).then(function(results) {
+          var guestData = results[0].val() || {};
+          var googleData = results[1].val() || {};
+          var merged = {
+            xp: Math.max(guestData.xp || 0, googleData.xp || 0, self.state.xp || 0),
+            gems: Math.max(guestData.gems || 0, googleData.gems || 0, self.state.gems || 0),
+            hearts: Math.max(guestData.hearts || 0, googleData.hearts || 0, self.state.hearts || 5),
+            streak: Math.max(guestData.streak || 0, googleData.streak || 0, self.state.streak || 0),
+            level: Math.max(guestData.level || 1, googleData.level || 1),
+            createdAt: googleData.createdAt || guestData.createdAt || Date.now()
+          };
+          return fbDB.ref('users/' + newKey).update(merged).then(function() {
+            if (guestData.userName && !googleData.userName) {
+              return fbDB.ref('users/' + newKey).update({ userName: guestData.userName });
+            }
+          }).then(function() {
+            return fbDB.ref('users/' + oldKey).remove();
+          }).then(function() {
+            self.state.xp = merged.xp;
+            self.state.gems = merged.gems;
+            self.state.hearts = merged.hearts;
+            self.state.streak = merged.streak;
+            self.saveState();
+            self.updateStatsUI();
+          });
         }).catch(function() {});
+      } else if (oldKey && oldKey !== newKey && authMode === 'signin') {
+        fbDB.ref('users/' + oldKey).remove().catch(function() {});
       }
       setTimeout(function() {
         try { self.registerUser(); } catch(e) {}
