@@ -1636,7 +1636,6 @@ submitAppeal: function() {
         el.addEventListener('click', function() {
           self.vibrate(10); self.playSound('click');
           var dest = el.getAttribute('data-nav');
-          if (dest === 'owner-screen' && !self.state.ownerMode) { self.openOwnerAuth(); return; }
           self.go(dest);
           var all = document.querySelectorAll('.nav-item');
           for (var j = 0; j < all.length; j++) all[j].classList.remove('active');
@@ -1652,7 +1651,6 @@ submitAppeal: function() {
       ['btn-ach-back','profile-screen'],['btn-stats-back','profile-screen'],
       ['btn-lb-back','profile-screen'],['btn-chal-back','profile-screen'],
       ['btn-shop-back','profile-screen'],['btn-games-back','learning-path'],
-      ['btn-owner-back','learning-path']
     ];
     for (var i = 0; i < backs.length; i++) {
       (function(id, dest) {
@@ -1702,15 +1700,6 @@ submitAppeal: function() {
         });
       })(gameCards[i]);
     }
-    var ownerCards = document.querySelectorAll('.owner-card');
-    for (var i = 0; i < ownerCards.length; i++) {
-      (function(el) {
-        el.addEventListener('click', function() {
-          self.vibrate(10); self.playSound('click');
-          self.ownerAction(el.getAttribute('data-owner'));
-        });
-      })(ownerCards[i]);
-    }
     var lbTabs = document.querySelectorAll('.lb-tab');
     for (var i = 0; i < lbTabs.length; i++) {
       (function(el) {
@@ -1746,8 +1735,7 @@ submitAppeal: function() {
         _gemsMultiplier: this.state._gemsMultiplier, _gemsMultiplierUntil: this.state._gemsMultiplierUntil,
         completed: this.state.completed, settings: this.state.settings, myRefCode: this.state.myRefCode,
         usedRefCodes: this.state.usedRefCodes, achievements: this.state.achievements,
-        ownerPassword: this.state.ownerPassword, ownerKey: this.state.ownerKey,
-        recoveryCode: this.state.recoveryCode, lastWheelDate: this.state.lastWheelDate,
+        lastWheelDate: this.state.lastWheelDate,
         lastDailyDate: this.state.lastDailyDate, dailyRewardDay: this.state.dailyRewardDay,
         securityAnswers: this.state.securityAnswers,
         stats: this.state.stats
@@ -1777,9 +1765,6 @@ submitAppeal: function() {
         if (p.myRefCode) this.state.myRefCode = p.myRefCode;
         if (p.usedRefCodes) this.state.usedRefCodes = p.usedRefCodes;
         if (p.achievements) this.state.achievements = p.achievements;
-        if (p.ownerPassword) this.state.ownerPassword = p.ownerPassword;
-        if (p.ownerKey) this.state.ownerKey = p.ownerKey;
-        if (p.recoveryCode) this.state.recoveryCode = p.recoveryCode;
         if (p.lastWheelDate) this.state.lastWheelDate = p.lastWheelDate;
         if (p.lastDailyDate) this.state.lastDailyDate = p.lastDailyDate;
         if (p.dailyRewardDay != null) this.state.dailyRewardDay = p.dailyRewardDay;
@@ -1833,7 +1818,6 @@ submitAppeal: function() {
     var t = document.getElementById(id);
     if (t) { t.classList.add('active'); t.scrollTop = 0; }
     if (id === 'learning-path' && this.state.currentCourse) this.renderTree();
-    if (id === 'owner-screen') this.updateOwnerStats();
     if (id === 'profile-screen') { this.updateAvatar(); this.updateUserName(); }
   },
 
