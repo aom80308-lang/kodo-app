@@ -2867,7 +2867,94 @@ updateActiveEffectsBar: function() {
   Js.units[2].lessons[0].content = "<p><strong>console.log()</strong> هي أداة الطباعة في JavaScript.</p><p>أمثلة:</p><ul style='padding-right:20px;line-height:2;'><li><code>console.log(\"أهلاً\")</code> → تطبع: أهلاً</li><li><code>console.log(100)</code> → تطبع: 100</li><li><code>console.log(5+3)</code> → تطبع: 8</li></ul><p>💡 <strong>الفكرة:</strong> console.log هي زي print في بايثون، بترجعلك إنت اللي بتشوف النتيجة.</p>";
   Js.units[2].lessons[1].content = "<p>في JavaScript، كل سطر كود لازم ينتهي بـ <strong>فاصلة منقوطة <code>;</code></strong>.</p><p>أمثلة:</p><ul style='padding-right:20px;line-height:2;'><li><code>let x = 5;</code></li><li><code>console.log(x);</code></li></ul><p>💡 <strong>نصيحة:</strong> نسيان الفاصلة المنقوطة ممكن يسبب أخطاء صعبة تكتشفها. خلي عادة عندك تحطها على طول.</p>";
 })();
-  
+/* ========== Account: Logout + Delete Account ========== */
+(function() {
+  function isLoggedIn() {
+    try { return !!(firebase && firebase.auth && firebase.auth().currentUser); } catch(e) { return false; }
+  }
+  function updateAccountUI() {
+    var s = document.getElementById('account-settings-section');
+    if (s) s.style.display = isLoggedIn() ? 'block' : 'none';
+  }
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('#item-logout')) {
+      if (!confirm('متأكد عايز تسجل خروج؟')) return;
+      firebase.auth().signOut().then(function() {
+        try {
+          ['kodo_visited','kodo_account_type','kodo_user_email','kodo_user_name','kodo_device_id','kodo_state'].forEach(function(k){ localStorage.removeItem(k); });
+        } catch(err) {}
+        location.reload();
+      }).catch(function(err) { alert('❌ ' + err.message); });
+    }
+    if (e.target.closest('#item-delete-account')) {
+      if (!isLoggedIn()) { alert('سجل دخول الأول'); return; }
+      showDeleteConfirm();
+    }
+  });
+
+  function showDeleteConfirm() {
+    var modal = document.getElementById('modal');
+    var mc = document.getElementById('modal-content');
+    mc.innerHTML = '<div style="text-align:center;padding:10px;">' +
+      '<div style="font-size:70px;margin-bottom:15px;">⚠️</div>' +
+      '<h3 style="color:#EF4444;margin-bottom:15px;">تحذير!</h3>' +
+      '<p style="font-size:15px;line-height:1.8;color:#6B7280;">حذف الحساب معناه إن <b>كل تقدمك</b> هيتحذف نهائيًا:<br>⭐ XP • 💎 الجواهر • 🔥 السلسلة • 🏆 الشارات<br><b style="color:#EF4444;">مفيش رجوع بعد الحذف!</b></p>' +
+      '<div id="del-count" style="background:#FEF3C7;color:#92400E;padding:15px;border-radius:12px;margin:20px 0;font-size:18px;font-weight:800;">⏳ استنى 7 ثواني...</div>' +
+      '<div style="display:flex;gap:10px;">' +
+      '<button class="btn btn-secondary" id="cancel-del" style="flex:1;">إلغاء</button>' +
+      '<button class="btn btn-danger" id="confirm-del" style="flex:1;" disabled>حذف الحساب</button>' +
+      '</div></div>';
+    modal.classList.add('active');
+    var sec = 7, cEl = document.getElementById('del-count'), dBtn = document.getElementById('confirm-del');
+    var timer = setInterval(function() {
+      sec--;
+      if (sec <= 0) {
+        clearInterval(timer);
+        cEl.innerHTML = '✅ تقدر تحذف دلوقتي';
+        cEl.style.background = '#FEE2E2';
+        cEl.style.color = '#991B1B';
+        dBtn.disabled = false;
+      } else {
+        cEl.innerHTML = '⏳ استنى ' + sec + ' ثواني...';
+      }
+    }, 1000);
+    document.getElementById('cancel-del').onclick = function() {
+      clearInterval(timer);
+      modal.classList.remove('active');
+    };
+    dBtn.onclick = function() {
+      dBtn.disabled = true;
+      dBtn.textContent = '⏳ جاري الحذف...';
+      performDelete();
+    };
+  }
+
+  function performDelete() {
+    var user = firebase.auth().currentUser;
+    if (!user) return;
+    var uid = 'uid_' + user.uid;
+    var tasks = [];
+    if (fbDB) {
+      tasks.push(fbDB.ref('users/' + uid).remove().catch(function(){}));
+      tasks.push(fbDB.ref('tokens/' + uid).remove().catch(function(){}));
+    }
+    Promise.all(tasks).then(function() {
+      return firebase.auth().signOut();
+    }).then(function() {
+      try {
+        ['kodo_visited','kodo_account_type','kodo_user_email','kodo_user_name','kodo_device_id','kodo_state'].forEach(function(k){ localStorage.removeItem(k); });
+      } catch(err) {}
+      alert('✅ تم حذف حسابك وكل بياناتك');
+      location.reload();
+    }).catch(function(err) { alert('❌ خطأ: ' + err.message); });
+  }
+
+  if (firebase && firebase.auth) {
+    firebase.auth().onAuthStateChanged(function() { setTimeout(updateAccountUI, 300); });
+  }
+  setTimeout(updateAccountUI, 1500);
+})();
 window.addEventListener('load', function() { App.init(); });
 if (window.matchMedia) {
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
