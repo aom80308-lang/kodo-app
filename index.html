@@ -3382,6 +3382,25 @@ function handleGoogleAuth(isSignup) {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
     var user = result.user;
+    var uid = 'uid_' + user.uid;
+    if (!isSignup && fbDB) {
+      return fbDB.ref('users/' + uid).once('value').then(function(snap) {
+        if (!snap.exists()) {
+          return firebase.auth().signOut().then(function() {
+            try { localStorage.removeItem('kodo_auth_mode'); } catch(e) {}
+            alert('❌ الحساب ده مش موجود في Kodo\n\nاضغط على "إنشاء حساب جديد" الأول');
+          });
+        }
+        try {
+          localStorage.setItem('kodo_visited', 'true');
+          localStorage.setItem('kodo_account_type', 'google');
+          localStorage.setItem('kodo_user_email', user.email || '');
+          localStorage.setItem('kodo_user_name', user.displayName || '');
+        } catch(e) {}
+        alert('✅ أهلاً ' + (user.displayName || user.email));
+        App.go('onboarding');
+      });
+    }
     try {
       localStorage.setItem('kodo_visited', 'true');
       localStorage.setItem('kodo_account_type', 'google');
@@ -3453,15 +3472,33 @@ if (avatarEl && user.photoURL) {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-   function handleProfileGoogleAuth(isSignup) {
+  function handleProfileGoogleAuth(isSignup) {
   try { localStorage.setItem('kodo_auth_mode', isSignup ? 'signup' : 'signin'); } catch(e) {}
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
+    var user = result.user;
+    var uid = 'uid_' + user.uid;
+    if (!isSignup && fbDB) {
+      return fbDB.ref('users/' + uid).once('value').then(function(snap) {
+        if (!snap.exists()) {
+          return firebase.auth().signOut().then(function() {
+            try { localStorage.removeItem('kodo_auth_mode'); } catch(e) {}
+            alert('❌ الحساب ده مش موجود في Kodo\n\nاضغط على "إنشاء حساب جديد" الأول');
+          });
+        }
+        try {
+          localStorage.setItem('kodo_visited', 'true');
+          localStorage.setItem('kodo_account_type', 'google');
+        } catch(e) {}
+        App.toast('✅ أهلاً ' + (user.displayName || user.email));
+        setTimeout(updateProfileUI, 500);
+      });
+    }
     try {
       localStorage.setItem('kodo_visited', 'true');
       localStorage.setItem('kodo_account_type', 'google');
     } catch(e) {}
-    App.toast('✅ أهلاً ' + (result.user.displayName || result.user.email));
+    App.toast('✅ أهلاً ' + (user.displayName || user.email));
     setTimeout(updateProfileUI, 500);
   }).catch(function(err) {
     if (err.code === 'auth/popup-closed-by-user') return;
