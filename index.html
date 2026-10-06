@@ -96,9 +96,7 @@ body { font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color
 .lang-card .arrow { color:var(--text-lighter);font-size:22px; }
 
 #learning-path { background:linear-gradient(180deg,var(--bg-secondary) 0%,var(--bg) 100%); }
-.tree-header { background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:18px 20px 20px;text-align:center; }
-.tree-header .dev-line { font-size:14px;opacity:1;margin-bottom:10px;font-weight:700;letter-spacing:.5px;line-height:1.6; }
-.tree-header .dev-heart { display:inline-block;cursor:pointer;padding:0 6px;font-size:20px;transition:transform .2s;animation:heartPulse 1.5s infinite; }
+.tree-header { background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:12px 16px;text-align:center; }
 .tree-header h2 { font-size:26px;font-weight:800;line-height:1.3; }
 .tree-header p { font-size:14px;opacity:.9;margin-top:6px; }
 .tree-container { padding:20px 20px 40px;display:flex;flex-direction:column;align-items:center; }
@@ -396,7 +394,7 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
 
 <div id="learning-path" class="screen">
   <div class="topbar">
-    <div class="topbar-actions"><button class="btn-icon" id="btn-robot-secret" title="كودو">🤖</button><button class="btn-icon" id="btn-settings-from-tree">⚙️</button></div>
+  <div class="topbar-actions"><button class="btn-icon" id="btn-settings-from-tree">⚙️</button></div>
     <div class="stats">
       <div class="stat xp">⭐ <span id="xp-val">0</span></div>
       <div class="stat hearts">❤️ <span id="hearts-val">5</span></div>
@@ -405,7 +403,6 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
     </div>
   </div>
   <div class="tree-header">
-    <div class="dev-line">صنع بـ <span class="dev-heart" id="dev-heart">❤</span> أحمد بسيوني &bull; Made by Ahmed Bassiouny</div>
     <h2 id="course-title">بايثون</h2><p id="course-subtitle">اختار درس من الشجرة</p>
   </div>
   <div class="tree-container" id="tree-container"></div>
@@ -413,7 +410,6 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
     <button class="nav-item active" data-nav="learning-path"><span class="icon">📚</span>التعلم</button>
     <button class="nav-item" data-nav="profile-screen"><span class="icon">👤</span>حسابي</button>
     <button class="nav-item" data-nav="games-screen"><span class="icon">🎮</span>الألعاب</button>
-    <button class="nav-item owner-nav" id="nav-owner" data-nav="owner-screen" style="display:none;"><span class="icon">👑</span>المالك</button>
     <button class="nav-item" data-nav="settings-screen"><span class="icon">⚙️</span>الإعدادات</button>
   </div>
 </div>
@@ -598,143 +594,6 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
   </div>
 </div>
 
-<div id="owner-screen" class="screen">
-  <div class="topbar owner-topbar">
-    <div class="topbar-actions"><button class="btn-icon" id="btn-owner-back" style="color:#fff;">←</button></div>
-    <h3 style="color:#fff;">👑 وضع المالك</h3>
-    <div style="width:40px;"></div>
-  </div>
-  <div class="owner-header">
-    <span class="crown">👑</span>
-    <h2>مرحباً يا مالك التطبيق</h2>
-    <p>أحمد بسيوني • Ahmed Bassiouny</p>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">📊 إحصائيات سريعة</div>
-    <div class="owner-stats-grid">
-      <div class="owner-stat"><span class="num" id="owner-stat-xp">0</span><span class="lbl">XP</span></div>
-      <div class="owner-stat"><span class="num" id="owner-stat-gems">0</span><span class="lbl">جواهر</span></div>
-      <div class="owner-stat"><span class="num" id="owner-stat-lessons">0</span><span class="lbl">دروس</span></div>
-      <div class="owner-stat"><span class="num" id="owner-stat-ach">0</span><span class="lbl">شارات</span></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">💰 العملات والمكافآت</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="add-gems"><span class="icon">💎</span><h4>إضافة جواهر</h4></div>
-      <div class="owner-card" data-owner="add-xp"><span class="icon">⭐</span><h4>إضافة XP</h4></div>
-      <div class="owner-card" data-owner="add-hearts"><span class="icon">❤️</span><h4>إضافة قلوب</h4></div>
-      <div class="owner-card" data-owner="add-streak"><span class="icon">🔥</span><h4>إضافة سلسلة</h4></div>
-      <div class="owner-card" data-owner="set-level"><span class="icon">📈</span><h4>تعديل المستوى</h4></div>
-      <div class="owner-card" data-owner="give-all"><span class="icon">🎁</span><h4>إعطاء الكل</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">💬 الدعم والشات</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="view-messages"><span class="icon">📨</span><h4>الرسائل الواردة</h4></div>
-      <div class="owner-card" data-owner="reply-messages"><span class="icon">💬</span><h4>الرد على المستخدمين</h4></div>
-      <div class="owner-card" data-owner="send-broadcast"><span class="icon">📢</span><h4>إشعار جماعي</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">📚 إدارة المحتوى</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="unlock-all"><span class="icon">🔓</span><h4>فتح كل الدروس</h4></div>
-      <div class="owner-card" data-owner="lock-all"><span class="icon">🔒</span><h4>قفل كل الدروس</h4></div>
-      <div class="owner-card" data-owner="reset-course"><span class="icon">🔄</span><h4>إعادة تعيين لغة</h4></div>
-      <div class="owner-card" data-owner="content-stats"><span class="icon">📊</span><h4>إحصائيات المحتوى</h4></div>
-      <div class="owner-card" data-owner="change-app-name"><span class="icon">📝</span><h4>تغيير الاسم</h4></div>
-      <div class="owner-card" data-owner="welcome-msg"><span class="icon">👋</span><h4>رسالة ترحيب</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">📱 إدارة الأجهزة</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="device-info"><span class="icon">ℹ️</span><h4>معلومات جهازي</h4></div>
-      <div class="owner-card" data-owner="trust-device"><span class="icon">✅</span><h4>جهاز موثوق</h4></div>
-      <div class="owner-card" data-owner="ban-device"><span class="icon">🚫</span><h4>حظر جهاز</h4></div>
-      <div class="owner-card" data-owner="ban-ip"><span class="icon">🌐</span><h4>حظر IP</h4></div>
-      <div class="owner-card" data-owner="device-stats"><span class="icon">📊</span><h4>إحصائيات</h4></div>
-      <div class="owner-card" data-owner="logout-all"><span class="icon">🚪</span><h4>خروج الكل</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">📢 الإشعارات</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="broadcast"><span class="icon">📢</span><h4>إشعار عام</h4></div>
-      <div class="owner-card" data-owner="schedule-notif"><span class="icon">⏰</span><h4>إشعار مجدول</h4></div>
-      <div class="owner-card" data-owner="maintenance"><span class="icon">🔧</span><h4>وضع الصيانة</h4></div>
-      <div class="owner-card" data-owner="update-notif"><span class="icon">📲</span><h4>إشعار تحديث</h4></div>
-      <div class="owner-card" data-owner="emergency"><span class="icon">🚨</span><h4>إشعار طوارئ</h4></div>
-      <div class="owner-card" data-owner="test-notif"><span class="icon">🧪</span><h4>اختبار إشعار</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">🔒 الأمان والحماية</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="security-log"><span class="icon">📜</span><h4>سجل الأمان</h4></div>
-      <div class="owner-card" data-owner="change-pass"><span class="icon">🔑</span><h4>تغيير الباسورد</h4></div>
-      <div class="owner-card" data-owner="change-key"><span class="icon">🗝️</span><h4>تغيير المفتاح</h4></div>
-      <div class="owner-card" data-owner="backup-code"><span class="icon">📄</span><h4>كود احتياطي</h4></div>
-      <div class="owner-card" data-owner="email-recover"><span class="icon">📧</span><h4>إيميل الاسترداد</h4></div>
-      <div class="owner-card" data-owner="two-factor"><span class="icon">🔐</span><h4>تحقق بخطوتين</h4></div>
-      <div class="owner-card" data-owner="detect-tamper"><span class="icon">🛡️</span><h4>كشف التعديل</h4></div>
-      <div class="owner-card" data-owner="blacklist"><span class="icon">⚫</span><h4>القائمة السوداء</h4></div>
-      <div class="owner-card" data-owner="security-questions"><span class="icon">❓</span><h4>الأسئلة الأمنية</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">📊 الإحصائيات</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="full-stats"><span class="icon">📊</span><h4>إحصائيات كاملة</h4></div>
-      <div class="owner-card" data-owner="activity-log"><span class="icon">📜</span><h4>سجل النشاط</h4></div>
-      <div class="owner-card" data-owner="error-log"><span class="icon">⚠️</span><h4>سجل الأخطاء</h4></div>
-      <div class="owner-card" data-owner="export-stats"><span class="icon">📤</span><h4>تصدير</h4></div>
-      <div class="owner-card" data-owner="daily-report"><span class="icon">📅</span><h4>تقرير يومي</h4></div>
-      <div class="owner-card" data-owner="user-list"><span class="icon">👥</span><h4>المستخدمين</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">🔧 أدوات المالك</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="backup-all"><span class="icon">💾</span><h4>نسخ احتياطي</h4></div>
-      <div class="owner-card" data-owner="restore-all"><span class="icon">📥</span><h4>استعادة</h4></div>
-      <div class="owner-card" data-owner="clear-cache"><span class="icon">🗑️</span><h4>مسح الكاش</h4></div>
-      <div class="owner-card" data-owner="optimize"><span class="icon">⚡</span><h4>تحسين</h4></div>
-      <div class="owner-card" data-owner="test-features"><span class="icon">🧪</span><h4>اختبار</h4></div>
-      <div class="owner-card" data-owner="force-update"><span class="icon">🔄</span><h4>تحديث إجباري</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">🎨 تخصيص التطبيق</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="change-theme"><span class="icon">🎨</span><h4>إضافة ثيم</h4></div>
-      <div class="owner-card" data-owner="change-font"><span class="icon">🔤</span><h4>تغيير الخط</h4></div>
-      <div class="owner-card" data-owner="maintenance-msg"><span class="icon">🔧</span><h4>رسالة صيانة</h4></div>
-      <div class="owner-card" data-owner="custom-notif"><span class="icon">📢</span><h4>إشعار مخصص</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">🎁 مكافآت للجميع</div>
-    <div class="owner-grid">
-      <div class="owner-card" data-owner="give-gems-all"><span class="icon">💎</span><h4>جواهر للكل</h4></div>
-      <div class="owner-card" data-owner="give-xp-all"><span class="icon">⭐</span><h4>XP للكل</h4></div>
-      <div class="owner-card" data-owner="double-xp"><span class="icon">⚡</span><h4>XP مضاعف</h4></div>
-      <div class="owner-card" data-owner="free-premium"><span class="icon">👑</span><h4>Premium مجاني</h4></div>
-      <div class="owner-card" data-owner="daily-bonus"><span class="icon">🎁</span><h4>مكافأة يومية</h4></div>
-      <div class="owner-card" data-owner="special-offer"><span class="icon">🏷️</span><h4>عرض خاص</h4></div>
-    </div>
-  </div>
-  <div class="owner-section">
-    <div class="owner-section-title">⚠️ أدوات خطيرة</div>
-    <div class="owner-grid">
-      <div class="owner-card danger" data-owner="reset-my-stats"><span class="icon">🔄</span><h4>إعادة تعييني</h4></div>
-      <div class="owner-card danger" data-owner="delete-all"><span class="icon">🗑️</span><h4>مسح الكل</h4></div>
-      <div class="owner-card danger" data-owner="logout-owner"><span class="icon">🚪</span><h4>خروج المالك</h4></div>
-    </div>
-  </div>
-  <div style="text-align:center;padding:20px;color:#64748B;font-size:11px;">© 2026 Kodo - Owner Panel v1.0</div>
 </div>
 
 <div class="active-effect" id="active-effect"></div>
@@ -1206,15 +1065,11 @@ var App = {
   init: function() {
     var self = this;
     this.loadState(); this.applySettings(); this.setupOnboarding();
-    this.setupSettings(); this.setupSplashTap(); this.setupRobotSecret();
-    this.setupHeartSecret(); this.checkActiveEffects(); this.updateStatsUI();
+    this.setupSettings(); this.setupSplashTap(); this.checkActiveEffects(); this.updateStatsUI();
     this.updateAvatar(); this.updateUserName(); this.bindAllEvents();
     this.ensureMyRefCode(); this.checkStreak();
     this.listenToFirebase();
-    if (this.state.ownerMode) {
-      var navOwner = document.getElementById('nav-owner');
-      if (navOwner) navOwner.style.display = 'flex';
-    }
+   
     // Firebase
     setTimeout(function() {
       try { self.initSupportChat(); } catch(e) {}
@@ -2270,60 +2125,6 @@ submitAppeal: function() {
     this._splashTimer = setTimeout(function() {
       if (splash.classList.contains('active')) self.go('onboarding');
     }, 2000);
-  },
-
-  setupRobotSecret: function() {
-    var self = this;
-    var target = document.getElementById('btn-robot-secret');
-    if (!target) return;
-    var tapCount = 0, lastTap = 0;
-    target.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var now = Date.now();
-      if (now - lastTap > 1500) tapCount = 0;
-      tapCount++; lastTap = now;
-      self.vibrate(15); self.playSound('click');
-      if (tapCount >= 7) {
-        tapCount = 0;
-        self._robotTapped = true;
-        self._robotTappedTime = Date.now();
-        self.toast('✅ اضغط 3 ثواني على القلب ❤️');
-      }
-    });
-  },
-
-  setupHeartSecret: function() {
-    var self = this;
-    var heart = document.getElementById('dev-heart');
-    if (!heart) return;
-    var pressTimer = null;
-    var start = function(e) {
-      e.preventDefault();
-      pressTimer = setTimeout(function() {
-        if (self._robotTapped && Date.now() - self._robotTappedTime < 60000) {
-          self._robotTapped = false;
-          self.openOwnerAuth();
-        } else {
-          self.toast('❌ اضغط 🤖 7 مرات الأول');
-        }
-      }, 3000);
-    };
-    var cancel = function() { if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; } };
-    heart.addEventListener('mousedown', start);
-    heart.addEventListener('touchstart', start, {passive:false});
-    heart.addEventListener('mouseup', cancel);
-    heart.addEventListener('mouseleave', cancel);
-    heart.addEventListener('touchend', cancel);
-    heart.addEventListener('touchcancel', cancel);
-  },
-
-  openOwnerAuth: function() {
-    if (this.state.ownerMode) {
-      this.go('owner-screen'); this.updateOwnerStats();
-      this.toast('👑 مرحباً'); return;
-    }
-    if (!this.state.ownerPassword) { this.setupOwnerFirstTime(); return; }
-    this.showOwnerLogin();
   },
 
   setupOwnerFirstTime: function() {
