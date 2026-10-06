@@ -3265,30 +3265,36 @@ function sendTelegram(type, email, reason, device, callback) {
   window.addEventListener('load', function() {
     setTimeout(function() {
       var googleBtn = document.getElementById('btn-google-signin');
-      var guestBtn = document.getElementById('btn-guest-mode');
-      if (googleBtn) {
-        googleBtn.addEventListener('click', function() {
-          if (typeof firebase === 'undefined' || !firebase.auth) {
-            alert('❌ Firebase مش جاهز - جرب Refresh');
-            return;
-          }
-          var provider = new firebase.auth.GoogleAuthProvider();
-          firebase.auth().signInWithPopup(provider).then(function(result) {
-            var user = result.user;
-            try {
-              localStorage.setItem('kodo_visited', 'true');
-              localStorage.setItem('kodo_account_type', 'google');
-              localStorage.setItem('kodo_user_email', user.email || '');
-              localStorage.setItem('kodo_user_name', user.displayName || '');
-            } catch(e) {}
-            alert('✅ أهلاً ' + (user.displayName || user.email));
-            App.go('onboarding');
-          }).catch(function(err) {
-            if (err.code === 'auth/popup-closed-by-user') return;
-            alert('❌ فشل التسجيل: ' + (err.message || err.code));
-          });
-        });
-      }
+var signupBtn = document.getElementById('btn-google-signup');
+var guestBtn = document.getElementById('btn-guest-mode');
+function handleGoogleAuth(isSignup) {
+  if (typeof firebase === 'undefined' || !firebase.auth) {
+    alert('❌ Firebase مش جاهز - جرب Refresh');
+    return;
+  }
+  try { localStorage.setItem('kodo_auth_mode', isSignup ? 'signup' : 'signin'); } catch(e) {}
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    var user = result.user;
+    try {
+      localStorage.setItem('kodo_visited', 'true');
+      localStorage.setItem('kodo_account_type', 'google');
+      localStorage.setItem('kodo_user_email', user.email || '');
+      localStorage.setItem('kodo_user_name', user.displayName || '');
+    } catch(e) {}
+    alert('✅ أهلاً ' + (user.displayName || user.email));
+    App.go('onboarding');
+  }).catch(function(err) {
+    if (err.code === 'auth/popup-closed-by-user') return;
+    alert('❌ فشل التسجيل: ' + (err.message || err.code));
+  });
+}
+if (googleBtn) {
+  googleBtn.addEventListener('click', function() { handleGoogleAuth(false); });
+}
+if (signupBtn) {
+  signupBtn.addEventListener('click', function() { handleGoogleAuth(true); });
+}
       if (guestBtn) {
         guestBtn.addEventListener('click', function() {
           try {
