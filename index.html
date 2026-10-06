@@ -1562,6 +1562,54 @@ submitAppeal: function() {
     } catch(e) {}
   },
 
+  ensureMyRefCode: function() {
+  if (!this.state.myRefCode) {
+    this.state.myRefCode = 'KODO-' + Math.random().toString(36).substr(2,6).toUpperCase();
+    this.saveState();
+  }
+},
+
+checkStreak: function() {
+  var today = new Date().toDateString();
+  var last = this.state.stats.lastOpen;
+  if (last !== today) {
+    var yesterday = new Date(Date.now() - 86400000).toDateString();
+    if (last === yesterday) this.state.streak += 1;
+    else if (last && last !== today && !this.state.streakShield) this.state.streak = 1;
+    else if (!last) this.state.streak = 1;
+    this.state.stats.lastOpen = today;
+    this.state.stats.totalDays += 1;
+    this.saveState();
+  }
+},
+
+checkActiveEffects: function() {
+  var now = Date.now();
+  var changed = false;
+  if (this.state._xpMultiplierUntil && now > this.state._xpMultiplierUntil) {
+    this.state._xpMultiplier = 1; this.state._xpMultiplierUntil = null; changed = true;
+  }
+  if (this.state._gemsMultiplierUntil && now > this.state._gemsMultiplierUntil) {
+    this.state._gemsMultiplier = 1; this.state._gemsMultiplierUntil = null; changed = true;
+  }
+  if (this.state.streakShieldUntil && now > this.state.streakShieldUntil) {
+    this.state.streakShield = false; this.state.streakShieldUntil = null; changed = true;
+  }
+  if (changed) this.saveState();
+  this.updateActiveEffectsBar();
+},
+
+updateActiveEffectsBar: function() {
+  var bar = document.getElementById('active-effect');
+  if (!bar) return;
+  var effects = [];
+  if (this.state._xpMultiplier && this.state._xpMultiplier > 1) effects.push('⚡ XP × ' + this.state._xpMultiplier);
+  if (this.state._gemsMultiplier && this.state._gemsMultiplier > 1) effects.push('💰 جواهر × ' + this.state._gemsMultiplier);
+  if (this.state.streakShield) effects.push('🛡️ محمية');
+  if (effects.length > 0) { bar.textContent = effects.join(' • '); bar.classList.add('show'); }
+  else bar.classList.remove('show');
+},
+
   playSound: function(type) {
     if (!this.state.settings.sound) return;
     try {
