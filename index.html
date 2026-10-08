@@ -1230,6 +1230,7 @@ listenToFirebase: function() {
     if (data.hearts != null && data.hearts !== self.state.hearts) { self.state.hearts = data.hearts; changed = true; }
     if (data.streak != null && data.streak !== self.state.streak) { self.state.streak = data.streak; changed = true; }
     if (data.completed) { self.state.completed = data.completed; changed = true; }
+    if (data.currentCourse && data.currentCourse !== self.state.currentCourse) { self.state.currentCourse = data.currentCourse; changed = true; }
     if (data.achievements && data.achievements.length > (self.state.achievements || []).length) {
       self.state.achievements = data.achievements;
       changed = true;
