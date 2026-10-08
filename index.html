@@ -1229,9 +1229,21 @@ listenToFirebase: function() {
     if (data.gems != null && data.gems !== self.state.gems) { self.state.gems = data.gems; changed = true; }
     if (data.hearts != null && data.hearts !== self.state.hearts) { self.state.hearts = data.hearts; changed = true; }
     if (data.streak != null && data.streak !== self.state.streak) { self.state.streak = data.streak; changed = true; }
+    if (data.completed) { self.state.completed = data.completed; changed = true; }
+    if (data.achievements && data.achievements.length > (self.state.achievements || []).length) {
+      self.state.achievements = data.achievements;
+      changed = true;
+    }
+    if (data.userName && data.userName !== self.state.userName) {
+      self.state.userName = data.userName;
+      changed = true;
+    }
     if (changed) {
       self.saveState();
       self.updateStatsUI();
+      if (self.state.currentCourse) {
+        try { self.renderTree(); } catch(e) {}
+      }
       if (self.toast) self.toast('🎁 تم تحديث بياناتك!');
     }
   });
@@ -2079,11 +2091,12 @@ updateActiveEffectsBar: function() {
       try {
         var deviceId = this.getDeviceId();
         fbDB.ref('users/' + deviceId).update({
-          xp: this.state.xp, gems: this.state.gems,
-          hearts: this.state.hearts, streak: this.state.streak,
-          level: Math.floor(this.state.xp / 100) + 1,
-          lastSeen: Date.now()
-        });
+        xp: this.state.xp, gems: this.state.gems,
+        hearts: this.state.hearts, streak: this.state.streak,
+        level: Math.floor(this.state.xp / 100) + 1,
+        completed: this.state.completed,
+        lastSeen: Date.now()
+      });
       } catch(e) {}
     }
     document.getElementById('result-title').textContent = correct ? 'برافو! 🎉' : 'محاولة كويسة! 💪';
