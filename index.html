@@ -3420,7 +3420,16 @@ function handleGoogleAuth(isSignup) {
           localStorage.setItem('kodo_user_name', user.displayName || '');
         } catch(e) {}
         alert('✅ أهلاً ' + (user.displayName || user.email));
-        App.go('onboarding');
+setTimeout(function() {
+  if (App.state.currentCourse) {
+    var titles = { python: 'بايثون', javascript: 'جافا سكريبت' };
+    var el = document.getElementById('course-title');
+    if (el) el.textContent = titles[App.state.currentCourse] || 'دورة';
+    App.go('learning-path');
+  } else {
+    App.go('onboarding');
+  }
+}, 1500);
       });
     }
     try {
@@ -3430,7 +3439,16 @@ function handleGoogleAuth(isSignup) {
       localStorage.setItem('kodo_user_name', user.displayName || '');
     } catch(e) {}
     alert('✅ أهلاً ' + (user.displayName || user.email));
+setTimeout(function() {
+  if (App.state.currentCourse) {
+    var titles = { python: 'بايثون', javascript: 'جافا سكريبت' };
+    var el = document.getElementById('course-title');
+    if (el) el.textContent = titles[App.state.currentCourse] || 'دورة';
+    App.go('learning-path');
+  } else {
     App.go('onboarding');
+  }
+}, 1500);
   }).catch(function(err) {
     if (err.code === 'auth/popup-closed-by-user') return;
     alert('❌ فشل التسجيل: ' + (err.message || err.code));
