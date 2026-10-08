@@ -1075,11 +1075,11 @@ var App = {
   },
 
   /* ========== Firebase ========== */
-  getDeviceId: function() {
+getDeviceId: function() {
   try {
     if (firebase && firebase.auth && firebase.auth().currentUser) {
       var uid = firebase.auth().currentUser.uid;
-      if (uid) return 'uid_' + uid;
+      if (uid) return uid;
     }
   } catch(e) {}
   var id = localStorage.getItem('kodo_device_id');
@@ -1094,7 +1094,7 @@ getUserId: function() {
   try {
     if (firebase && firebase.auth && firebase.auth().currentUser) {
       var uid = firebase.auth().currentUser.uid;
-      if (uid) return 'uid_' + uid;
+      if (uid) return uid;
     }
   } catch(e) {}
   return this.getDeviceId();
@@ -1105,7 +1105,7 @@ setupAuthListener: function() {
   if (!firebase || !firebase.auth) return;
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      var newKey = 'uid_' + user.uid;
+     var newKey = user.uid;
       var oldKey = localStorage.getItem('kodo_device_id');
       var authMode = 'signin';
       try { authMode = localStorage.getItem('kodo_auth_mode') || 'signin'; } catch(e) {}
@@ -2952,7 +2952,7 @@ updateActiveEffectsBar: function() {
   function performDelete() {
     var user = firebase.auth().currentUser;
     if (!user) return;
-    var uid = 'uid_' + user.uid;
+   var uid = user.uid;
     var tasks = [];
     if (fbDB) {
       tasks.push(fbDB.ref('users/' + uid).remove().catch(function(){}));
