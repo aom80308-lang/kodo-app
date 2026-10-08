@@ -3382,7 +3382,7 @@ function handleGoogleAuth(isSignup) {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
     var user = result.user;
-    var uid = 'uid_' + user.uid;
+    var uid = user.uid;
     var isNewUser = result.additionalUserInfo && result.additionalUserInfo.isNewUser;
     if (!isSignup && isNewUser) {
       return firebase.auth().signOut().then(function() {
@@ -3484,7 +3484,7 @@ if (avatarEl && user.photoURL) {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
     var user = result.user;
-    var uid = 'uid_' + user.uid;
+    var uid = user.uid;
     var isNewUser = result.additionalUserInfo && result.additionalUserInfo.isNewUser;
     if (!isSignup && isNewUser) {
       return firebase.auth().signOut().then(function() {
