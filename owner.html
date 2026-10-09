@@ -1136,15 +1136,34 @@ document.getElementById('btn-messages-delete-all').addEventListener('click', fun
   btn.disabled = true;
   btn.textContent = '⏳';
   
+  var messages = [];
   fbDB.ref('support').once('value').then(function(snap) {
     if (snap.numChildren() === 0) {
       alert('📭 مفيش رسائل لحذفها');
       btn.disabled = false;
       btn.textContent = '🗑️';
-      return;
+      return null;
     }
-    return fbDB.ref('support').remove();
-  }).then(function() {
+    snap.forEach(function(child) {
+      messages.push({ id: child.key, data: child.val() });
+    });
+    var promises = messages.map(function(msg) {
+      return fbDB.ref('support/' + msg.id).remove();
+    });
+    return Promise.all(promises);
+  }).then(function(result) {
+    if (result === null) return;
+    var userPromises = [];
+    messages.forEach(function(msg) {
+      if (msg.data && msg.data.userId) {
+        userPromises.push(
+          fbDB.ref('user_messages/' + msg.data.userId + '/' + msg.id).remove().catch(function(){})
+        );
+      }
+    });
+    return Promise.all(userPromises);
+  }).then(function(result) {
+    if (result === null) return;
     alert('✅ تم حذف كل الرسائل');
     btn.disabled = false;
     btn.textContent = '🗑️';
