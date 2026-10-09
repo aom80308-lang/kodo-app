@@ -273,7 +273,19 @@ body {
     </div>
   </div>
 </div>
-
+<!-- 2FA MODAL -->
+<div id="twofa-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);">
+  <div style="background:linear-gradient(135deg,#1E293B,#0F172A);border:1.5px solid rgba(251,191,36,.4);border-radius:22px;padding:28px 22px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:fadeUp .3s ease;">
+    <div style="font-size:56px;margin-bottom:12px;">🔐</div>
+    <h3 style="font-size:20px;font-weight:800;color:#FBBF24;margin-bottom:8px;">الكود السري</h3>
+    <p style="font-size:13px;color:#94A3B8;line-height:1.7;margin-bottom:20px;">اكتب الكود السري للدخول للوحة المالك</p>
+    <input id="twofa-input" type="password" placeholder="••••••••••••" dir="ltr" autocomplete="off" style="width:100%;padding:14px;background:#0F172A;border:2px solid #334155;border-radius:12px;color:#F1F5F9;font-size:16px;font-family:inherit;text-align:center;letter-spacing:2px;box-sizing:border-box;margin-bottom:16px;">
+    <div id="twofa-error" style="display:none;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#FCA5A5;padding:10px;border-radius:10px;font-size:13px;margin-bottom:14px;">❌ الكود السري غلط</div>
+    <button id="twofa-submit" style="width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,#FBBF24,#F59E0B);color:#1F2937;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 4px 0 #B45309;margin-bottom:10px;">✅ تأكيد</button>
+    <button id="twofa-cancel" style="width:100%;padding:14px;border:none;border-radius:14px;background:#334155;color:#CBD5E1;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;">❌ إلغاء</button>
+  </div>
+</div>
+  
 <!-- DASHBOARD -->
 <div id="dashboard-screen" class="screen">
   <div class="topbar">
@@ -2523,15 +2535,50 @@ function askSecretAndGo(user) {
     goToDashboard(user);
     return;
   }
-  var code = prompt('🔐 اكتب الكود السري للدخول:');
-  if (code === OWNER_SECRET_CODE) {
-    sessionStorage.setItem('kodo_owner_2fa', 'ok');
-    goToDashboard(user);
-  } else {
-    alert('❌ الكود السري غلط');
-    fbAuth.signOut();
-    show('login-screen');
+  var modal = document.getElementById('twofa-modal');
+  var input = document.getElementById('twofa-input');
+  var errorEl = document.getElementById('twofa-error');
+  var submitBtn = document.getElementById('twofa-submit');
+  var cancelBtn = document.getElementById('twofa-cancel');
+  input.value = '';
+  errorEl.style.display = 'none';
+  modal.style.display = 'flex';
+  setTimeout(function() { input.focus(); }, 200);
+
+  function cleanup() {
+    modal.style.display = 'none';
+    input.value = '';
+    errorEl.style.display = 'none';
   }
+
+  function onSubmit() {
+    var code = input.value.trim();
+    if (code === OWNER_SECRET_CODE) {
+      cleanup();
+      sessionStorage.setItem('kodo_owner_2fa', 'ok');
+      goToDashboard(user);
+    } else {
+      errorEl.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  function onCancel() {
+    cleanup();
+    fbAuth.signOut().then(function() {
+      show('login-screen');
+      var btn = document.getElementById('btn-google-login');
+      btn.disabled = false;
+      btn.textContent = '🔐 دخول بحساب Google';
+    });
+  }
+
+  submitBtn.onclick = onSubmit;
+  cancelBtn.onclick = onCancel;
+  input.onkeypress = function(e) {
+    if (e.key === 'Enter') onSubmit();
+  };
 }
 
 /* Override onAuthStateChanged */
