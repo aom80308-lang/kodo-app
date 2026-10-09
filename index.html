@@ -1605,10 +1605,15 @@ deleteMyMessage: function(msgId) {
   if (!confirm('⚠️ متأكد عايز تحذف الرسالة دي؟')) return;
   if (!fbDB || !firebase.auth().currentUser) return;
   var userId = firebase.auth().currentUser.uid;
-  Promise.all([
-    fbDB.ref('support/' + msgId).remove().catch(function(){}),
-    fbDB.ref('user_messages/' + userId + '/' + msgId).remove().catch(function(){})
-  ]).then(function() {
+  fbDB.ref('user_messages/' + userId + '/' + msgId).once('value').then(function(snap) {
+    var data = snap.val() || {};
+    var hasReply = data.reply ? true : false;
+    var tasks = [fbDB.ref('user_messages/' + userId + '/' + msgId).remove()];
+    if (!hasReply) {
+      tasks.push(fbDB.ref('support/' + msgId).remove().catch(function(){}));
+    }
+    return Promise.all(tasks);
+  }).then(function() {
     self.toast('✅ تم حذف الرسالة');
     setTimeout(function() { self.loadMyMessagesToUI(); }, 500);
   }).catch(function(err) {
@@ -1629,12 +1634,16 @@ deleteAllMyMessages: function() {
     var promises = [];
     snap.forEach(function(child) {
       var msgId = child.key;
-      promises.push(fbDB.ref('support/' + msgId).remove().catch(function(){}));
+      var data = child.val() || {};
+      var hasReply = data.reply ? true : false;
       promises.push(fbDB.ref('user_messages/' + userId + '/' + msgId).remove().catch(function(){}));
+      if (!hasReply) {
+        promises.push(fbDB.ref('support/' + msgId).remove().catch(function(){}));
+      }
     });
     return Promise.all(promises);
   }).then(function() {
-    self.toast('✅ تم حذف كل الرسائل');
+    self.toast('✅ تم حذف الرسائل');
     setTimeout(function() { self.loadMyMessagesToUI(); }, 500);
   }).catch(function(err) {
     self.toast('❌ خطأ: ' + err.message);
