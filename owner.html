@@ -1224,10 +1224,16 @@ function sendReply(msgId, btn) {
   if (!text) { alert('❌ اكتب رد'); return; }
   btn.disabled = true;
   btn.textContent = '⏳ جاري الإرسال...';
-  fbDB.ref('support/' + msgId).update({
-    reply: text,
-    replyTime: Date.now(),
-    status: 'replied'
+  var updates = { reply: text, replyTime: Date.now(), status: 'replied' };
+  fbDB.ref('support/' + msgId).once('value').then(function(snap) {
+    var data = snap.val();
+    if (!data) throw new Error('message not found');
+    return fbDB.ref('support/' + msgId).update(updates).then(function() {
+      var userId = data.userId;
+      if (userId) {
+        return fbDB.ref('user_messages/' + userId + '/' + msgId).update(updates).catch(function(){});
+      }
+    });
   }).then(function() {
     alert('✅ تم إرسال الرد');
     loadMessages();
