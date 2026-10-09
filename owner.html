@@ -257,22 +257,13 @@ body {
     <h1>Kodo Owner Panel</h1>
     <div class="sub">لوحة تحكم المالك — دخول خاص</div>
 
-    <div class="field">
-      <label>📧 الإيميل</label>
-      <input id="login-email" type="email" placeholder="owner@example.com" dir="ltr" autocomplete="off">
+    <div style="background:rgba(251,191,36,.1);border:1.5px solid rgba(251,191,36,.3);border-radius:14px;padding:18px;margin-bottom:20px;">
+      <div style="font-size:52px;margin-bottom:10px;">🔐</div>
+      <div style="font-size:14px;font-weight:800;color:#FBBF24;margin-bottom:6px;">الدخول بحساب Google</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.7;">مسموح بحساب المالك فقط<br>أي حساب تاني هيتم رفضه تلقائياً</div>
     </div>
 
-    <div class="field">
-      <label>🔑 الباسورد</label>
-      <div class="pass-wrap">
-        <input id="login-pass" type="password" placeholder="••••••••" dir="ltr" autocomplete="off">
-        <button class="eye" type="button" onclick="togglePass()">👁️</button>
-      </div>
-    </div>
-
-    <button class="btn-login" id="btn-login">🔓 دخول</button>
-    <button class="btn-login" id="btn-google-login" style="background:linear-gradient(135deg,#4285F4,#34A853);box-shadow:0 4px 0 #2C5F9E;margin-top:10px;">🔐 دخول بحساب Google</button>
-    <button class="btn-login" id="btn-signup" style="display:none;background:linear-gradient(135deg,#10B981,#059669);box-shadow:0 4px 0 #047857;margin-top:10px;">📝 إنشاء حساب جديد</button>
+    <button class="btn-login" id="btn-google-login" style="background:linear-gradient(135deg,#4285F4,#34A853);box-shadow:0 4px 0 #2C5F9E;">🔐 دخول بحساب Google</button>
 
     <div class="msg" id="login-msg"></div>
 
@@ -993,55 +984,6 @@ if (!fbAuth) {
   show('login-screen');
   msg('error', '❌ Firebase مش اشتغل — جرب تعمل Refresh');
 }
-
-/* ========== Login ========== */
-document.getElementById('btn-login').addEventListener('click', function() {
-  var email = document.getElementById('login-email').value.trim();
-  var pass = document.getElementById('login-pass').value;
-  var btn = this;
-
-  if (!email || !pass) {
-    msg('error', '❌ اكتب الإيميل والباسورد');
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = '⏳ جاري التحقق...';
-  msg('info', '⏳ بيتأكد من بياناتك...');
-
-  fbAuth.signInWithEmailAndPassword(email, pass)
-    .then(function(cred) {
-      if (cred.user.email !== OWNER_EMAIL) {
-        msg('error', '❌ ده مش حساب المالك');
-        logLoginAttempt(false, email);
-        sendTelegram('wrong_owner', email, 'مش حساب المالك', getDeviceInfo());
-        fbAuth.signOut();
-        btn.disabled = false;
-        btn.textContent = '🔓 دخول';
-        return;
-      }
-      msg('success', '✅ تم الدخول بنجاح!');
-      logLoginAttempt(true, email);
-      sendTelegram('login_success', email, '', getDeviceInfo());
-    })
-    .catch(function(err) {
-      btn.disabled = false;
-      btn.textContent = '🔓 دخول';
-      var msgs = {
-        'auth/wrong-password': 'الباسورد غلط',
-        'auth/user-not-found': 'الإيميل غير مسجل',
-        'auth/invalid-email': 'الإيميل مش صحيح',
-        'auth/too-many-requests': 'محاولات كتير',
-        'auth/invalid-credential': 'الإيميل أو الباسورد غلط',
-        'auth/network-request-failed': 'مشكلة في الشبكة',
-        'auth/user-disabled': 'الحساب معطل'
-      };
-   var reason = '[' + err.code + '] ' + (err.message || '');
-      msg('error', '❌ ' + reason);
-      logLoginAttempt(false, email);
-      sendTelegram('login_failed', email, reason, getDeviceInfo());
-    });
-});
   
 /* ========== Logout ========== */
 document.getElementById('btn-logout').addEventListener('click', function() {
@@ -2584,86 +2526,8 @@ document.getElementById('btn-google-login').addEventListener('click', function()
 });
 
 
-/* ========== Secret: Long press 3s + 5 taps on crown ========== */
-(function() {
-  var crown = document.querySelector('.crown');
-  if (!crown) return;
-  var pressTimer = null;
-  var readyForTaps = false;
-  var tapCount = 0;
-  var resetTimer = null;
-
-  function resetAll() {
-    readyForTaps = false;
-    tapCount = 0;
-    if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
-  }
-
-  function onStart(e) {
-    e.preventDefault();
-    if (readyForTaps) {
-      tapCount++;
-      if (tapCount >= 5) {
-        var signupBtn = document.getElementById('btn-signup');
-        if (signupBtn) signupBtn.style.display = 'block';
-        resetAll();
-        setTimeout(function() {
-          if (signupBtn) signupBtn.style.display = 'none';
-        }, 60000);
-      }
-      return;
-    }
-    if (pressTimer) return;
-    pressTimer = setTimeout(function() {
-      readyForTaps = true;
-      tapCount = 0;
-      pressTimer = null;
-      resetTimer = setTimeout(resetAll, 10000);
-    }, 3000);
-  }
-
-  function onEnd(e) {
-    if (!readyForTaps && pressTimer) {
-      clearTimeout(pressTimer);
-      pressTimer = null;
-    }
-  }
-
-  crown.addEventListener('touchstart', onStart, { passive: false });
-  crown.addEventListener('touchend', onEnd);
-  crown.addEventListener('touchcancel', onEnd);
-  crown.addEventListener('mousedown', onStart);
-  crown.addEventListener('mouseup', onEnd);
-  crown.addEventListener('mouseleave', onEnd);
-})();
-
-/* ========== Owner Secret Code ========== */
+/* ========== Owner Secret Code (for 2FA) ========== */
 var OWNER_SECRET_CODE = 'AHMED2004KODO';
-
-/* ========== Sign Up Button ========== */
-document.getElementById('btn-signup').addEventListener('click', function() {
-  var email = prompt('الإيميل:');
-  if (!email) return;
-  email = email.trim();
-  var pass = prompt('الباسورد (8 حروف على الأقل):');
-  if (!pass || pass.length < 8) { alert('❌ الباسورد قصير - لازم 8 حروف على الأقل'); return; }
-  var code = prompt('🔐 الكود السري:');
-  if (code !== OWNER_SECRET_CODE) { alert('❌ الكود السري غلط'); return; }
-  fbAuth.createUserWithEmailAndPassword(email, pass)
-    .then(function(cred) {
-      alert('✅ تم إنشاء الحساب بنجاح!\n\nدلوقتي تقدر تسجل دخول.');
-      var sb = document.getElementById('btn-signup');
-      if (sb) sb.style.display = 'none';
-    })
-    .catch(function(err) {
-      var m = {
-        'auth/email-already-in-use': 'الإيميل موجود بالفعل - سجل دخول',
-        'auth/invalid-email': 'الإيميل مش صحيح',
-        'auth/weak-password': 'الباسورد ضعيف'
-      };
-      alert('❌ ' + (m[err.code] || err.message));
-    });
-});
 
 /* ========== 2FA: Secret code at login ========== */
 function askSecretAndGo(user) {
