@@ -1572,31 +1572,74 @@ submitAppeal: function() {
   },
 
   loadMyMessagesToUI: function() {
-    var self = this;
-    this.loadMyMessages(function(msgs) {
-      var list = document.getElementById('my-messages-list');
-      if (!list) return;
-      if (msgs.length === 0) {
-        list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px;font-size:13px;">مفيش رسائل لسه</p>';
-        return;
+  var self = this;
+  this.loadMyMessages(function(msgs) {
+    var list = document.getElementById('my-messages-list');
+    if (!list) return;
+    if (msgs.length === 0) {
+      list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px;font-size:13px;">مفيش رسائل لسه</p>';
+      return;
+    }
+    var html = '';
+    html += '<button onclick="App.deleteAllMyMessages()" style="width:100%;padding:10px;margin-bottom:12px;border:none;border-radius:10px;background:#EF4444;color:#fff;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;">🗑️ حذف كل الرسائل</button>';
+    for (var i = msgs.length - 1; i >= 0; i--) {
+      var m = msgs[i];
+      var date = new Date(m.time).toLocaleString('ar-EG');
+      html += '<div style="background:var(--bg-secondary);border-radius:12px;padding:12px;margin-bottom:10px;position:relative;">';
+      html += '<div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">' + date + '</div>';
+      html += '<div style="font-weight:600;font-size:14px;padding-left:36px;">' + m.message + '</div>';
+      html += '<button onclick="App.deleteMyMessage(\'' + m.id + '\')" style="position:absolute;top:8px;left:8px;border:none;background:#FEE2E2;color:#DC2626;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;">🗑️</button>';
+      if (m.reply) {
+        html += '<div style="background:#DCFCE7;color:#16A34A;padding:10px;border-radius:8px;font-size:13px;margin-top:8px;"><b>رد الإدارة:</b><br>' + m.reply + '</div>';
+      } else {
+        html += '<div style="background:#FEF3C7;color:#92400E;padding:6px;border-radius:8px;font-size:12px;margin-top:8px;text-align:center;">⏳ في انتظار الرد</div>';
       }
-      var html = '';
-      for (var i = msgs.length - 1; i >= 0; i--) {
-        var m = msgs[i];
-        var date = new Date(m.time).toLocaleString('ar-EG');
-        html += '<div style="background:var(--bg-secondary);border-radius:12px;padding:12px;margin-bottom:10px;">';
-        html += '<div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">' + date + '</div>';
-        html += '<div style="font-weight:600;font-size:14px;">' + m.message + '</div>';
-        if (m.reply) {
-          html += '<div style="background:#DCFCE7;color:#16A34A;padding:10px;border-radius:8px;font-size:13px;margin-top:8px;"><b>رد الإدارة:</b><br>' + m.reply + '</div>';
-        } else {
-          html += '<div style="background:#FEF3C7;color:#92400E;padding:6px;border-radius:8px;font-size:12px;margin-top:8px;text-align:center;">⏳ في انتظار الرد</div>';
-        }
-        html += '</div>';
-      }
-      list.innerHTML = html;
+      html += '</div>';
+    }
+    list.innerHTML = html;
+  });
+},
+
+deleteMyMessage: function(msgId) {
+  var self = this;
+  if (!confirm('⚠️ متأكد عايز تحذف الرسالة دي؟')) return;
+  if (!fbDB || !firebase.auth().currentUser) return;
+  var userId = firebase.auth().currentUser.uid;
+  Promise.all([
+    fbDB.ref('support/' + msgId).remove().catch(function(){}),
+    fbDB.ref('user_messages/' + userId + '/' + msgId).remove().catch(function(){})
+  ]).then(function() {
+    self.toast('✅ تم حذف الرسالة');
+    setTimeout(function() { self.loadMyMessagesToUI(); }, 500);
+  }).catch(function(err) {
+    self.toast('❌ خطأ: ' + err.message);
+  });
+},
+
+deleteAllMyMessages: function() {
+  var self = this;
+  if (!confirm('⚠️ متأكد عايز تحذف كل الرسائل؟')) return;
+  if (!fbDB || !firebase.auth().currentUser) return;
+  var userId = firebase.auth().currentUser.uid;
+  fbDB.ref('user_messages/' + userId).once('value').then(function(snap) {
+    if (!snap.exists()) {
+      self.toast('📭 مفيش رسائل');
+      return;
+    }
+    var promises = [];
+    snap.forEach(function(child) {
+      var msgId = child.key;
+      promises.push(fbDB.ref('support/' + msgId).remove().catch(function(){}));
+      promises.push(fbDB.ref('user_messages/' + userId + '/' + msgId).remove().catch(function(){}));
     });
-  },
+    return Promise.all(promises);
+  }).then(function() {
+    self.toast('✅ تم حذف كل الرسائل');
+    setTimeout(function() { self.loadMyMessagesToUI(); }, 500);
+  }).catch(function(err) {
+    self.toast('❌ خطأ: ' + err.message);
+  });
+},
 
   requestNotificationPermission: function() {
     var self = this;
