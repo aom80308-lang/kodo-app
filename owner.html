@@ -1046,18 +1046,6 @@ actions.forEach(function(id) {
   }
 });
 
-/* ========== Enter key for login ========== */
-document.getElementById('login-pass').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') {
-    document.getElementById('btn-login').click();
-  }
-});
-document.getElementById('login-email').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') {
-    document.getElementById('login-pass').focus();
-  }
-});
-
 /* ========== Messages Management ========== */
 document.getElementById('btn-messages-back').addEventListener('click', function() {
   show('dashboard-screen');
