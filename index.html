@@ -1527,12 +1527,23 @@ submitAppeal: function() {
   },
 
   replyToMessage: function(msgId, replyText, callback) {
-    if (!fbDB) { if (callback) callback(false); return; }
-    fbDB.ref('support/' + msgId).update({
-      reply: replyText, replyTime: Date.now(), status: 'replied'
-    }).then(function() { if (callback) callback(true); })
-      .catch(function(err) { if (callback) callback(false, err.message); });
-  },
+  if (!fbDB) { if (callback) callback(false); return; }
+  var updates = { reply: replyText, replyTime: Date.now(), status: 'replied' };
+  fbDB.ref('support/' + msgId).once('value').then(function(snap) {
+    var data = snap.val();
+    if (!data) throw new Error('message not found');
+    return fbDB.ref('support/' + msgId).update(updates).then(function() {
+      var userId = data.userId;
+      if (userId) {
+        return fbDB.ref('user_messages/' + userId + '/' + msgId).update(updates).catch(function(){});
+      }
+    });
+  }).then(function() {
+    if (callback) callback(true);
+  }).catch(function(err) {
+    if (callback) callback(false, err.message);
+  });
+},
 
   initSupportChat: function() {
     var self = this;
