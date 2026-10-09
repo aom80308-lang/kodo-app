@@ -3159,11 +3159,30 @@ if (window.matchMedia) {
     document.getElementById('result-xp').textContent = '+' + (score * 10);
     document.getElementById('result-score').textContent = score + '/' + total;
     this.go('result-screen');
-    this.playSound('complete');
-    if (score >= total / 2) this.confetti();
-    this._extraChapters = null;
-    this._extraQuizzes = null;
-  };
+      this.go('result-screen');
+  this.playSound('complete');
+  if (score >= total / 2) this.confetti();
+  this._extraChapters = null;
+  this._extraQuizzes = null;
+  if (fbDB && firebase.auth().currentUser) {
+    var userId = firebase.auth().currentUser.uid;
+    fbDB.ref('users/' + userId).update({
+      xp: this.state.xp,
+      gems: this.state.gems,
+      hearts: this.state.hearts,
+      streak: this.state.streak,
+      level: Math.floor(this.state.xp / 100) + 1,
+      completed: this.state.completed,
+      currentCourse: this.state.currentCourse,
+      achievements: this.state.achievements,
+      lastSeen: Date.now()
+    }).then(function() {
+      console.log('✅ Extra quiz saved to Firebase');
+    }).catch(function(e) {
+      console.error('❌ Extra quiz save error:', e.code, e.message);
+    });
+  }
+};
 })();
 /* ========== Ban Check Patch - فحص الحظر فوراً ========== */
 (function() {
