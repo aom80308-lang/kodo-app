@@ -3419,8 +3419,19 @@ function handleGoogleAuth(isSignup) {
           localStorage.setItem('kodo_user_email', user.email || '');
           localStorage.setItem('kodo_user_name', user.displayName || '');
         } catch(e) {}
-        alert('✅ أهلاً ' + (user.displayName || user.email));
-setTimeout(function() {
+alert('✅ أهلاً ' + (user.displayName || user.email));
+fbDB.ref('users/' + uid).once('value').then(function(snap) {
+  var data = snap.val() || {};
+  App.state.xp = data.xp || 0;
+  App.state.gems = data.gems || 0;
+  App.state.hearts = data.hearts || 5;
+  App.state.streak = data.streak || 0;
+  App.state.completed = data.completed || {};
+  App.state.achievements = data.achievements || [];
+  App.state.currentCourse = data.currentCourse || null;
+  if (data.userName) App.state.userName = data.userName;
+  App.saveState();
+  App.updateStatsUI();
   if (App.state.currentCourse) {
     var titles = { python: 'بايثون', javascript: 'جافا سكريبت' };
     var el = document.getElementById('course-title');
@@ -3429,7 +3440,7 @@ setTimeout(function() {
   } else {
     App.go('onboarding');
   }
-}, 1500);
+});
       });
     }
     try {
@@ -3438,8 +3449,19 @@ setTimeout(function() {
       localStorage.setItem('kodo_user_email', user.email || '');
       localStorage.setItem('kodo_user_name', user.displayName || '');
     } catch(e) {}
-    alert('✅ أهلاً ' + (user.displayName || user.email));
-setTimeout(function() {
+alert('✅ أهلاً ' + (user.displayName || user.email));
+fbDB.ref('users/' + uid).once('value').then(function(snap) {
+  var data = snap.val() || {};
+  App.state.xp = data.xp || 0;
+  App.state.gems = data.gems || 0;
+  App.state.hearts = data.hearts || 5;
+  App.state.streak = data.streak || 0;
+  App.state.completed = data.completed || {};
+  App.state.achievements = data.achievements || [];
+  App.state.currentCourse = data.currentCourse || null;
+  if (data.userName) App.state.userName = data.userName;
+  App.saveState();
+  App.updateStatsUI();
   if (App.state.currentCourse) {
     var titles = { python: 'بايثون', javascript: 'جافا سكريبت' };
     var el = document.getElementById('course-title');
@@ -3448,7 +3470,7 @@ setTimeout(function() {
   } else {
     App.go('onboarding');
   }
-}, 1500);
+});
   }).catch(function(err) {
     if (err.code === 'auth/popup-closed-by-user') return;
     alert('❌ فشل التسجيل: ' + (err.message || err.code));
