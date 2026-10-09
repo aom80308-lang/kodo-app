@@ -2088,19 +2088,22 @@ updateActiveEffectsBar: function() {
     this.state.gems += gemGain;
     if (correct) this.state.stats.perfectLessons += 1;
     this.saveState(); this.checkAchievements();
-    if (fbDB) {
-      try {
-        var deviceId = this.getDeviceId();
-        fbDB.ref('users/' + deviceId).update({
-  xp: this.state.xp, gems: this.state.gems,
-  hearts: this.state.hearts, streak: this.state.streak,
-  level: Math.floor(this.state.xp / 100) + 1,
-  completed: this.state.completed,
-  currentCourse: this.state.currentCourse,
-  lastSeen: Date.now()
-});
-      } catch(e) {}
-    }
+if (fbDB && firebase.auth().currentUser) {
+  var userId = firebase.auth().currentUser.uid;
+  fbDB.ref('users/' + userId).update({
+    xp: this.state.xp, gems: this.state.gems,
+    hearts: this.state.hearts, streak: this.state.streak,
+    level: Math.floor(this.state.xp / 100) + 1,
+    completed: this.state.completed,
+    currentCourse: this.state.currentCourse,
+    lastSeen: Date.now()
+  }).then(function() {
+    console.log('✅ Saved to Firebase:', userId);
+  }).catch(function(e) {
+    console.error('❌ Firebase Save Error:', e.code, e.message);
+    alert('❌ خطأ في الحفظ: ' + e.message);
+  });
+}
     document.getElementById('result-title').textContent = correct ? 'برافو! 🎉' : 'محاولة كويسة! 💪';
     document.getElementById('result-subtitle').textContent = correct ? 'خلصت الدرس بإتقان' : 'حاول تاني';
     document.getElementById('result-xp').textContent = '+' + xpGain;
