@@ -1475,33 +1475,42 @@ submitAppeal: function() {
   },
 
   sendSupportMessage: function(userMessage, callback) {
-    if (!fbDB) { if (callback) callback(false, 'مفيش اتصال'); return; }
-    var deviceId = this.getDeviceId();
-    var msgId = 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
-    var data = {
-      userId: deviceId, userName: this.state.userName || 'مستخدم',
+  if (!fbDB) { if (callback) callback(false, 'مفيش اتصال'); return; }
+  var deviceId = this.getDeviceId();
+  var msgId = 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+  var data = {
+    userId: deviceId, userName: this.state.userName || 'مستخدم',
+    message: userMessage, time: Date.now(),
+    status: 'pending', reply: null, replyTime: null
+  };
+  var tasks = [fbDB.ref('support/' + msgId).set(data)];
+  if (firebase.auth().currentUser) {
+    var userId = firebase.auth().currentUser.uid;
+    tasks.push(fbDB.ref('user_messages/' + userId + '/' + msgId).set({
       message: userMessage, time: Date.now(),
       status: 'pending', reply: null, replyTime: null
-    };
-    fbDB.ref('support/' + msgId).set(data)
-      .then(function() { if (callback) callback(true); })
-      .catch(function(err) { if (callback) callback(false, err.message); });
-  },
+    }));
+  }
+  Promise.all(tasks)
+    .then(function() { if (callback) callback(true); })
+    .catch(function(err) { if (callback) callback(false, err.message); });
+},
 
   loadMyMessages: function(callback) {
-    if (!fbDB) { if (callback) callback([]); return; }
-    var deviceId = this.getDeviceId();
-    fbDB.ref('support').orderByChild('userId').equalTo(deviceId).on('value', function(snapshot) {
-      var msgs = [];
-      snapshot.forEach(function(child) {
-        var v = child.val();
-        v.id = child.key;
-        msgs.push(v);
-      });
-      msgs.sort(function(a, b) { return a.time - b.time; });
-      if (callback) callback(msgs);
+  if (!fbDB) { if (callback) callback([]); return; }
+  if (!firebase.auth().currentUser) { if (callback) callback([]); return; }
+  var userId = firebase.auth().currentUser.uid;
+  fbDB.ref('user_messages/' + userId).on('value', function(snapshot) {
+    var msgs = [];
+    snapshot.forEach(function(child) {
+      var v = child.val();
+      v.id = child.key;
+      msgs.push(v);
     });
-  },
+    msgs.sort(function(a, b) { return a.time - b.time; });
+    if (callback) callback(msgs);
+  });
+},
 
   loadAllMessages: function(callback) {
     if (!fbDB) { if (callback) callback([]); return; }
