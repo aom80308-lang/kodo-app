@@ -241,6 +241,20 @@ body {
 @keyframes spin { to { transform:rotate(360deg); } }
 .loading-text { font-size:14px; color:#94A3B8; }
 </style>
+<style>
+@media screen and (orientation: landscape) {
+  body {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    overflow: hidden;
+  }
+}
+</style>
 </head>
 <body>
 
