@@ -297,6 +297,20 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
 .modal-content .modal-btns { display:flex;gap:10px; }
 @media (min-width:500px) { #app { max-width:450px;margin:0 auto;box-shadow:0 0 40px rgba(0,0,0,.15); } }
 </style>
+<style>
+@media screen and (orientation: landscape) {
+  body {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    overflow: hidden;
+  }
+}
+</style>
 </head>
 <body>
 <div id="app">
