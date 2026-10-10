@@ -2510,7 +2510,6 @@ document.getElementById('btn-google-login').addEventListener('click', function()
         btn.textContent = '🔐 دخول بحساب Google';
         return;
       }
-      msg('success', '✅ تم الدخول بنجاح!');
       logLoginAttempt(true, user.email);
       sendTelegram('login_success', user.email, 'Google Sign-In', getDeviceInfo());
     })
@@ -2540,8 +2539,12 @@ function askSecretAndGo(user) {
   var errorEl = document.getElementById('twofa-error');
   var submitBtn = document.getElementById('twofa-submit');
   var cancelBtn = document.getElementById('twofa-cancel');
+  var btn = document.getElementById('btn-google-login');
   input.value = '';
   errorEl.style.display = 'none';
+  btn.disabled = false;
+  btn.textContent = '🔐 دخول بحساب Google';
+  hideMsg();
   modal.style.display = 'flex';
   setTimeout(function() { input.focus(); }, 200);
 
@@ -2549,6 +2552,7 @@ function askSecretAndGo(user) {
     modal.style.display = 'none';
     input.value = '';
     errorEl.style.display = 'none';
+    hideMsg();
   }
 
   function onSubmit() {
@@ -2568,9 +2572,9 @@ function askSecretAndGo(user) {
     cleanup();
     fbAuth.signOut().then(function() {
       show('login-screen');
-      var btn = document.getElementById('btn-google-login');
       btn.disabled = false;
       btn.textContent = '🔐 دخول بحساب Google';
+      hideMsg();
     });
   }
 
