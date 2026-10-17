@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="manifest" href="manifest.json">
 
-<script src="extras2.js"></script>
+<script src="extras2.js" defer></script>
 <title>Kodo - كودو</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
@@ -431,6 +431,11 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
     <h2 id="profile-name">مبرمج مبتدئ</h2>
     <p id="profile-level">المستوى 1 &bull; 0 XP</p>
     <p id="profile-email-display"></p>
+          <div style="margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,.15); padding: 8px 16px; border-radius: 20px; width: fit-content; margin-left: auto; margin-right: auto; border: 1px solid rgba(255,255,255,.3);">
+            <span style="font-size: 13px; font-weight: bold; opacity: 0.9;">ID:</span>
+            <span id="profile-id-display" style="font-size: 14px; direction: ltr; font-family: monospace; font-weight: bold;">---</span>
+            <button onclick="App.copyUserID()" style="background: rgba(0,0,0,0.2); border: none; color: #fff; cursor: pointer; padding: 4px 8px; border-radius: 8px; font-size: 14px;">📋 نسخ</button>
+          </div>
   </div>
   <div class="profile-account-cta" id="profile-account-cta">
     <span class="pacta-icon">🔐</span>
@@ -2500,9 +2505,21 @@ if (fbDB && firebase.auth().currentUser) {
   },
 
   updateUserName: function() {
-    var el = document.getElementById('profile-name');
-    if (el) el.textContent = this.state.userName || 'مبرمج مبتدئ';
-  },
+  var el = document.getElementById('profile-name');
+  if (el) el.textContent = this.state.userName || 'مبرمج مبتدئ';
+  var idEl = document.getElementById('profile-id-display');
+  if (idEl) idEl.textContent = this.getDeviceId();
+},
+
+copyUserID: function() {
+  var id = this.getDeviceId();
+  try {
+    if (navigator.clipboard) navigator.clipboard.writeText(id);
+    this.toast('📋 تم نسخ الـ ID بنجاح');
+  } catch(e) {
+    this.toast('❌ فشل النسخ، انسخه يدوياً: ' + id);
+  }
+},
 
   updateAvatar: function() {
     var el = document.getElementById('profile-avatar-el');
