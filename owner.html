@@ -2526,7 +2526,7 @@ document.getElementById('btn-google-login').addEventListener('click', function()
 
 
 /* ========== Owner Secret Code (for 2FA) ========== */
-var OWNER_SECRET_CODE = 'AHMED2004KODO';
+var OWNER_SECRET_ENCODED = 'QUhNRUQyMDA0S09ETw==';
 
 /* ========== 2FA: Secret code at login ========== */
 function askSecretAndGo(user) {
@@ -2557,7 +2557,7 @@ function askSecretAndGo(user) {
 
   function onSubmit() {
     var code = input.value.trim();
-    if (code === OWNER_SECRET_CODE) {
+    if (btoa(code) === OWNER_SECRET_ENCODED) {
       cleanup();
       sessionStorage.setItem('kodo_owner_2fa', 'ok');
       goToDashboard(user);
