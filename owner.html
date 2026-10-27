@@ -1286,7 +1286,7 @@ document.getElementById('btn-manual-unban-back').addEventListener('click', funct
 
 /* ----- Search Handlers ----- */
 document.getElementById('btn-hub-search').addEventListener('click', function() {
-  var id = document.getElementById('hub-search-input').value.trim().toUpperCase();
+  var id = document.getElementById('hub-search-input').value.trim();
   if (!id) { alert('❌ اكتب Device ID'); return; }
   doUniversalSearch(id);
 });
@@ -1338,7 +1338,7 @@ function loadBannedUsers() {
   if (!list) return;
   list.innerHTML = '<div class="empty-bans"><span class="em">⏳</span>جاري التحميل...</div>';
 
-  var filter = (document.getElementById('banned-search-input').value || '').trim().toUpperCase();
+var filter = (document.getElementById('banned-search-input').value || '').trim();
 
   fbDB.ref('banned').once('value').then(function(snap) {
     var arr = [];
@@ -2010,7 +2010,7 @@ document.getElementById('btn-rewards-history-back').addEventListener('click', fu
   show('rewards-screen');
 });
 document.getElementById('btn-rewards-search').addEventListener('click', function() {
-  var id = document.getElementById('rewards-user-input').value.trim().toUpperCase();
+var id = document.getElementById('rewards-user-input').value.trim();
   if (!id) { alert('❌ اكتب Device ID'); return; }
   loadRewardsUser(id);
 });
@@ -2369,7 +2369,11 @@ function openUserEdit(deviceId) {
       html += '</div>';
       html += '<div class="edit-actions-row">';
       html += '<button class="edit-action-btn eab-zero" onclick="setFieldValue(\'' + f.id + '\', 0)">تصفير</button>';
-      html += '<button class="edit-action-btn eab-max" onclick="setFieldValue(\'' + f.id + '\', ' + (f.id === 'hearts' ? 99 : 999999) + ')">أقصى</button>';
+      var maxVal = 9999999;
+if (f.id === 'hearts') maxVal = 99;
+if (f.id === 'streak') maxVal = 9999;
+if (f.id === 'gems') maxVal = 999999;
+html += '<button class="edit-action-btn eab-max" onclick="setFieldValue(\'' + f.id + '\', ' + maxVal + ')">أقصى</button>';
       html += '</div>';
     }
 
