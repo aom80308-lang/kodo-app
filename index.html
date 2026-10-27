@@ -2226,6 +2226,8 @@ if (fbDB && firebase.auth().currentUser) {
       var el = document.getElementById(ids[i][0]);
       if (el) el.textContent = ids[i][1];
     }
+    var lvlEl = document.getElementById('profile-level');
+if (lvlEl) lvlEl.textContent = 'المستوى ' + (Math.floor(this.state.xp / 100) + 1) + ' • ' + this.state.xp + ' XP';
     this.updateActiveEffectsBar();
   },
 
@@ -3640,7 +3642,7 @@ if (avatarEl && user.photoURL) {
     if (!App || !App.state) return;
     var hearts = document.getElementById('p-hearts-new');
     var ach = document.getElementById('p-ach-new');
-    if (hearts) hearts.textContent = App.state.hearts || 5;
+    if (hearts) hearts.textContent = (App.state.hearts !== undefined && App.state.hearts !== null) ? App.state.hearts : 5;
     if (ach) ach.textContent = (App.state.achievements || []).length;
   }
 
