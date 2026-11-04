@@ -2930,10 +2930,10 @@ copyUserID: function() {
 App.startCourse = function(courseId) {
   origStartCourse.call(this, courseId);
   this.saveState();
-  // تحديث الداتابيز فوراً عشان متلغبطش التطبيق
-  if (typeof fbDB !== 'undefined' && fbDB && typeof firebase !== 'undefined' && firebase.auth().currentUser) {
-    var userId = firebase.auth().currentUser.uid;
-    fbDB.ref('users/' + userId).update({ currentCourse: courseId });
+  // تحديث الداتابيز فوراً للجميع (مسجل أو ضيف)
+  if (typeof fbDB !== 'undefined' && fbDB) {
+    var deviceId = this.getDeviceId();
+    fbDB.ref('users/' + deviceId).update({ currentCourse: courseId });
   }
 };
 // تحديث عنوان الدورة كل ما الشجرة تترسم
