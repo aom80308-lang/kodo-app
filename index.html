@@ -2927,10 +2927,23 @@ copyUserID: function() {
 /* ====== Kodo Patch v1.1 ====== */
 (function() {
   var origStartCourse = App.startCourse;
-  App.startCourse = function(courseId) {
-    origStartCourse.call(this, courseId);
-    this.saveState();
-  };
+App.startCourse = function(courseId) {
+  origStartCourse.call(this, courseId);
+  this.saveState();
+  // تحديث الداتابيز فوراً عشان متلغبطش التطبيق
+  if (typeof fbDB !== 'undefined' && fbDB && typeof firebase !== 'undefined' && firebase.auth().currentUser) {
+    var userId = firebase.auth().currentUser.uid;
+    fbDB.ref('users/' + userId).update({ currentCourse: courseId });
+  }
+};
+// تحديث عنوان الدورة كل ما الشجرة تترسم
+var _origRenderTree = App.renderTree;
+App.renderTree = function() {
+  var titles = { python: 'بايثون', javascript: 'جافا سكريبت' };
+  var el = document.getElementById('course-title');
+  if (el) el.textContent = titles[this.state.currentCourse] || 'دورة';
+  _origRenderTree.call(this);
+};
   var origSaveState = App.saveState;
   App.saveState = function() {
     origSaveState.call(this);
