@@ -1109,6 +1109,8 @@ setupAuthListener: function() {
   var self = this;
   if (!firebase || !firebase.auth) return;
   firebase.auth().onAuthStateChanged(function(user) {
+    // Switch the data listener as soon as Firebase confirms the active identity.
+    self.listenToFirebase();
     if (user) {
      var newKey = user.uid;
       var oldKey = localStorage.getItem('kodo_device_id');
@@ -1226,7 +1228,14 @@ listenToFirebase: function() {
   if (!fbDB) return;
   var self = this;
   var deviceId = this.getDeviceId();
-  fbDB.ref('users/' + deviceId).on('value', function(snap) {
+  if (this._firebaseUserRef && this._firebaseUserCallback) {
+    try { this._firebaseUserRef.off('value', this._firebaseUserCallback); } catch(e) {}
+  }
+  var listenerGeneration = (this._firebaseListenerGeneration || 0) + 1;
+  this._firebaseListenerGeneration = listenerGeneration;
+  var userRef = fbDB.ref('users/' + deviceId);
+  var userCallback = function(snap) {
+    if (self._firebaseListenerGeneration !== listenerGeneration || self.getDeviceId() !== deviceId) return;
     var data = snap.val();
     if (!data) return;
     var changed = false;
@@ -1235,7 +1244,18 @@ listenToFirebase: function() {
     if (data.hearts != null && data.hearts !== self.state.hearts) { self.state.hearts = data.hearts; changed = true; }
     if (data.streak != null && data.streak !== self.state.streak) { self.state.streak = data.streak; changed = true; }
     if (data.completed) { self.state.completed = data.completed; changed = true; }
-    if (data.currentCourse && data.currentCourse !== self.state.currentCourse) { self.state.currentCourse = data.currentCourse; changed = true; }
+    if (data.currentCourse && data.currentCourse !== self.state.currentCourse) {
+      var localCourseAt = 0;
+      try { localCourseAt = Number(localStorage.getItem('kodo_course_updated_at') || 0); } catch(e) {}
+      var remoteCourseAt = Number(data.currentCourseUpdatedAt || 0);
+      if (!localCourseAt || remoteCourseAt >= localCourseAt) {
+        self.state.currentCourse = data.currentCourse;
+        if (remoteCourseAt) {
+          try { localStorage.setItem('kodo_course_updated_at', String(remoteCourseAt)); } catch(e) {}
+        }
+        changed = true;
+      }
+    }
     if (data.achievements && data.achievements.length > (self.state.achievements || []).length) {
       self.state.achievements = data.achievements;
       changed = true;
@@ -1252,7 +1272,10 @@ listenToFirebase: function() {
       }
       if (self.toast) self.toast('🎁 تم تحديث بياناتك!');
     }
-  });
+  };
+  this._firebaseUserRef = userRef;
+  this._firebaseUserCallback = userCallback;
+  userRef.on('value', userCallback);
 },
 
 // ===== Anti-Cheat System =====
@@ -2926,14 +2949,31 @@ copyUserID: function() {
 
 /* ====== Kodo Patch v1.1 ====== */
 (function() {
+  // A newer explicit local course choice must not be replaced by stale cloud data.
+  App.applyRemoteCourse = function(data) {
+    if (!data || (data.currentCourse !== 'python' && data.currentCourse !== 'javascript')) return;
+    var localAt = 0;
+    var remoteAt = Number(data.currentCourseUpdatedAt || 0);
+    try { localAt = Number(localStorage.getItem('kodo_course_updated_at') || 0); } catch(e) {}
+    if (localAt && (!remoteAt || localAt > remoteAt)) return;
+    this.state.currentCourse = data.currentCourse;
+    if (remoteAt) {
+      try { localStorage.setItem('kodo_course_updated_at', String(remoteAt)); } catch(e) {}
+    }
+  };
   var origStartCourse = App.startCourse;
 App.startCourse = function(courseId) {
   origStartCourse.call(this, courseId);
+  var courseUpdatedAt = Date.now();
+  try { localStorage.setItem('kodo_course_updated_at', String(courseUpdatedAt)); } catch(e) {}
   this.saveState();
-  // تحديث الداتابيز فوراً للجميع (مسجل أو ضيف)
+  // Persist the explicit selection and its ordering metadata for this account/device.
   if (typeof fbDB !== 'undefined' && fbDB) {
     var deviceId = this.getDeviceId();
-    fbDB.ref('users/' + deviceId).update({ currentCourse: courseId });
+    fbDB.ref('users/' + deviceId).update({
+      currentCourse: courseId,
+      currentCourseUpdatedAt: courseUpdatedAt
+    }).catch(function() {});
   }
 };
 // تحديث عنوان الدورة كل ما الشجرة تترسم
@@ -3554,7 +3594,7 @@ fbDB.ref('users/' + uid).once('value').then(function(snap) {
   App.state.streak = data.streak || 0;
   App.state.completed = data.completed || {};
   App.state.achievements = data.achievements || [];
-  App.state.currentCourse = data.currentCourse || null;
+  App.applyRemoteCourse(data);
   if (data.userName) App.state.userName = data.userName;
   App.saveState();
   App.updateStatsUI();
@@ -3584,7 +3624,7 @@ fbDB.ref('users/' + uid).once('value').then(function(snap) {
   App.state.streak = data.streak || 0;
   App.state.completed = data.completed || {};
   App.state.achievements = data.achievements || [];
-  App.state.currentCourse = data.currentCourse || null;
+  App.applyRemoteCourse(data);
   if (data.userName) App.state.userName = data.userName;
   App.saveState();
   App.updateStatsUI();
