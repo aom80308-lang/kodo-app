@@ -1246,12 +1246,12 @@ listenToFirebase: function() {
     if (data.completed) { self.state.completed = data.completed; changed = true; }
     if (data.currentCourse && data.currentCourse !== self.state.currentCourse) {
       var localCourseAt = 0;
-      try { localCourseAt = Number(localStorage.getItem('kodo_course_updated_at') || 0); } catch(e) {}
+      try { localCourseAt = Number(localStorage.getItem('kodo_course_updated_at_' + deviceId') || 0); } catch(e) {}
       var remoteCourseAt = Number(data.currentCourseUpdatedAt || 0);
       if (!localCourseAt || remoteCourseAt >= localCourseAt) {
         self.state.currentCourse = data.currentCourse;
         if (remoteCourseAt) {
-          try { localStorage.setItem('kodo_course_updated_at', String(remoteCourseAt)); } catch(e) {}
+          try { localStorage.setItem('kodo_course_updated_at_' + deviceId', String(remoteCourseAt)); } catch(e) {}
         }
         changed = true;
       }
@@ -2952,24 +2952,27 @@ copyUserID: function() {
   // A newer explicit local course choice must not be replaced by stale cloud data.
   App.applyRemoteCourse = function(data) {
     if (!data || (data.currentCourse !== 'python' && data.currentCourse !== 'javascript')) return;
+    var deviceId = this.getDeviceId();
+    var courseTimestampKey = 'kodo_course_updated_at_' + deviceId;
     var localAt = 0;
     var remoteAt = Number(data.currentCourseUpdatedAt || 0);
-    try { localAt = Number(localStorage.getItem('kodo_course_updated_at') || 0); } catch(e) {}
+    try { localAt = Number(localStorage.getItem('courseTimestampKey') || 0); } catch(e) {}
     if (localAt && (!remoteAt || localAt > remoteAt)) return;
     this.state.currentCourse = data.currentCourse;
     if (remoteAt) {
-      try { localStorage.setItem('kodo_course_updated_at', String(remoteAt)); } catch(e) {}
+      try { localStorage.setItem('courseTimestampKey', String(remoteAt)); } catch(e) {}
     }
   };
   var origStartCourse = App.startCourse;
 App.startCourse = function(courseId) {
   origStartCourse.call(this, courseId);
   var courseUpdatedAt = Date.now();
-  try { localStorage.setItem('kodo_course_updated_at', String(courseUpdatedAt)); } catch(e) {}
+  var deviceId = this.getDeviceId();
+  var courseTimestampKey = 'kodo_course_updated_at_' + deviceId;
+  try { localStorage.setItem('courseTimestampKey', String(courseUpdatedAt)); } catch(e) {}
   this.saveState();
   // Persist the explicit selection and its ordering metadata for this account/device.
   if (typeof fbDB !== 'undefined' && fbDB) {
-    var deviceId = this.getDeviceId();
     fbDB.ref('users/' + deviceId).update({
       currentCourse: courseId,
       currentCourseUpdatedAt: courseUpdatedAt
