@@ -33,7 +33,7 @@ jobs:
 
           html = pathlib.Path("index.html").read_text(encoding="utf-8")
           scripts = re.findall(
-              r"<script\\b(?![^>]*\\bsrc=)[^>]*>(.*?)</script>",
+              r"<script\b(?![^>]*\bsrc=)[^>]*>(.*?)</script>",
               html,
               flags=re.IGNORECASE | re.DOTALL,
           )
