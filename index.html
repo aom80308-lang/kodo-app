@@ -1213,7 +1213,9 @@ setupAuthListener: function() {
         self.saveState();
         self.updateStatsUI();
 
-        return guestRef.remove().then(function() { return true; });
+        // Keep the original guest record: preview and production currently share Firebase.
+        // The account-side marker makes retries idempotent without deleting the source copy.
+        return Promise.resolve(true);
       });
     }).catch(function(error) {
       console.warn('Kodo guest migration kept the original guest data:', error);
