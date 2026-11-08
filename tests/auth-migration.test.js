@@ -71,3 +71,24 @@ test('only migrates generated guest device identifiers', () => {
   assert.equal(migration.shouldMigrateGuestId('google-user-123'), false);
   assert.equal(migration.shouldMigrateGuestId(null), false);
 });
+
+test('prefers the course choice with the newest timestamp', () => {
+  const merged = migration.mergeGuestData(
+    { currentCourse: 'javascript', currentCourseUpdatedAt: 200 },
+    { currentCourse: 'python', currentCourseUpdatedAt: 100 },
+    'DEV-ABC'
+  );
+  assert.equal(merged.currentCourse, 'javascript');
+  assert.equal(merged.currentCourseUpdatedAt, 200);
+});
+
+test('repeating the same merge does not duplicate or reduce progress', () => {
+  const guest = {
+    xp: 75,
+    completed: { python: { lesson1: true } },
+    achievements: ['first']
+  };
+  const once = migration.mergeGuestData(guest, { xp: 40 }, 'DEV-ABC');
+  const twice = migration.mergeGuestData(guest, once, 'DEV-ABC');
+  assert.deepEqual(twice, once);
+});
