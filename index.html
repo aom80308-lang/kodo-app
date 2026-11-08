@@ -1150,8 +1150,31 @@ setupAuthListener: function() {
     var guestRef = fbDB.ref('users/' + guestId);
     var googleRef = fbDB.ref('users/' + googleUid);
     var migrationTask = guestRef.once('value').then(function(guestSnap) {
-      if (!guestSnap.exists()) return false;
-      var guestData = guestSnap.val() || {};
+      var remoteGuestData = guestSnap.val() || {};
+      var localGuestData = {
+        xp: self.state.xp,
+        gems: self.state.gems,
+        hearts: self.state.hearts,
+        streak: self.state.streak,
+        completed: self.state.completed || {},
+        achievements: self.state.achievements || [],
+        stats: self.state.stats || {},
+        userName: self.state.userName
+      };
+      try {
+        var localCourseAt = Number(localStorage.getItem('kodo_course_updated_at_' + guestId) || 0);
+        if (localCourseAt && self.state.currentCourse) {
+          localGuestData.currentCourse = self.state.currentCourse;
+          localGuestData.currentCourseUpdatedAt = localCourseAt;
+        }
+      } catch(e) {}
+      var guestData = window.KodoAuthMigration.mergeGuestData(localGuestData, remoteGuestData);
+      var hasLocalProgress = Number(localGuestData.xp || 0) > 0 ||
+        Number(localGuestData.gems || 0) > 0 ||
+        Object.keys(localGuestData.completed).length > 0 ||
+        localGuestData.achievements.length > 0 ||
+        !!localGuestData.currentCourse;
+      if (!guestSnap.exists() && !hasLocalProgress) return false;
 
       return googleRef.transaction(function(currentData) {
         return window.KodoAuthMigration.mergeGuestData(guestData, currentData || {}, guestId);
@@ -1189,15 +1212,17 @@ setupAuthListener: function() {
   }
 
   firebase.auth().onAuthStateChanged(function(user) {
-    self.listenToFirebase();
-    if (!user) return;
+    if (!user) {
+      self.listenToFirebase();
+      return;
+    }
 
     var guestId = null;
     try { guestId = localStorage.getItem('kodo_device_id'); } catch(e) {}
-    migrateGuestToGoogle(guestId, user.uid).then(function() {
+    self._guestMigrationPromise = migrateGuestToGoogle(guestId, user.uid).then(function() {
+      self.listenToFirebase();
       setTimeout(function() {
         try { self.registerUser(); } catch(e) {}
-        try { self.listenToFirebase(); } catch(e) {}
       }, 1000);
     });
   });
