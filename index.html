@@ -8,6 +8,7 @@
 
 <script src="extras2.js"></script>
 <title>Kodo - كودو</title>
+<script src="auth-migration.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
@@ -622,6 +623,34 @@ var FIREBASE_CONFIG = {
   measurementId: "G-XJM68BT4KM"
 };
 var VAPID_KEY = "BLAzl82NeniqODIcaQOoKEJSMGx-PUE4nZ_QgxmQoKC8kBqWU_YkBNLmJuMSGvVNYXr4Cfd0jVCriyUeIWaNrSk";
+function showGoogleAuthError(error) {
+  var code = error && error.code ? error.code : 'unknown';
+  var message = 'تعذر تسجيل الدخول إلى Google.\n\nرمز الخطأ: ' + code;
+  if (code === 'auth/unauthorized-domain') {
+    message += '\n\nنطاق النسخة التجريبية (' + window.location.hostname +
+      ') غير مضاف إلى Authorized domains في Firebase Authentication.';
+  } else if (code === 'auth/operation-not-allowed') {
+    message += '\n\nتسجيل الدخول بواسطة Google غير مفعّل في إعدادات Firebase Authentication.';
+  } else if (code === 'auth/network-request-failed') {
+    message += '\n\nتحقق من اتصال الإنترنت ثم حاول مرة أخرى.';
+  } else if (error && error.message) {
+    message += '\n\n' + error.message;
+  }
+  alert('❌ ' + message);
+}
+
+function handleGoogleAuthFailure(error, provider) {
+  var code = error && error.code;
+  if (code === 'auth/popup-blocked' ||
+      code === 'auth/operation-not-supported-in-this-environment' ||
+      code === 'auth/web-storage-unsupported') {
+    firebase.auth().signInWithRedirect(provider).catch(showGoogleAuthError);
+    return;
+  }
+  if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') return;
+  showGoogleAuthError(error);
+}
+
 
 var fbApp = null, fbDB = null, fbMessaging = null;
 try {
@@ -1108,56 +1137,73 @@ getUserId: function() {
 setupAuthListener: function() {
   var self = this;
   if (!firebase || !firebase.auth) return;
+
+  function migrateGuestToGoogle(guestId, googleUid) {
+    if (!fbDB || !window.KodoAuthMigration ||
+        !window.KodoAuthMigration.shouldMigrateGuestId(guestId) ||
+        !googleUid || guestId === googleUid) return Promise.resolve(false);
+
+    self._guestMigrationTasks = self._guestMigrationTasks || {};
+    var taskKey = guestId + ':' + googleUid;
+    if (self._guestMigrationTasks[taskKey]) return self._guestMigrationTasks[taskKey];
+
+    var guestRef = fbDB.ref('users/' + guestId);
+    var googleRef = fbDB.ref('users/' + googleUid);
+    var migrationTask = guestRef.once('value').then(function(guestSnap) {
+      if (!guestSnap.exists()) return false;
+      var guestData = guestSnap.val() || {};
+
+      return googleRef.transaction(function(currentData) {
+        return window.KodoAuthMigration.mergeGuestData(guestData, currentData || {}, guestId);
+      }).then(function() {
+        return googleRef.once('value');
+      }).then(function(googleSnap) {
+        var savedData = googleSnap.val() || {};
+        var expectedData = window.KodoAuthMigration.mergeGuestData(guestData, savedData, guestId);
+        if (!window.KodoAuthMigration.verifyGuestMerge(expectedData, savedData, guestId)) {
+          throw new Error('Guest migration verification failed');
+        }
+
+        ['xp', 'gems', 'hearts', 'streak'].forEach(function(field) {
+          if (typeof savedData[field] === 'number') self.state[field] = savedData[field];
+        });
+        if (savedData.completed) self.state.completed = savedData.completed;
+        if (savedData.achievements) self.state.achievements = savedData.achievements;
+        if (savedData.currentCourse) self.state.currentCourse = savedData.currentCourse;
+        if (savedData.userName) self.state.userName = savedData.userName;
+        self.saveState();
+        self.updateStatsUI();
+
+        return guestRef.remove().then(function() { return true; });
+      });
+    }).catch(function(error) {
+      console.warn('Kodo guest migration kept the original guest data:', error);
+      return false;
+    }).then(function(result) {
+      delete self._guestMigrationTasks[taskKey];
+      return result;
+    });
+
+    self._guestMigrationTasks[taskKey] = migrationTask;
+    return migrationTask;
+  }
+
   firebase.auth().onAuthStateChanged(function(user) {
-    // Switch the data listener as soon as Firebase confirms the active identity.
     self.listenToFirebase();
-    if (user) {
-     var newKey = user.uid;
-      var oldKey = localStorage.getItem('kodo_device_id');
-      var authMode = 'signin';
-      try { authMode = localStorage.getItem('kodo_auth_mode') || 'signin'; } catch(e) {}
-      if (oldKey && oldKey !== newKey && authMode === 'signup') {
-        Promise.all([
-          fbDB.ref('users/' + oldKey).once('value'),
-          fbDB.ref('users/' + newKey).once('value')
-        ]).then(function(results) {
-          var guestData = results[0].val() || {};
-          var googleData = results[1].val() || {};
-          var merged = {
-            xp: Math.max(guestData.xp || 0, googleData.xp || 0, self.state.xp || 0),
-            gems: Math.max(guestData.gems || 0, googleData.gems || 0, self.state.gems || 0),
-            hearts: Math.max(guestData.hearts || 0, googleData.hearts || 0, self.state.hearts || 5),
-            streak: Math.max(guestData.streak || 0, googleData.streak || 0, self.state.streak || 0),
-            level: Math.max(guestData.level || 1, googleData.level || 1),
-            createdAt: googleData.createdAt || guestData.createdAt || Date.now()
-          };
-          return fbDB.ref('users/' + newKey).update(merged).then(function() {
-            if (guestData.userName && !googleData.userName) {
-              return fbDB.ref('users/' + newKey).update({ userName: guestData.userName });
-            }
-          }).then(function() {
-            return fbDB.ref('users/' + oldKey).remove();
-          }).then(function() {
-            self.state.xp = merged.xp;
-            self.state.gems = merged.gems;
-            self.state.hearts = merged.hearts;
-            self.state.streak = merged.streak;
-            self.saveState();
-            self.updateStatsUI();
-          });
-        }).catch(function() {});
-      } else if (oldKey && oldKey !== newKey && authMode === 'signin') {
-        fbDB.ref('users/' + oldKey).remove().catch(function() {});
-      }
+    if (!user) return;
+
+    var guestId = null;
+    try { guestId = localStorage.getItem('kodo_device_id'); } catch(e) {}
+    migrateGuestToGoogle(guestId, user.uid).then(function() {
       setTimeout(function() {
         try { self.registerUser(); } catch(e) {}
         try { self.listenToFirebase(); } catch(e) {}
       }, 1000);
-    }
+    });
   });
 },
 
-  registerUser: function() {
+    registerUser: function() {
   if (!fbDB) return;
   var self = this;
   var deviceId = this.getDeviceId();
@@ -3641,8 +3687,7 @@ fbDB.ref('users/' + uid).once('value').then(function(snap) {
   }
 });
   }).catch(function(err) {
-    if (err.code === 'auth/popup-closed-by-user') return;
-    alert('❌ فشل التسجيل: ' + (err.message || err.code));
+    handleGoogleAuthFailure(err, provider);
   });
 }
 if (googleBtn) {
@@ -3739,8 +3784,7 @@ if (avatarEl && user.photoURL) {
     App.toast('✅ أهلاً ' + (user.displayName || user.email));
     setTimeout(updateProfileUI, 500);
   }).catch(function(err) {
-    if (err.code === 'auth/popup-closed-by-user') return;
-    alert('❌ فشل التسجيل: ' + (err.message || err.code));
+    handleGoogleAuthFailure(err, provider);
   });
 }
 var googleBtn = document.getElementById('btn-profile-google');
