@@ -4,15 +4,15 @@
   "display": "standalone",
   "name": "Kodo",
   "orientation": "portrait",
-  "scope": "/kodo-app/",
+  "scope": "/",
   "short_name": "Kodo",
-  "start_url": "/kodo-app/",
+  "start_url": "/",
   "theme_color": "#3b82f6",
   "id": "com.aom80308.kodo",
   "description": "تطبيق Kodo لتعليم البرمجة (بايثون وجافاسكريبت) بالعربي",
   "icons": [
     {
-      "src": "/kodo-app/icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
