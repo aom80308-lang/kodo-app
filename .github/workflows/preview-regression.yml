@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 22
       - name: Run guest migration regression tests
-        run: node --test tests/auth-migration.test.js
+        run: node --test tests/*.test.js
       - name: Check inline JavaScript syntax
         run: |
           python3 - <<'PY'
