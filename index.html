@@ -3645,8 +3645,7 @@ function sendTelegram(type, email, reason, device, callback) {
     }, 2000);
   };
 
-  window.addEventListener('load', function() {
-    setTimeout(function() {
+  function bindWelcomeAuthButtons() {
       var googleBtn = document.getElementById('btn-google-signin');
 var signupBtn = document.getElementById('btn-google-signup');
 var guestBtn = document.getElementById('btn-guest-mode');
@@ -3753,8 +3752,13 @@ if (signupBtn) {
           App.go('onboarding');
         });
       }
-    }, 800);
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindWelcomeAuthButtons, { once: true });
+  } else {
+    bindWelcomeAuthButtons();
+  }
 })();
 
 /* ========== Profile Screen - Account Status & Google ========== */
