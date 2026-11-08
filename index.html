@@ -651,6 +651,21 @@ function handleGoogleAuthFailure(error, provider) {
   showGoogleAuthError(error);
 }
 
+function captureGuestAuthSnapshot() {
+  try {
+    var guestId = App.getDeviceId();
+    var state = App.state || {};
+    App._guestPreAuthSnapshot = {
+      guestId: guestId,
+      state: JSON.parse(JSON.stringify({
+        xp: state.xp, gems: state.gems, hearts: state.hearts, streak: state.streak,
+        completed: state.completed || {}, achievements: state.achievements || [],
+        stats: state.stats || {}, currentCourse: state.currentCourse, userName: state.userName
+      }))
+    };
+  } catch(e) {}
+}
+
 
 var fbApp = null, fbDB = null, fbMessaging = null;
 try {
@@ -1138,7 +1153,7 @@ setupAuthListener: function() {
   var self = this;
   if (!firebase || !firebase.auth) return;
 
-  function migrateGuestToGoogle(guestId, googleUid) {
+  function migrateGuestToGoogle(guestId, googleUid, localSnapshot) {
     if (!fbDB || !window.KodoAuthMigration ||
         !window.KodoAuthMigration.shouldMigrateGuestId(guestId) ||
         !googleUid || guestId === googleUid) return Promise.resolve(false);
@@ -1151,20 +1166,21 @@ setupAuthListener: function() {
     var googleRef = fbDB.ref('users/' + googleUid);
     var migrationTask = guestRef.once('value').then(function(guestSnap) {
       var remoteGuestData = guestSnap.val() || {};
+      var localState = localSnapshot || self.state;
       var localGuestData = {
-        xp: self.state.xp,
-        gems: self.state.gems,
-        hearts: self.state.hearts,
-        streak: self.state.streak,
-        completed: self.state.completed || {},
-        achievements: self.state.achievements || [],
-        stats: self.state.stats || {},
-        userName: self.state.userName
+        xp: localState.xp,
+        gems: localState.gems,
+        hearts: localState.hearts,
+        streak: localState.streak,
+        completed: localState.completed || {},
+        achievements: localState.achievements || [],
+        stats: localState.stats || {},
+        userName: localState.userName
       };
       try {
         var localCourseAt = Number(localStorage.getItem('kodo_course_updated_at_' + guestId) || 0);
-        if (localCourseAt && self.state.currentCourse) {
-          localGuestData.currentCourse = self.state.currentCourse;
+        if (localCourseAt && localState.currentCourse) {
+          localGuestData.currentCourse = localState.currentCourse;
           localGuestData.currentCourseUpdatedAt = localCourseAt;
         }
       } catch(e) {}
@@ -1219,7 +1235,11 @@ setupAuthListener: function() {
 
     var guestId = null;
     try { guestId = localStorage.getItem('kodo_device_id'); } catch(e) {}
-    self._guestMigrationPromise = migrateGuestToGoogle(guestId, user.uid).then(function() {
+    var snapshot = self._guestPreAuthSnapshot &&
+      self._guestPreAuthSnapshot.guestId === guestId ?
+      self._guestPreAuthSnapshot.state : null;
+    self._guestMigrationPromise = migrateGuestToGoogle(guestId, user.uid, snapshot).then(function() {
+      self._guestPreAuthSnapshot = null;
       self.listenToFirebase();
       setTimeout(function() {
         try { self.registerUser(); } catch(e) {}
@@ -3635,6 +3655,7 @@ function handleGoogleAuth(isSignup) {
   }
   try { localStorage.setItem('kodo_auth_mode', isSignup ? 'signup' : 'signin'); } catch(e) {}
   var provider = new firebase.auth.GoogleAuthProvider();
+  captureGuestAuthSnapshot();
   firebase.auth().signInWithPopup(provider).then(function(result) {
     var user = result.user;
     var uid = user.uid;
@@ -3776,6 +3797,7 @@ if (avatarEl && user.photoURL) {
   function handleProfileGoogleAuth(isSignup) {
   try { localStorage.setItem('kodo_auth_mode', isSignup ? 'signup' : 'signin'); } catch(e) {}
   var provider = new firebase.auth.GoogleAuthProvider();
+  captureGuestAuthSnapshot();
   firebase.auth().signInWithPopup(provider).then(function(result) {
     var user = result.user;
     var uid = user.uid;
