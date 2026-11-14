@@ -1187,10 +1187,19 @@ setupAuthListener: function() {
         }
       } catch(e) {}
       var guestData = window.KodoAuthMigration.mergeGuestData(localGuestData, remoteGuestData);
+      var hasLocalStats = Object.keys(localGuestData.stats).some(function(key) {
+        var value = localGuestData.stats[key];
+        return typeof value === 'number' ? value > 0 :
+          value !== null && value !== undefined && value !== '' && value !== false;
+      });
       var hasLocalProgress = Number(localGuestData.xp || 0) > 0 ||
         Number(localGuestData.gems || 0) > 0 ||
+        Number(localGuestData.hearts) !== 5 ||
+        Number(localGuestData.streak || 0) > 0 ||
         Object.keys(localGuestData.completed).length > 0 ||
         localGuestData.achievements.length > 0 ||
+        hasLocalStats ||
+        (localGuestData.userName && localGuestData.userName !== 'مبرمج مبتدئ') ||
         !!localGuestData.currentCourse;
       if (!guestSnap.exists() && !hasLocalProgress) return false;
 
@@ -1334,10 +1343,14 @@ listenToFirebase: function() {
     var data = snap.val();
     if (!data) return;
     var changed = false;
-    if (data.xp != null && data.xp !== self.state.xp) { self.state.xp = data.xp; changed = true; }
-    if (data.gems != null && data.gems !== self.state.gems) { self.state.gems = data.gems; changed = true; }
-    if (data.hearts != null && data.hearts !== self.state.hearts) { self.state.hearts = data.hearts; changed = true; }
-    if (data.streak != null && data.streak !== self.state.streak) { self.state.streak = data.streak; changed = true; }
+    // Never let an older cloud snapshot reduce newer local progress.
+    ['xp', 'gems', 'hearts', 'streak'].forEach(function(field) {
+      if (typeof data[field] === 'number' && isFinite(data[field]) &&
+          data[field] > Number(self.state[field] || 0)) {
+        self.state[field] = data[field];
+        changed = true;
+      }
+    });
     if (data.completed) {
       var mergedCompleted = window.KodoAuthMigration.mergeGuestData(
         { completed: self.state.completed || {} },
