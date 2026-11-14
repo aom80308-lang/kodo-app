@@ -1360,9 +1360,27 @@ listenToFirebase: function() {
         changed = true;
       }
     }
-    if (data.achievements && data.achievements.length > (self.state.achievements || []).length) {
-      self.state.achievements = data.achievements;
-      changed = true;
+    if (data.stats && typeof data.stats === 'object') {
+      var mergedStats = window.KodoAuthMigration.mergeGuestData(
+        { stats: self.state.stats || {} },
+        { stats: data.stats || {} }
+      ).stats;
+      mergedStats.totalLessons = self.getTotalCompleted();
+      mergedStats.levelsComplete = self.getLevelsComplete();
+      if (JSON.stringify(mergedStats) !== JSON.stringify(self.state.stats || {})) {
+        self.state.stats = mergedStats;
+        changed = true;
+      }
+    }
+    if (Array.isArray(data.achievements)) {
+      var mergedAchievements = window.KodoAuthMigration.mergeGuestData(
+        { achievements: self.state.achievements || [] },
+        { achievements: data.achievements }
+      ).achievements;
+      if (JSON.stringify(mergedAchievements) !== JSON.stringify(self.state.achievements || [])) {
+        self.state.achievements = mergedAchievements;
+        changed = true;
+      }
     }
     if (data.userName && data.userName !== self.state.userName) {
       self.state.userName = data.userName;
