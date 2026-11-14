@@ -3741,15 +3741,26 @@ function handleGoogleAuth(isSignup) {
 alert('✅ أهلاً ' + (user.displayName || user.email));
 fbDB.ref('users/' + uid).once('value').then(function(snap) {
   var data = snap.val() || {};
-  App.state.xp = data.xp || 0;
-  App.state.gems = data.gems || 0;
-  App.state.hearts = data.hearts || 5;
-  App.state.streak = data.streak || 0;
-  App.state.completed = window.KodoAuthMigration.mergeGuestData(
-      { completed: App.state.completed || {} },
-      { completed: data.completed || {} }
-    ).completed;
-  App.state.achievements = data.achievements || [];
+  var mergedAccountState = window.KodoAuthMigration.mergeGuestData(
+    {
+      xp: App.state.xp, gems: App.state.gems, hearts: App.state.hearts,
+      streak: App.state.streak, completed: App.state.completed || {},
+      stats: App.state.stats || {}, achievements: App.state.achievements || []
+    },
+    {
+      xp: data.xp, gems: data.gems, hearts: data.hearts,
+      streak: data.streak, completed: data.completed || {},
+      stats: data.stats || {}, achievements: data.achievements || []
+    }
+  );
+  ['xp', 'gems', 'hearts', 'streak'].forEach(function(field) {
+    if (typeof mergedAccountState[field] === 'number') App.state[field] = mergedAccountState[field];
+  });
+  App.state.completed = mergedAccountState.completed || {};
+  App.state.stats = mergedAccountState.stats || App.state.stats;
+  App.state.stats.totalLessons = App.getTotalCompleted();
+  App.state.stats.levelsComplete = App.getLevelsComplete();
+  App.state.achievements = mergedAccountState.achievements || [];
   App.applyRemoteCourse(data);
   if (data.userName) App.state.userName = data.userName;
   App.saveState();
@@ -3774,15 +3785,26 @@ fbDB.ref('users/' + uid).once('value').then(function(snap) {
 alert('✅ أهلاً ' + (user.displayName || user.email));
 fbDB.ref('users/' + uid).once('value').then(function(snap) {
   var data = snap.val() || {};
-  App.state.xp = data.xp || 0;
-  App.state.gems = data.gems || 0;
-  App.state.hearts = data.hearts || 5;
-  App.state.streak = data.streak || 0;
-  App.state.completed = window.KodoAuthMigration.mergeGuestData(
-      { completed: App.state.completed || {} },
-      { completed: data.completed || {} }
-    ).completed;
-  App.state.achievements = data.achievements || [];
+  var mergedAccountState = window.KodoAuthMigration.mergeGuestData(
+    {
+      xp: App.state.xp, gems: App.state.gems, hearts: App.state.hearts,
+      streak: App.state.streak, completed: App.state.completed || {},
+      stats: App.state.stats || {}, achievements: App.state.achievements || []
+    },
+    {
+      xp: data.xp, gems: data.gems, hearts: data.hearts,
+      streak: data.streak, completed: data.completed || {},
+      stats: data.stats || {}, achievements: data.achievements || []
+    }
+  );
+  ['xp', 'gems', 'hearts', 'streak'].forEach(function(field) {
+    if (typeof mergedAccountState[field] === 'number') App.state[field] = mergedAccountState[field];
+  });
+  App.state.completed = mergedAccountState.completed || {};
+  App.state.stats = mergedAccountState.stats || App.state.stats;
+  App.state.stats.totalLessons = App.getTotalCompleted();
+  App.state.stats.levelsComplete = App.getLevelsComplete();
+  App.state.achievements = mergedAccountState.achievements || [];
   App.applyRemoteCourse(data);
   if (data.userName) App.state.userName = data.userName;
   App.saveState();
