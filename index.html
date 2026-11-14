@@ -3654,18 +3654,33 @@ function sendTelegram(type, email, reason, device, callback) {
       }
     };
     var continueButton = document.getElementById('splash-continue');
-    if (continueButton) {
-      continueButton.addEventListener('click', function(e) {
+    this._splashContinued = false;
+    var advanceSplash = function(e) {
+      if (e) {
         e.preventDefault();
         e.stopPropagation();
-        if (!splash.classList.contains('active')) return;
-        clearTimeout(self._splashTimer);
-        self.vibrate(10); self.playSound('click');
-        continueFromSplash();
-      });
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      }
+      if (self._splashContinued || !splash.classList.contains('active')) return;
+      self._splashContinued = true;
+      clearTimeout(self._splashTimer);
+      self.vibrate(10);
+      self.playSound('click');
+      continueFromSplash();
+    };
+    if (continueButton) {
+      continueButton.disabled = false;
+      continueButton.onclick = advanceSplash;
+      continueButton.style.pointerEvents = 'auto';
+      continueButton.style.position = 'relative';
+      continueButton.style.zIndex = '10';
     }
+    clearTimeout(self._splashTimer);
     this._splashTimer = setTimeout(function() {
-      if (splash.classList.contains('active')) continueFromSplash();
+      if (!self._splashContinued && splash.classList.contains('active')) {
+        self._splashContinued = true;
+        continueFromSplash();
+      }
     }, 2000);
   };
 
