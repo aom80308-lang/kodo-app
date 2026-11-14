@@ -39,7 +39,9 @@ body { font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color
 @keyframes glow { 0%,100%{box-shadow:0 0 20px rgba(251,191,36,.5);}50%{box-shadow:0 0 40px rgba(251,191,36,.9);} }
 @keyframes heartPulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.3);} }
 
-#splash { background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px;position:relative;cursor:pointer; }
+#splash { background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px;position:relative; }
+#splash .tap-hint { display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;margin:0 0 30px;border:2px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.16);color:#fff;font:700 16px inherit;cursor:pointer;touch-action:manipulation;box-shadow:0 4px 14px rgba(0,0,0,.15); }
+#splash .tap-hint:active { transform:scale(.97);background:rgba(255,255,255,.28); }
 #splash .splash-inner { display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%; }
 #splash .logo { width:150px;height:150px;margin-bottom:24px;animation:pop .6s ease; }
 #splash h1 { font-size:48px;margin-bottom:12px;font-weight:800;letter-spacing:2px; }
@@ -308,7 +310,7 @@ body.dark .section-divider.done { background:#14532D;color:#86EFAC; }
     <h1>Kodo</h1>
     <div class="splash-sub">اتعلم برمجة بالعربي<br>ببساطة ومتعة</div>
     <div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-    <div class="tap-hint">👆 اضغط في أي مكان للمتابعة</div>
+    <button type="button" id="splash-continue" class="tap-hint">👆 اضغط هنا للمتابعة</button>
   </div>
   <div class="dev-signature">Made with ❤ by Ahmed Bassiouny &bull; © 2026 Kodo</div>
 </div>
@@ -3111,16 +3113,17 @@ App.renderTree = function() {
         self.go('onboarding');
       }
     };
-    var handleSplashPress = function(e) {
-      if (!splash.classList.contains('active')) return;
-      clearTimeout(self._splashTimer);
-      self.vibrate(10); self.playSound('click');
-      continueFromSplash();
-    };
-    // Capture the press from anywhere inside the full-screen splash, including child elements.
-    splash.addEventListener('pointerdown', handleSplashPress, true);
-    // Fallback for browsers that do not dispatch Pointer Events.
-    splash.addEventListener('click', handleSplashPress, true);
+    var continueButton = document.getElementById('splash-continue');
+    if (continueButton) {
+      continueButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!splash.classList.contains('active')) return;
+        clearTimeout(self._splashTimer);
+        self.vibrate(10); self.playSound('click');
+        continueFromSplash();
+      });
+    }
     this._splashTimer = setTimeout(function() {
   if (splash.classList.contains('active')) continueFromSplash();
 }, 500);
@@ -3634,16 +3637,17 @@ function sendTelegram(type, email, reason, device, callback) {
         self.go('welcome-screen');
       }
     };
-    var handleSplashPress = function(e) {
-      if (!splash.classList.contains('active')) return;
-      clearTimeout(self._splashTimer);
-      self.vibrate(10); self.playSound('click');
-      continueFromSplash();
-    };
-    // Capture the press from anywhere inside the full-screen splash, including child elements.
-    splash.addEventListener('pointerdown', handleSplashPress, true);
-    // Fallback for browsers that do not dispatch Pointer Events.
-    splash.addEventListener('click', handleSplashPress, true);
+    var continueButton = document.getElementById('splash-continue');
+    if (continueButton) {
+      continueButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!splash.classList.contains('active')) return;
+        clearTimeout(self._splashTimer);
+        self.vibrate(10); self.playSound('click');
+        continueFromSplash();
+      });
+    }
     this._splashTimer = setTimeout(function() {
       if (splash.classList.contains('active')) continueFromSplash();
     }, 2000);
