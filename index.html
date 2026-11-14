@@ -1338,7 +1338,16 @@ listenToFirebase: function() {
     if (data.gems != null && data.gems !== self.state.gems) { self.state.gems = data.gems; changed = true; }
     if (data.hearts != null && data.hearts !== self.state.hearts) { self.state.hearts = data.hearts; changed = true; }
     if (data.streak != null && data.streak !== self.state.streak) { self.state.streak = data.streak; changed = true; }
-    if (data.completed) { self.state.completed = data.completed; changed = true; }
+    if (data.completed) {
+      var mergedCompleted = window.KodoAuthMigration.mergeGuestData(
+        { completed: self.state.completed || {} },
+        { completed: data.completed || {} }
+      ).completed;
+      if (JSON.stringify(mergedCompleted) !== JSON.stringify(self.state.completed || {})) {
+        self.state.completed = mergedCompleted;
+        changed = true;
+      }
+    }
     if (data.currentCourse && data.currentCourse !== self.state.currentCourse) {
       var localCourseAt = 0;
       try { localCourseAt = Number(localStorage.getItem('kodo_course_updated_at_' + deviceId) || 0); } catch(e) {}
@@ -3703,7 +3712,10 @@ fbDB.ref('users/' + uid).once('value').then(function(snap) {
   App.state.gems = data.gems || 0;
   App.state.hearts = data.hearts || 5;
   App.state.streak = data.streak || 0;
-  App.state.completed = data.completed || {};
+  App.state.completed = window.KodoAuthMigration.mergeGuestData(
+      { completed: App.state.completed || {} },
+      { completed: data.completed || {} }
+    ).completed;
   App.state.achievements = data.achievements || [];
   App.applyRemoteCourse(data);
   if (data.userName) App.state.userName = data.userName;
@@ -3733,7 +3745,10 @@ fbDB.ref('users/' + uid).once('value').then(function(snap) {
   App.state.gems = data.gems || 0;
   App.state.hearts = data.hearts || 5;
   App.state.streak = data.streak || 0;
-  App.state.completed = data.completed || {};
+  App.state.completed = window.KodoAuthMigration.mergeGuestData(
+      { completed: App.state.completed || {} },
+      { completed: data.completed || {} }
+    ).completed;
   App.state.achievements = data.achievements || [];
   App.applyRemoteCourse(data);
   if (data.userName) App.state.userName = data.userName;
