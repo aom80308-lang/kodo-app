@@ -1229,6 +1229,7 @@ setupAuthListener: function() {
         return Promise.resolve(true);
       });
     }).catch(function(error) {
+      self._guestMigrationFailed = true;
       console.warn('Kodo guest migration kept the original guest data:', error);
       return false;
     }).then(function(result) {
@@ -1241,6 +1242,10 @@ setupAuthListener: function() {
   }
 
   firebase.auth().onAuthStateChanged(function(user) {
+    self._progressSyncReady = false;
+    self._progressSyncMigrationReady = false;
+    self._progressSyncUid = null;
+    self._guestMigrationFailed = false;
     if (!user) {
       self.listenToFirebase();
       return;
@@ -1253,6 +1258,8 @@ setupAuthListener: function() {
       self._guestPreAuthSnapshot.state : null;
     self._guestMigrationPromise = migrateGuestToGoogle(guestId, user.uid, snapshot).then(function() {
       self._guestPreAuthSnapshot = null;
+      self._progressSyncMigrationReady = !self._guestMigrationFailed;
+      self._progressSyncUid = self._progressSyncMigrationReady ? user.uid : null;
       self.listenToFirebase();
       setTimeout(function() {
         try { self.registerUser(); } catch(e) {}
@@ -1341,7 +1348,12 @@ listenToFirebase: function() {
   var userCallback = function(snap) {
     if (self._firebaseListenerGeneration !== listenerGeneration || self.getDeviceId() !== deviceId) return;
     var data = snap.val();
-    if (!data) return;
+    if (!data) {
+      if (self._progressSyncMigrationReady && self._progressSyncUid === deviceId) {
+        self.activateProgressSync(deviceId);
+      }
+      return;
+    }
     var changed = false;
     // Never let an older cloud snapshot reduce newer local progress.
     ['xp', 'gems', 'hearts', 'streak'].forEach(function(field) {
@@ -1406,6 +1418,9 @@ listenToFirebase: function() {
         try { self.renderTree(); } catch(e) {}
       }
       if (self.toast) self.toast('🎁 تم تحديث بياناتك!');
+    }
+    if (self._progressSyncMigrationReady && self._progressSyncUid === deviceId) {
+      self.activateProgressSync(deviceId);
     }
   };
   this._firebaseUserRef = userRef;
@@ -3930,5 +3945,121 @@ if (googleSignupBtn) {
   });
 })();
 </script>
+
+<script>
+/* ========== Safe Google learning-progress sync ========== */
+(function() {
+  if (typeof App === 'undefined') return;
+
+  App.activateProgressSync = function(uid) {
+    var user = null;
+    try { user = firebase && firebase.auth && firebase.auth().currentUser; } catch(e) {}
+    if (!user || user.uid !== uid || !this._progressSyncMigrationReady) return;
+    this._progressSyncUid = uid;
+    this._progressSyncReady = true;
+    this.queueProgressSync();
+  };
+
+  App.queueProgressSync = function() {
+    if (!this._progressSyncReady || !fbDB || !window.KodoAuthMigration) return;
+    var user = null;
+    try { user = firebase && firebase.auth && firebase.auth().currentUser; } catch(e) {}
+    if (!user || user.uid !== this._progressSyncUid) return;
+
+    var state = this.state || {};
+    var courseAt = 0;
+    try {
+      courseAt = Number(localStorage.getItem('kodo_course_updated_at_' + user.uid) || 0);
+      if (state.currentCourse && !courseAt) {
+        courseAt = Date.now();
+        localStorage.setItem('kodo_course_updated_at_' + user.uid, String(courseAt));
+      }
+    } catch(e) {}
+
+    var payload = {
+      xp: Number(state.xp) || 0,
+      level: Math.floor((Number(state.xp) || 0) / 100) + 1,
+      completed: state.completed || {},
+      stats: state.stats || {},
+      achievements: Array.isArray(state.achievements) ? state.achievements : []
+    };
+    if (state.currentCourse) {
+      payload.currentCourse = state.currentCourse;
+      payload.currentCourseUpdatedAt = courseAt || Date.now();
+    }
+
+    var key = 'kodo_progress_sync_pending_' + user.uid;
+    try {
+      var previous = JSON.parse(localStorage.getItem(key) || '{}');
+      var merged = window.KodoAuthMigration.mergeGuestData(payload, previous);
+      merged.updatedAt = Math.max(Date.now(), Number(previous.updatedAt || 0) + 1);
+      localStorage.setItem(key, JSON.stringify(merged));
+      clearTimeout(this._progressSyncTimer);
+      var self = this;
+      this._progressSyncTimer = setTimeout(function() { self.flushProgressSync(); }, 400);
+    } catch(e) {
+      console.warn('Kodo progress sync could not queue locally:', e);
+    }
+  };
+
+  App.flushProgressSync = function() {
+    if (!this._progressSyncReady || !fbDB || !window.KodoAuthMigration || !navigator.onLine) return;
+    var user = null;
+    try { user = firebase && firebase.auth && firebase.auth().currentUser; } catch(e) {}
+    if (!user || user.uid !== this._progressSyncUid) return;
+
+    var key = 'kodo_progress_sync_pending_' + user.uid;
+    var pending;
+    try { pending = JSON.parse(localStorage.getItem(key) || 'null'); } catch(e) { return; }
+    if (!pending || !pending.updatedAt) return;
+
+    var version = pending.updatedAt;
+    var payload = {
+      xp: pending.xp,
+      level: pending.level,
+      completed: pending.completed || {},
+      stats: pending.stats || {},
+      achievements: pending.achievements || []
+    };
+    if (pending.currentCourse) {
+      payload.currentCourse = pending.currentCourse;
+      payload.currentCourseUpdatedAt = pending.currentCourseUpdatedAt || 0;
+    }
+
+    var self = this;
+    fbDB.ref('users/' + user.uid).transaction(function(currentData) {
+      if (!self._progressSyncReady || self._progressSyncUid !== user.uid) return;
+      return window.KodoAuthMigration.mergeGuestData(payload, currentData || {});
+    }, function(error, committed) {
+      if (error || !committed) {
+        if (error) console.warn('Kodo progress sync will retry later:', error);
+        return;
+      }
+      try {
+        var latest = JSON.parse(localStorage.getItem(key) || 'null');
+        if (latest && latest.updatedAt === version) {
+          localStorage.removeItem(key);
+        } else if (latest) {
+          self.flushProgressSync();
+        }
+      } catch(e) {}
+    }, false).catch(function(error) {
+      console.warn('Kodo progress sync will retry later:', error);
+    });
+  };
+
+  var originalSaveState = App.saveState;
+  App.saveState = function() {
+    var result = originalSaveState.apply(this, arguments);
+    this.queueProgressSync();
+    return result;
+  };
+
+  window.addEventListener('online', function() {
+    if (App && typeof App.flushProgressSync === 'function') App.flushProgressSync();
+  });
+})();
+</script>
+
 </body>
 </html>
