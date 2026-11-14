@@ -2051,6 +2051,7 @@ updateActiveEffectsBar: function() {
         lastWheelDate: this.state.lastWheelDate,
         lastDailyDate: this.state.lastDailyDate, dailyRewardDay: this.state.dailyRewardDay,
         securityAnswers: this.state.securityAnswers,
+        _ran: this.state._ran || {},
         stats: this.state.stats
       }));
     } catch(e) {}
@@ -2082,6 +2083,7 @@ updateActiveEffectsBar: function() {
         if (p.lastDailyDate) this.state.lastDailyDate = p.lastDailyDate;
         if (p.dailyRewardDay != null) this.state.dailyRewardDay = p.dailyRewardDay;
         if (p.securityAnswers) this.state.securityAnswers = p.securityAnswers;
+        if (p._ran && typeof p._ran === 'object' && !Array.isArray(p._ran)) this.state._ran = p._ran;
         if (p.stats) for (var k2 in p.stats) if (this.state.stats[k2] !== undefined) this.state.stats[k2] = p.stats[k2];
       }
     } catch(e) {}
