@@ -3111,13 +3111,16 @@ App.renderTree = function() {
         self.go('onboarding');
       }
     };
-    splash.addEventListener('click', function(e) {
-      if (splash.classList.contains('active')) {
-        clearTimeout(self._splashTimer);
-        self.vibrate(10); self.playSound('click');
-        continueFromSplash();
-      }
-    });
+    var handleSplashPress = function(e) {
+      if (!splash.classList.contains('active')) return;
+      clearTimeout(self._splashTimer);
+      self.vibrate(10); self.playSound('click');
+      continueFromSplash();
+    };
+    // Capture the press from anywhere inside the full-screen splash, including child elements.
+    splash.addEventListener('pointerdown', handleSplashPress, true);
+    // Fallback for browsers that do not dispatch Pointer Events.
+    splash.addEventListener('click', handleSplashPress, true);
     this._splashTimer = setTimeout(function() {
   if (splash.classList.contains('active')) continueFromSplash();
 }, 500);
@@ -3631,13 +3634,16 @@ function sendTelegram(type, email, reason, device, callback) {
         self.go('welcome-screen');
       }
     };
-    splash.addEventListener('click', function(e) {
-      if (splash.classList.contains('active')) {
-        clearTimeout(self._splashTimer);
-        self.vibrate(10); self.playSound('click');
-        continueFromSplash();
-      }
-    });
+    var handleSplashPress = function(e) {
+      if (!splash.classList.contains('active')) return;
+      clearTimeout(self._splashTimer);
+      self.vibrate(10); self.playSound('click');
+      continueFromSplash();
+    };
+    // Capture the press from anywhere inside the full-screen splash, including child elements.
+    splash.addEventListener('pointerdown', handleSplashPress, true);
+    // Fallback for browsers that do not dispatch Pointer Events.
+    splash.addEventListener('click', handleSplashPress, true);
     this._splashTimer = setTimeout(function() {
       if (splash.classList.contains('active')) continueFromSplash();
     }, 2000);
