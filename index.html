@@ -3141,42 +3141,6 @@ App.renderTree = function() {
       if (s.currentCourse) this.state.currentCourse = s.currentCourse;
     } catch(e) {}
   };
-  App.setupSplashTap = function() {
-    var self = this;
-    var splash = document.getElementById('splash');
-    if (!splash) return;
-    var continueFromSplash = function() {
-      if (self.state.currentCourse) {
-        var titles = { python: 'بايثون', javascript: 'جافا سكريبت' };
-        var el = document.getElementById('course-title');
-        if (el) el.textContent = titles[self.state.currentCourse] || 'دورة';
-        self.go('learning-path');
-      } else {
-        self.go('onboarding');
-      }
-    };
-    var continueButton = document.getElementById('splash-continue');
-    this._splashContinued = false;
-    var advanceSplash = function(e) {
-      if (e) { e.preventDefault(); e.stopPropagation(); }
-      if (self._splashContinued || !splash.classList.contains('active')) return;
-      self._splashContinued = true;
-      clearTimeout(self._splashTimer);
-      self.vibrate(10); self.playSound('click');
-      continueFromSplash();
-    };
-    if (continueButton) {
-      continueButton.disabled = false;
-      continueButton.onclick = advanceSplash;
-      continueButton.addEventListener('click', advanceSplash, true);
-    }
-    this._splashTimer = setTimeout(function() {
-      if (!self._splashContinued && splash.classList.contains('active')) {
-        self._splashContinued = true;
-        continueFromSplash();
-      }
-    }, 1000);
-  };
 })();
 (function() {
   var Py = COURSES.python.levels[0];
@@ -3286,7 +3250,16 @@ App.renderTree = function() {
   }
   setTimeout(updateAccountUI, 1500);
 })();
-window.addEventListener('load', function() { App.init(); });
+function startKodoApp() {
+  if (window.__kodoAppInitStarted) return;
+  window.__kodoAppInitStarted = true;
+  App.init();
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startKodoApp, { once: true });
+} else {
+  startKodoApp();
+}
 if (window.matchMedia) {
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
     if (App.state.settings.auto) App.applySettings();
