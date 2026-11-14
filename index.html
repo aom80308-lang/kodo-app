@@ -3112,7 +3112,6 @@ App.renderTree = function() {
       }
     };
     splash.addEventListener('click', function(e) {
-      if (e.target.closest('#logo-tap')) return;
       if (splash.classList.contains('active')) {
         clearTimeout(self._splashTimer);
         self.vibrate(10); self.playSound('click');
@@ -3633,7 +3632,6 @@ function sendTelegram(type, email, reason, device, callback) {
       }
     };
     splash.addEventListener('click', function(e) {
-      if (e.target.closest('#logo-tap')) return;
       if (splash.classList.contains('active')) {
         clearTimeout(self._splashTimer);
         self.vibrate(10); self.playSound('click');
