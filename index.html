@@ -40,7 +40,7 @@ body { font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color
 @keyframes heartPulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.3);} }
 
 #splash { background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px;position:relative; }
-#splash .tap-hint { display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;margin:0 0 30px;border:2px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.16);color:#fff;font:700 16px inherit;cursor:pointer;touch-action:manipulation;box-shadow:0 4px 14px rgba(0,0,0,.15); }
+#splash .tap-hint { position:relative;z-index:5;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;margin:0 0 30px;border:2px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.16);color:#fff;font:700 16px inherit;cursor:pointer;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:rgba(255,255,255,.25);box-shadow:0 4px 14px rgba(0,0,0,.15); }
 #splash .tap-hint:active { transform:scale(.97);background:rgba(255,255,255,.28); }
 #splash .splash-inner { display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%; }
 #splash .logo { width:150px;height:150px;margin-bottom:24px;animation:pop .6s ease; }
@@ -3114,19 +3114,26 @@ App.renderTree = function() {
       }
     };
     var continueButton = document.getElementById('splash-continue');
+    this._splashContinued = false;
+    var advanceSplash = function(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      if (self._splashContinued || !splash.classList.contains('active')) return;
+      self._splashContinued = true;
+      clearTimeout(self._splashTimer);
+      self.vibrate(10); self.playSound('click');
+      continueFromSplash();
+    };
     if (continueButton) {
-      continueButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (!splash.classList.contains('active')) return;
-        clearTimeout(self._splashTimer);
-        self.vibrate(10); self.playSound('click');
-        continueFromSplash();
-      });
+      continueButton.disabled = false;
+      continueButton.onclick = advanceSplash;
+      continueButton.addEventListener('click', advanceSplash, true);
     }
     this._splashTimer = setTimeout(function() {
-  if (splash.classList.contains('active')) continueFromSplash();
-}, 2000);
+      if (!self._splashContinued && splash.classList.contains('active')) {
+        self._splashContinued = true;
+        continueFromSplash();
+      }
+    }, 1000);
   };
 })();
 (function() {
